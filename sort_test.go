@@ -36,6 +36,7 @@ var (
 
 	sortImplementations = []Sorter{
 		{"StdSort", slices.Sort[[]int, int]},
+		{"BlockSort", BlockSort},
 		{"QuickSort", QuickSort},
 	}
 

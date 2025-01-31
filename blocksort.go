@@ -1,13 +1,25 @@
 package sortcomparison
 
-// BlockSort implements the block sort algorithm, which:
-// 1. Divides the input array into fixed-size blocks
-// 2. Sorts each block independently using insertion sort
-// 3. Merges the sorted blocks using a merge algorithm similar to merge sort
-// This approach provides good cache efficiency and memory locality
-// while maintaining O(n log n) time complexity
+/*
+BlockSort Implementation (Cache-Efficient Hybrid Sort)
 
-func BlockSort[T any](arr []T, less func(a, b T) bool) {
+Time Complexity:
+  - Overall:  O(n log n)
+  - Blocks:   O(n * sqrt(n)) - insertion sort on sqrt(n) sized blocks
+  - Merging:  O(n log n) - similar to merge sort
+
+Space Complexity:
+  - O(n) - requires temporary array for merging
+  - O(1) - for block sorting phase (in-place)
+
+Implementation Notes:
+  - Block size chosen as sqrt(n) for optimal cache performance
+  - Combines insertion sort (small ranges) with merge sort (large ranges)
+  - Cache-friendly due to localized memory access patterns
+  - Stable sort - maintains relative order of equal elements
+  - Good performance on partially sorted data
+*/
+func BlockSort(arr []int) {
 	n := len(arr)
 	if n <= 1 {
 		return
@@ -25,11 +37,11 @@ func BlockSort[T any](arr []T, less func(a, b T) bool) {
 		if end > n {
 			end = n
 		}
-		insertionSortBlock(arr[start:end], less)
+		insertionSortBlock(arr[start:end])
 	}
 
 	// Merge sorted blocks
-	temp := make([]T, n)
+	temp := make([]int, n)
 	for size := blockSize; size < n; size *= 2 {
 		for left := 0; left < n; left += 2 * size {
 			mid := left + size
@@ -41,25 +53,25 @@ func BlockSort[T any](arr []T, less func(a, b T) bool) {
 				right = n
 			}
 			if mid < right {
-				mergeBlocks(arr, temp, left, mid, right, less)
+				mergeBlocks(arr, temp, left, mid, right, func(a, b int) bool { return a < b })
 			}
 		}
 	}
 }
 
-func insertionSortBlock[T any](block []T, less func(a, b T) bool) {
-	for i := 1; i < len(block); i++ {
-		key := block[i]
+func insertionSortBlock(arr []int) {
+	for i := 1; i < len(arr); i++ {
+		key := arr[i]
 		j := i - 1
-		for j >= 0 && less(key, block[j]) {
-			block[j+1] = block[j]
+		for j >= 0 && arr[j] > key {
+			arr[j+1] = arr[j]
 			j--
 		}
-		block[j+1] = key
+		arr[j+1] = key
 	}
 }
 
-func mergeBlocks[T any](arr, temp []T, left, mid, right int, less func(a, b T) bool) {
+func mergeBlocks(arr, temp []int, left, mid, right int, less func(a, b int) bool) {
 	// Copy to temporary array
 	for i := left; i < right; i++ {
 		temp[i] = arr[i]
