@@ -39,6 +39,7 @@ var (
 		{"BlockSort", BlockSort},
 		{"BubbleSort", BubbleSort},
 		{"BucketSort", BucketSort[int]},
+		{"BurstSort", BurstSort},
 		{"QuickSort", QuickSort},
 	}
 
@@ -313,11 +314,14 @@ func TestSort(t *testing.T) {
 				data := tc.gen(tc.size)
 				s.fn(data)
 
-				// Verify sorting
-				for i := 1; i < len(data); i++ {
-					if data[i] < data[i-1] {
-						t.Errorf("Array not sorted at index %d", i)
-					}
+				// assert that the array is sorted
+				if !slices.IsSorted(data) {
+					t.Errorf("Array not sorted")
+				}
+
+				// assert size
+				if len(data) != tc.size {
+					t.Errorf("Array size changed")
 				}
 			})
 		}
