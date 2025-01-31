@@ -38,6 +38,7 @@ var (
 		{"StdSort", slices.Sort[[]int, int]},
 		{"BlockSort", BlockSort},
 		{"BubbleSort", BubbleSort},
+		{"BucketSort", BucketSort[int]},
 		{"QuickSort", QuickSort},
 	}
 

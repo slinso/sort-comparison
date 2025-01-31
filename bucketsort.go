@@ -1,16 +1,32 @@
 package sortcomparison
 
-// BucketSort implements the bucket sort algorithm which:
-// 1. Creates n empty buckets (lists)
-// 2. Scatters elements into buckets based on their values
-// 3. Sorts elements in each bucket (usually with insertion sort)
-// 4. Gathers elements from buckets in order
-// Time Complexity: Average O(n + k), Worst O(n²)
-// Space Complexity: O(n + k)
-// where n is number of elements and k is number of buckets
-// Best suited for uniformly distributed data over a range
+import (
+	"cmp"
 
-func BucketSort[T any](arr []T, less func(a, b T) bool, getBucketIndex func(T, int) int) {
+	"golang.org/x/exp/constraints"
+)
+
+/*
+BucketSort Implementation (Distribution Sort)
+
+Time Complexity:
+  - Average: O(n + k) - when data is uniformly distributed
+  - Worst:   O(n²) - when all elements go to the same bucket
+  - Best:    O(n) - when elements are evenly distributed
+
+Space Complexity:
+  - O(n + k) - where n is input size, k is number of buckets
+  - Additional space needed for bucket storage
+  - Each bucket requires dynamic allocation
+
+Implementation Notes:
+  - Non-in-place sorting algorithm
+  - Stable sort when using stable sort for buckets
+  - Excellent for uniform distributions
+  - Memory usage varies with bucket count
+  - Parallelizable - buckets can be sorted independently
+*/
+func BucketSort[T constraints.Integer | constraints.Float](arr []T) {
 	n := len(arr)
 	if n <= 1 {
 		return
@@ -32,7 +48,7 @@ func BucketSort[T any](arr []T, less func(a, b T) bool, getBucketIndex func(T, i
 	// Sort individual buckets using insertion sort
 	for i := 0; i < numBuckets; i++ {
 		if len(buckets[i]) > 1 {
-			insertionSortBucket(buckets[i], less)
+			insertionSortBucket(buckets[i])
 		}
 	}
 
@@ -46,11 +62,31 @@ func BucketSort[T any](arr []T, less func(a, b T) bool, getBucketIndex func(T, i
 	}
 }
 
-func insertionSortBucket[T any](bucket []T, less func(a, b T) bool) {
+func getBucketIndex[T constraints.Float | constraints.Integer](item T, numBuckets int) int {
+	// Convert to float64 for calculation
+	val := float64(item)
+
+	// Scale to 0-1 range, then multiply by (numBuckets-1)
+	// Add small epsilon to avoid edge case with maximum value
+	scaled := val * float64(numBuckets-1)
+
+	// Ensure index is within bounds
+	index := int(scaled)
+	if index >= numBuckets {
+		return numBuckets - 1
+	}
+	if index < 0 {
+		return 0
+	}
+
+	return index
+}
+
+func insertionSortBucket[T constraints.Ordered](bucket []T) {
 	for i := 1; i < len(bucket); i++ {
 		key := bucket[i]
 		j := i - 1
-		for j >= 0 && less(key, bucket[j]) {
+		for j >= 0 && cmp.Less(key, bucket[j]) {
 			bucket[j+1] = bucket[j]
 			j--
 		}
