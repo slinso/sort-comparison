@@ -1,58 +1,44 @@
 package sortcomparison
 
-import "math/rand"
+/*
+QuickSort Implementation using Lomuto Partition Scheme
 
-// QuickSort implements the quicksort algorithm which:
-// 1. Selects a pivot element from the array
-// 2. Partitions other elements into two sub-arrays according to whether they are
-//    less than or greater than the pivot
-// 3. Recursively sorts the sub-arrays
-//
-// Time Complexity:
-// - Average Case: O(n log n)
-// - Best Case: O(n log n)
-// - Worst Case: O(n²) - can be mitigated with random pivot selection
-//
-// Space Complexity: O(log n) average, O(n) worst case
-// In-place: Yes
-// Stable: No
-// Parallel: Yes (with modifications)
+Time Complexity:
+  - Average: O(n log n)
+  - Worst:   O(n²) - when array is already sorted or reverse sorted
+  - Best:    O(n log n) - when partition splits array in roughly equal halves
 
-func QuickSort[T any](arr []T, less func(a, b T) bool) {
-	if len(arr) <= 1 {
-		return
-	}
-	quicksort(arr, 0, len(arr)-1, less)
+Space Complexity:
+  - O(log n) - due to recursion stack in average case
+  - O(n) in worst case
+
+Implementation Notes:
+  - Uses Lomuto partition scheme with last element as pivot
+  - In-place sorting algorithm
+  - Not stable - relative order of equal elements may change
+*/
+func QuickSort(arr []int) {
+	quicksortHelper(arr, 0, len(arr)-1)
 }
 
-func quicksort[T any](arr []T, low, high int, less func(a, b T) bool) {
+func quicksortHelper(arr []int, low, high int) {
 	if low < high {
-		// Choose random pivot to avoid worst case for sorted arrays
-		pivotIndex := low + rand.Intn(high-low+1)
-		arr[pivotIndex], arr[high] = arr[high], arr[pivotIndex]
-
-		// Partition and get pivot position
-		pi := quicksortPartition(arr, low, high, less)
-
-		// Recursively sort elements before and after partition
-		quicksort(arr, low, pi-1, less)
-		quicksort(arr, pi+1, high, less)
+		pivot := quicksortPartition(arr, low, high)
+		quicksortHelper(arr, low, pivot-1)
+		quicksortHelper(arr, pivot+1, high)
 	}
 }
 
-func quicksortPartition[T any](arr []T, low, high int, less func(a, b T) bool) int {
+func quicksortPartition(arr []int, low, high int) int {
 	pivot := arr[high]
-	i := low - 1 // Index of smaller element
+	i := low - 1
 
 	for j := low; j < high; j++ {
-		// If current element is smaller than pivot
-		if less(arr[j], pivot) {
-			i++ // Increment index of smaller element
+		if arr[j] <= pivot {
+			i++
 			arr[i], arr[j] = arr[j], arr[i]
 		}
 	}
-
-	// Place pivot in its correct position
 	arr[i+1], arr[high] = arr[high], arr[i+1]
 	return i + 1
 }

@@ -23,12 +23,12 @@ func introSortRec[T any](arr []T, maxDepth int, less func(a, b T) bool) {
 	}
 
 	// Otherwise, do quicksort
-	pivot := partition(arr, less)
+	pivot := introsortPartition(arr, less)
 	introSortRec(arr[:pivot], maxDepth-1, less)
 	introSortRec(arr[pivot+1:], maxDepth-1, less)
 }
 
-func partition[T any](arr []T, less func(a, b T) bool) int {
+func introsortPartition[T any](arr []T, less func(a, b T) bool) int {
 	pivot := arr[len(arr)-1]
 	i := -1
 
