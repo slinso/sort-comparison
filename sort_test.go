@@ -72,6 +72,9 @@ var (
 		{"TimSort", TimSort, nil},
 		{"TournamentSort", TournamentSort, nil},
 		{"TreeSort", TreeSort, nil},
+		// TODO: spreadsort
+		// TODO: postmansort
+		// TODO: samplesort
 	}
 
 	dataGenerators = []DataGenerator{
