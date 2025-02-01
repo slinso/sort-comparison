@@ -39,6 +39,8 @@ var (
 
 	sortImplementations = []Sorter{
 		{"StdSort", slices.Sort[[]int, int], nil},
+		{"BeadSort", nil, BeadSort},
+		{"BitonicSort", nil, BitonicSort},
 		{"BlockSort", BlockSort, nil},
 		{"BubbleSort", BubbleSort, nil},
 		{"BucketSort", BucketSort[int], nil},
@@ -59,22 +61,20 @@ var (
 		{"OddEvenSort", OddEvenSort, nil},
 		{"PatienceSort", PatienceSort, nil},
 		{"PigeonholeSort", PigeonholeSort, nil},
-		{"PostmanSort", PostmanSort, nil},
+		{"PostmanSort", nil, PostmanSort},
 		{"QuickSort", QuickSort, nil},
 		{"RadixSortLSD", RadixSort, nil},
 		{"RadixSortMSD", RadixSortMSD, nil},
+		// TODO: {"SampleSort", nil, SampleSort},
 		{"SelectionSort", SelectionSort, nil},
 		{"ShellSort", ShellSort, nil},
 		{"SimplePancakeSort", SimplePancakeSort, nil},
 		{"SmoothSort", SmoothSort, nil},
-		{"SpreadSort", SpreadSort, nil},
+		{"SpreadSort", nil, SpreadSort},
 		{"StrandSort", StrandSort, nil},
 		{"TimSort", TimSort, nil},
 		{"TournamentSort", TournamentSort, nil},
 		{"TreeSort", TreeSort, nil},
-		// TODO: spreadsort
-		// TODO: postmansort
-		// TODO: samplesort
 	}
 
 	dataGenerators = []DataGenerator{
