@@ -1,82 +1,68 @@
 package sortcomparison
 
-/*
-PostmanSort Implementation (Route-Based Distribution Sort)
+import "sort"
 
-Time Complexity:
-  - Average: O(n + r) where r is number of routes
-  - Worst:   O(n²) when many elements in same route
-  - Best:    O(n) when elements evenly distributed
-
-Space Complexity:
-  - O(n) for route storage
-  - O(r) for route management where r is route count
-
-Implementation Notes:
-  - Similar to bucket sort but with dynamic route sizing
-  - Stable sort - maintains relative order of equal elements
-  - Efficient for data with natural clustering
-  - Adaptive to data distribution patterns
-*/
-func PostmanSort(arr []int) {
-	n := len(arr)
-	if n <= 1 {
-		return
+// PostmanSort sorts a slice of non-negative integers using a stable counting sort approach,
+// often referred to as PostmanSort because it "delivers" elements into their proper buckets.
+//
+// How it works:
+//   - It scans the array to determine the minimum and maximum values.
+//   - It creates a count array of size (max - min + 1) to count occurrences.
+//   - It computes cumulative counts to identify the final positions of each element.
+//   - It iterates backwards through the input array to maintain stability when placing elements
+//     in the output slice.
+//   - The sorted output is copied back into the original array.
+//
+// Time Complexity:
+//   - O(n + r), where n is the number of elements and r is the range of the input values.
+//
+// Space Complexity:
+//   - O(n + r), due to the count array and auxiliary output slice.
+func PostmanSort(arr []int) []int {
+	if len(arr) < 2 {
+		return arr
 	}
 
-	// Find range for route distribution
+	// Find minimum and maximum values
 	min, max := arr[0], arr[0]
-	for i := 1; i < n; i++ {
-		if arr[i] < min {
-			min = arr[i]
+	for _, v := range arr {
+		if v < min {
+			min = v
 		}
-		if arr[i] > max {
-			max = arr[i]
-		}
-	}
-
-	// Calculate optimal number of routes
-	routeSize := (max-min)/n + 1
-	if routeSize < 1 {
-		routeSize = 1
-	}
-	numRoutes := (max-min)/routeSize + 1
-
-	// Create routes
-	routes := make([][]int, numRoutes)
-	for i := range routes {
-		routes[i] = make([]int, 0)
-	}
-
-	// Distribute elements to routes
-	for _, val := range arr {
-		routeIndex := (val - min) / routeSize
-		routes[routeIndex] = append(routes[routeIndex], val)
-	}
-
-	// Sort each route using insertion sort
-	for i := range routes {
-		insertionSortRoute(routes[i])
-	}
-
-	// Merge routes back to original array
-	index := 0
-	for _, route := range routes {
-		for _, val := range route {
-			arr[index] = val
-			index++
+		if v > max {
+			max = v
 		}
 	}
-}
 
-func insertionSortRoute(route []int) {
-	for i := 1; i < len(route); i++ {
-		key := route[i]
-		j := i - 1
-		for j >= 0 && route[j] > key {
-			route[j+1] = route[j]
-			j--
-		}
-		route[j+1] = key
+	rangeSize := max - min + 1
+
+	// TODO: if the range is too large, use a different sorting algorithm
+	if rangeSize > 1000000 {
+		sort.Ints(arr)
+		return arr
 	}
+
+	// Create and populate the count array
+	count := make([]int, rangeSize)
+	for _, v := range arr {
+		count[v-min]++
+	}
+
+	// Compute cumulative count for positions
+	for i := 1; i < rangeSize; i++ {
+		count[i] += count[i-1]
+	}
+
+	// Build the output slice
+	output := make([]int, len(arr))
+	// Iterate backwards for stability
+	for i := len(arr) - 1; i >= 0; i-- {
+		val := arr[i]
+		count[val-min]--
+		output[count[val-min]] = val
+	}
+
+	// Copy the sorted output back to the original array
+	copy(arr, output)
+	return arr
 }
