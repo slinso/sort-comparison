@@ -1,5 +1,9 @@
 package sortcomparison
 
+import (
+	"sort"
+)
+
 /*
 PigeonholeSort Implementation
 
@@ -10,14 +14,12 @@ Time Complexity:
     where range is max-min+1
 
 Space Complexity:
-  - O(range) for pigeonhole array
-  - Additional O(1) for variables
+  - O(range) for the pigeonhole array (if used)
+  - Alternatively O(n) extra space if range >> n using a map
 
 Implementation Notes:
-  - Efficient when range of values is close to array size
-  - Stable sort - maintains relative order of equal elements
-  - Not suitable for large ranges of values
-  - Cache-friendly for small ranges
+  - For small ranges relative to n, the usual pigeonhole allocation is efficient.
+  - For small lists with large values, we switch to a map-based method so that only keys that occur are stored.
 */
 func PigeonholeSort(arr []int) {
 	n := len(arr)
@@ -25,36 +27,65 @@ func PigeonholeSort(arr []int) {
 		return
 	}
 
-	// Find min and max in single pass
+	// Find minimum and maximum values.
 	min, max := arr[0], arr[0]
 	for i := 1; i < n; i++ {
-		if arr[i] < min {
-			min = arr[i]
+		v := arr[i]
+		if v < min {
+			min = v
 		}
-		if arr[i] > max {
-			max = arr[i]
+		if v > max {
+			max = v
 		}
 	}
 
-	range_ := max - min + 1
+	// Calculate the range of values.
+	rangeVal := max - min + 1
 
-	// Create pigeonholes
-	holes := make([][]int, range_)
+	// If the range is huge compared to n, use a map-based count approach.
+	if rangeVal > 10*n {
+		counts := make(map[int]int, n)
+		for i := 0; i < n; i++ {
+			counts[arr[i]]++
+		}
+		// Extract the keys and sort them.
+		keys := make([]int, 0, len(counts))
+		for k := range counts {
+			keys = append(keys, k)
+		}
+		sort.Ints(keys)
+		// Reassemble the sorted array.
+		index := 0
+		for _, key := range keys {
+			freq := counts[key]
+			for j := 0; j < freq; j++ {
+				arr[index] = key
+				index++
+			}
+		}
+		return
+	}
+
+	// Otherwise, use the standard pigeonhole approach.
+	// Allocate pigeonholes as slices.
+	holes := make([][]int, rangeVal)
+	// We don't know the exact count per hole, but this avoids reallocation overhead.
 	for i := range holes {
 		holes[i] = make([]int, 0)
 	}
 
-	// Distribute elements into pigeonholes
-	for _, val := range arr {
-		holes[val-min] = append(holes[val-min], val)
+	// Distribute the elements into the pigeonholes.
+	for i := 0; i < n; i++ {
+		idx := arr[i] - min
+		holes[idx] = append(holes[idx], arr[i])
 	}
 
-	// Collect elements from pigeonholes
-	idx := 0
-	for i := range holes {
-		for _, val := range holes[i] {
-			arr[idx] = val
-			idx++
+	// Reassemble the sorted array.
+	index := 0
+	for i := 0; i < rangeVal; i++ {
+		for j := 0; j < len(holes[i]); j++ {
+			arr[index] = holes[i][j]
+			index++
 		}
 	}
 }
