@@ -1,89 +1,81 @@
 package sortcomparison
 
-const (
-	insertionSortThreshold = 32
-	minBinSize             = 64
-)
-
-/*
-SpreadSort Implementation (Hybrid Distribution/Comparison Sort)
-
-Time Complexity:
-  - Average: O(n log log n) - for uniform distributions
-  - Worst:   O(n log n) - when fallback to comparison sort
-  - Best:    O(n) - when perfect distribution
-
-Space Complexity:
-  - O(n) - requires temporary storage for bins
-  - O(log n) - recursion depth
-
-Implementation Notes:
-  - Hybrid of distribution and comparison sorting
-  - Adaptive to data distribution patterns
-  - Not stable - does not preserve order of equal elements
-  - Cache-efficient for uniform distributions
-  - Falls back to insertion sort for small ranges
-*/
-func SpreadSort(arr []int) {
-	n := len(arr)
-	if n <= 1 {
-		return
+// SpreadSort sorts a slice of non-negative integers using an adaptive recursion
+// that partitions the array based on the binary representation of the numbers.
+// It is a hybrid approach similar in spirit to SpreadSort where the input distribution
+// is exploited to achieve high performance.
+//
+// How it works:
+//   - It computes the most significant bit (MSB) needed to represent the maximum value.
+//   - It recursively partitions the slice into two groups based on the presence of the bit
+//     at the current position (0-group and 1-group).
+//   - Once the partition length falls below a predefined threshold, insertion sort is used.
+//   - This in-place, recursive approach minimizes memory allocations and is idiomatic Go.
+//
+// Time Complexity:
+//   - Average-case: O(n) when the data is uniformly distributed.
+//   - Worst-case: O(n log m), where m is the range of input values, if many bits are processed.
+//
+// Space Complexity:
+//   - O(1) auxiliary space (in-place recursion; recursion depth is O(log m)).
+//
+// Note:
+// - The algorithm assumes non-negative integers.
+func SpreadSort(arr []int) []int {
+	if len(arr) < 2 {
+		return arr
 	}
 
-	// Find min/max for range
-	min, max := arr[0], arr[0]
-	for i := 1; i < n; i++ {
-		if arr[i] < min {
-			min = arr[i]
-		}
-		if arr[i] > max {
-			max = arr[i]
+	// Compute maximum value to determine the starting bit for partitioning.
+	max := arr[0]
+	for _, v := range arr {
+		if v > max {
+			max = v
 		}
 	}
 
-	// Use insertion sort for small arrays or small ranges
-	if n < insertionSortThreshold || (max-min) < minBinSize {
+	// Find the most significant bit (MSB) in 'max'
+	bit := 0
+	for max > 0 {
+		bit++
+		max >>= 1
+	}
+	// Adjust bit to be zero-indexed.
+	bit--
+
+	spreadSortHelper(arr, bit)
+	return arr
+}
+
+// threshold below which insertion sort is used for efficiency.
+const insertionThreshold = 16
+
+// spreadSortHelper recursively partitions the array based on the 'bit' position.
+func spreadSortHelper(arr []int, bit int) {
+	if len(arr) < insertionThreshold {
 		insertionSort(arr)
 		return
 	}
-
-	// Calculate bin size and count
-	range_ := max - min + 1
-	binCount := n
-	if binCount > range_ {
-		binCount = int(range_)
-	}
-	if binCount < 1 {
-		binCount = 1
+	if bit < 0 {
+		// No further bits to partition on.
+		return
 	}
 
-	// Create bins
-	bins := make([][]int, binCount)
-	for i := range bins {
-		bins[i] = make([]int, 0)
-	}
-
-	// Distribute elements to bins
-	binSize := float64(range_) / float64(binCount)
-	for _, v := range arr {
-		idx := int(float64(v-min) / binSize)
-		if idx >= binCount {
-			idx = binCount - 1
-		}
-		bins[idx] = append(bins[idx], v)
-	}
-
-	// Sort each bin and merge back
-	pos := 0
-	for i := range bins {
-		if len(bins[i]) > 0 {
-			if len(bins[i]) > insertionSortThreshold {
-				SpreadSort(bins[i])
-			} else {
-				insertionSort(bins[i])
-			}
-			copy(arr[pos:], bins[i])
-			pos += len(bins[i])
+	mask := 1 << bit
+	// Partition the array in-place into two groups:
+	// - left part: numbers where the 'bit' is 0.
+	// - right part: numbers where the 'bit' is 1.
+	i, j := 0, len(arr)-1
+	for i <= j {
+		if (arr[i] & mask) == 0 {
+			i++
+		} else {
+			arr[i], arr[j] = arr[j], arr[i]
+			j--
 		}
 	}
+
+	// Recursively sort the partitions based on the next lower bit.
+	spreadSortHelper(arr[:i], bit-1)
+	spreadSortHelper(arr[i:], bit-1)
 }
