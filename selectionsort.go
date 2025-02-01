@@ -32,9 +32,7 @@ func SelectionSort(arr []int) {
 				minIdx = j
 			}
 		}
-		// Swap only if we found a smaller element
-		if minIdx != i {
-			arr[i], arr[minIdx] = arr[minIdx], arr[i]
-		}
+
+		arr[i], arr[minIdx] = arr[minIdx], arr[i]
 	}
 }
