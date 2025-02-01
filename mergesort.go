@@ -1,54 +1,72 @@
 package sortcomparison
 
-// MergeSort sorts the slice using the merge sort algorithm
-func MergeSort[T any](arr []T, less func(a, b T) bool) {
-	// Create temporary array for merging
-	temp := make([]T, len(arr))
-	mergeSort(arr, temp, 0, len(arr)-1, less)
-}
+/*
+MergeSort Implementation (Divide and Conquer Sort)
 
-// mergeSort recursively splits and merges the array
-func mergeSort[T any](arr []T, temp []T, left, right int, less func(a, b T) bool) {
-	if left < right {
-		mid := (left + right) / 2
+Time Complexity:
+  - Average: O(n log n)
+  - Worst:   O(n log n)
+  - Best:    O(n log n)
 
-		// Sort first and second halves
-		mergeSort(arr, temp, left, mid, less)
-		mergeSort(arr, temp, mid+1, right, less)
+Space Complexity:
+  - O(n) - requires temporary arrays for merging
+  - Additional recursive call stack space O(log n)
 
-		// Merge the sorted halves
-		merge(arr, temp, left, mid, right, less)
-	}
-}
-
-// merge combines two sorted subarrays into one sorted array
-func merge[T any](arr []T, temp []T, left, mid, right int, less func(a, b T) bool) {
-	// Copy both parts to temp array
-	for i := left; i <= right; i++ {
-		temp[i] = arr[i]
+Implementation Notes:
+  - Stable sort - maintains relative order of equal elements
+  - Divide-and-conquer strategy
+  - Predictable performance regardless of input
+  - Cache-inefficient due to non-local memory access
+  - Well-suited for sorting linked lists
+*/
+func MergeSort(arr []int) {
+	if len(arr) <= 1 {
+		return
 	}
 
-	i := left    // First subarray index
-	j := mid + 1 // Second subarray index
-	k := left    // Merged array index
+	mid := len(arr) / 2
 
-	// Merge temp arrays back into arr[left..right]
-	for i <= mid && j <= right {
-		if less(temp[i], temp[j]) {
-			arr[k] = temp[i]
+	// Create temp arrays
+	left := make([]int, mid)
+	right := make([]int, len(arr)-mid)
+
+	// Copy data to temp arrays
+	copy(left, arr[:mid])
+	copy(right, arr[mid:])
+
+	// Sort temp arrays
+	MergeSort(left)
+	MergeSort(right)
+
+	// Merge sorted arrays
+	merge(arr, left, right)
+}
+
+func merge(arr, left, right []int) {
+	i, j, k := 0, 0, 0
+
+	// Compare and merge
+	for i < len(left) && j < len(right) {
+		if left[i] <= right[j] {
+			arr[k] = left[i]
 			i++
 		} else {
-			arr[k] = temp[j]
+			arr[k] = right[j]
 			j++
 		}
 		k++
 	}
 
-	// Copy remaining elements of left half if any
-	for i <= mid {
-		arr[k] = temp[i]
-		k++
+	// Copy remaining elements
+	for i < len(left) {
+		arr[k] = left[i]
 		i++
+		k++
 	}
-	// Note: remaining elements of right half are already in correct position
+
+	for j < len(right) {
+		arr[k] = right[j]
+		j++
+		k++
+	}
 }

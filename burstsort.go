@@ -38,64 +38,53 @@ Implementation Notes:
   - Parallel-friendly due to independent buckets
 */
 
-func BurstSort(arr []int) []int {
+func BurstSort(arr []int) {
 	if len(arr) <= 1 {
-		return arr
+		return
 	}
-
-	// Split the array into two sub-arrays
-	subarr := split(arr)
-
-	// Sort the two sub-arrays
-	BurstSort(subarr[0])
-	BurstSort(subarr[1])
-
-	// Merge the sorted arrays into a single sorted array
-	return mergeBurst(subarr[0], subarr[1])
-}
-
-// Function to merge two sorted arrays into a single sorted
-// array
-func mergeBurst(arr1 []int, arr2 []int) []int {
-	arr3 := make([]int, len(arr1)+len(arr2))
-	i, j := 0, 0
-
-	for i < len(arr1) && j < len(arr2) {
-		if arr1[i] < arr2[j] {
-			arr3 = append(arr3, arr1[i])
-			i++
-		} else {
-			arr3 = append(arr3, arr2[j])
-			j++
-		}
-	}
-
-	for i < len(arr1) {
-		arr3 = append(arr3, arr1[i])
-		i++
-	}
-
-	for j < len(arr2) {
-		arr3 = append(arr3, arr2[j])
-		j++
-	}
-
-	return arr3
-}
-
-// Function to split an array into two sub-arrays
-func split(arr []int) [][]int {
-	subarr := make([][]int, 2)
 
 	mid := len(arr) / 2
 
-	for i := 0; i < mid; i++ {
-		subarr[0] = append(subarr[0], arr[i])
+	// Sort the two halves
+	BurstSort(arr[:mid])
+	BurstSort(arr[mid:])
+
+	// Merge the sorted halves in-place
+	mergeBurst(arr, mid)
+}
+
+func mergeBurst(arr []int, mid int) {
+	// Create single temp array for merging
+	temp := make([]int, len(arr))
+
+	// Indexes for left half, right half, and temp array
+	left, right, idx := 0, mid, 0
+
+	// Compare and merge into temp array
+	for left < mid && right < len(arr) {
+		if arr[left] <= arr[right] {
+			temp[idx] = arr[left]
+			left++
+		} else {
+			temp[idx] = arr[right]
+			right++
+		}
+		idx++
 	}
 
-	for i := mid; i < len(arr); i++ {
-		subarr[1] = append(subarr[1], arr[i])
+	// Copy remaining elements
+	for left < mid {
+		temp[idx] = arr[left]
+		left++
+		idx++
 	}
 
-	return subarr
+	for right < len(arr) {
+		temp[idx] = arr[right]
+		right++
+		idx++
+	}
+
+	// Copy back to original array
+	copy(arr, temp)
 }

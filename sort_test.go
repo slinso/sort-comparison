@@ -40,6 +40,8 @@ var (
 		{"BubbleSort", BubbleSort},
 		{"BucketSort", BucketSort[int]},
 		{"BurstSort", BurstSort},
+		{"CocktailShakerSort", CocktailShakerSort},
+		{"MergeSort", MergeSort},
 		{"QuickSort", QuickSort},
 	}
 
@@ -264,7 +266,7 @@ func BenchmarkSort(b *testing.B) {
 	for _, size := range testSizes {
 		for _, gen := range dataGenerators {
 			for _, s := range sortImplementations {
-				b.Run(fmt.Sprintf("dataset=%s/algo=%s/%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
+				b.Run(fmt.Sprintf("dataset=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
 					data := gen.Data(size)
 					b.ResetTimer()
 					b.StopTimer()
@@ -314,14 +316,14 @@ func TestSort(t *testing.T) {
 				data := tc.gen(tc.size)
 				s.fn(data)
 
-				// assert that the array is sorted
-				if !slices.IsSorted(data) {
-					t.Errorf("Array not sorted")
-				}
-
 				// assert size
 				if len(data) != tc.size {
 					t.Errorf("Array size changed")
+				}
+
+				// assert that the array is sorted
+				if !slices.IsSorted(data) {
+					t.Errorf("Array not sorted: %v", data)
 				}
 			})
 		}
