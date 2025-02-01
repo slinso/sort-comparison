@@ -37,7 +37,7 @@ func TimSort(arr []int) {
 				for i < n && arr[i] < arr[i-1] {
 					i++
 				}
-				reverse(arr, runStart, i-1)
+				reverseTim(arr, runStart, i-1)
 			} else {
 				// Ascending run.
 				for i < n && arr[i] >= arr[i-1] {
@@ -102,7 +102,7 @@ func insertionSortTim(arr []int, left, right int) {
 }
 
 // reverse reverses the subarray arr[left:right] in place.
-func reverse(arr []int, left, right int) {
+func reverseTim(arr []int, left, right int) {
 	for left < right {
 		arr[left], arr[right] = arr[right], arr[left]
 		left++
