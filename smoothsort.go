@@ -25,64 +25,79 @@ func SmoothSort(arr []int) {
 		return
 	}
 
-	p := 1 // Size of rightmost remaining heap
-	q := 1 // Size of second rightmost remaining heap
-	r := 0 // Size of third rightmost remaining heap
+	p := n - 1
+	q := p
+	r := 0
 
-	for i := 0; i < n; i++ {
-		if (p & 3) == 3 {
-			// Two consecutive leonardo numbers, merge them
-			siftDownSmooth(arr, i-p, p)
-			p = q + r + 1
-			q = r
-			r = 1
-		} else {
-			// Extend rightmost heap
-			siftDownSmooth(arr, i-p, p)
-			r = q
-			q = p
-			p = 1
+	// Build the Leonardo heap by merging
+	// pairs of adjacent trees
+	for p > 0 {
+		if (r & 0x03) == 0 {
+			heapify(arr, r, q)
 		}
+
+		if leonardo(r) == p {
+			r = r + 1
+		} else {
+			r = r - 1
+			q = q - leonardo(r)
+			heapify(arr, r, q)
+			q = r - 1
+			r = r + 1
+		}
+
+		arr[0], arr[p] = arr[p], arr[0]
+		p = p - 1
 	}
 
-	// Restore the sorted order
-	for i := n - 1; i >= 0; i-- {
-		if q == 1 {
-			p = q
-			q = r
-			r = 1
-		} else if q <= 1 {
-			p = 1
-			q = 1
-			r = 0
-		} else {
-			p = q
-			q = r
-			r = p - q - 1
-		}
-
-		if r != 0 {
-			siftDownSmooth(arr, i-p, p)
+	// Convert the Leonardo heap
+	// back into an array
+	for i := 0; i < n-1; i++ {
+		j := i + 1
+		for j > 0 && arr[j] < arr[j-1] {
+			arr[j], arr[j-1] = arr[j-1], arr[j]
+			j = j - 1
 		}
 	}
 }
 
-func siftDownSmooth(arr []int, root, size int) {
-	for size > 1 {
-		j := root
-		k := root + 1
-		if k < size && arr[k] > arr[j] {
-			j = k
+// Define the Leonardo numbers
+func leonardo(k int) int {
+	if k < 2 {
+		return 1
+	}
+	return leonardo(k-1) + leonardo(k-2) + 1
+}
+
+// Build the Leonardo heap by merging
+// pairs of adjacent trees
+func heapify(arr []int, start int, end int) {
+	i := start
+	var j, k int
+
+	for k < end-start+1 {
+		if k&0xAAAAAAAA != 0 {
+			j = j + i
+			i = i >> 1
+		} else {
+			i = i + j
+			j = j >> 1
 		}
-		k = root + 2
-		if k < size && arr[k] > arr[j] {
-			j = k
+
+		k = k + 1
+	}
+
+	for i > 0 {
+		j = j >> 1
+		k = i + j
+		for k < end {
+			if arr[k] > arr[k-i] {
+				break
+			}
+			arr[k], arr[k-i] = arr[k-i], arr[k]
+			k = k + i
 		}
-		if j == root {
-			break
-		}
-		arr[root], arr[j] = arr[j], arr[root]
-		root = j
-		size -= 2
+
+		i = j
 	}
 }
