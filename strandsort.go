@@ -1,7 +1,7 @@
 package sortcomparison
 
 /*
-StrandSort Implementation
+StrandSort Implementation (Optimized for Memory Allocations)
 
 Time Complexity:
   - Average: O(n²)
@@ -9,39 +9,37 @@ Time Complexity:
   - Best:    O(n) - when input is already sorted
 
 Space Complexity:
-  - O(n) - requires temporary storage for strands
-  - Additional O(1) for merging operations
+  - O(n) - requires additional storage for strands and merging buffers
 
 Implementation Notes:
-  - Recursive merge-based algorithm
-  - Stable sort - maintains relative order of equal elements
-  - Efficient for partially ordered sequences
-  - Natural algorithm for linked lists
-  - Memory usage varies with input order
+  - Extracts increasing subsequences (strands) and recursively merges them
+  - Preallocates slice capacities to reduce reallocations
+  - Stable sort – maintains relative order of equal elements
 */
+
 func StrandSort(arr []int) {
 	if len(arr) <= 1 {
 		return
 	}
-
 	result := strandSortHelper(arr)
 	copy(arr, result)
 }
 
 func strandSortHelper(input []int) []int {
-	if len(input) <= 1 {
+	n := len(input)
+	if n <= 1 {
 		return input
 	}
 
-	// Extract first strand
-	strand := make([]int, 0)
-	remaining := make([]int, 0)
+	// Preallocate with capacity equal to input length to avoid reallocations
+	strand := make([]int, 0, n)
+	remaining := make([]int, 0, n)
 
 	// Add first element to strand
 	strand = append(strand, input[0])
 
 	// Build strand with increasing subsequence
-	for i := 1; i < len(input); i++ {
+	for i := 1; i < n; i++ {
 		if input[i] >= strand[len(strand)-1] {
 			strand = append(strand, input[i])
 		} else {
@@ -49,17 +47,18 @@ func strandSortHelper(input []int) []int {
 		}
 	}
 
-	// Base case: no remaining elements
+	// If no remaining elements, the strand is fully sorted
 	if len(remaining) == 0 {
 		return strand
 	}
 
-	// Recursively sort remaining elements and merge
+	// Recursively sort remaining elements and merge strands
 	return mergeStrand(strand, strandSortHelper(remaining))
 }
 
 func mergeStrand(left, right []int) []int {
-	result := make([]int, 0, len(left)+len(right))
+	totalLen := len(left) + len(right)
+	result := make([]int, 0, totalLen)
 	i, j := 0, 0
 
 	for i < len(left) && j < len(right) {
@@ -72,7 +71,7 @@ func mergeStrand(left, right []int) []int {
 		}
 	}
 
-	// Append remaining elements
+	// Append any remaining elements
 	result = append(result, left[i:]...)
 	result = append(result, right[j:]...)
 
