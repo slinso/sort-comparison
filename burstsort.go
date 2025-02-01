@@ -1,67 +1,54 @@
 package sortcomparison
 
-const (
-	bucketSize     = 1024
-	burstThreshold = 8192
-)
-
-type BurstNode struct {
-	buckets  map[int][]int
-	children map[int]*BurstNode
-	isBurst  bool
-}
-
 /*
-BurstSort Implementation (Cache-Efficient Trie-Based Sort)
+BurstSort Implementation (Optimized to reduce memory allocations)
 
 Time Complexity:
-  - Average: O(n) - when data is well-distributed
-  - Worst:   O(n²) - when all strings share long common prefixes
-  - Best:    O(n) - when strings have distinct prefixes
+    - Average: O(n log n)
+    - Worst:   O(n log n)
+    - Best:    O(n) when nearly sorted
 
 Space Complexity:
-  - O(n) for storing all elements
-  - O(k) additional for trie structure, where k is unique prefixes
-  - Memory scales with burst threshold and bucket sizes
-
-Cache Behavior:
-  - Optimized for cache efficiency through bucketing
-  - Burst threshold controls memory/performance trade-off
-  - Bucket size affects cache line utilization
-  - Adaptive to memory hierarchy through bursting
+    - O(n) additional space for a temporary buffer (allocated only once)
+    - Reduces repeated allocations during recursive merging
 
 Implementation Notes:
-  - Non-in-place sorting algorithm
-  - Stable sort (maintains relative order of equal elements)
-  - Particularly efficient for string sorting
-  - Memory usage depends on data distribution
-  - Parallel-friendly due to independent buckets
+    - Divide-and-conquer recursive burst sort with in-place merge using a preallocated buffer
+    - Stable sort - maintains relative order of equal elements
+    - Particularly efficient for string sorting, adapted here for ints
+    - Memory allocation is minimized by reusing a single temporary slice
 */
 
 func BurstSort(arr []int) {
 	if len(arr) <= 1 {
 		return
 	}
-
-	mid := len(arr) / 2
-
-	// Sort the two halves
-	BurstSort(arr[:mid])
-	BurstSort(arr[mid:])
-
-	// Merge the sorted halves in-place
-	mergeBurst(arr, mid)
+	// Allocate a temporary buffer once
+	temp := make([]int, len(arr))
+	burstSortAux(arr, temp)
 }
 
-func mergeBurst(arr []int, mid int) {
-	// Create single temp array for merging
-	temp := make([]int, len(arr))
+func burstSortAux(arr, temp []int) {
+	n := len(arr)
+	if n <= 1 {
+		return
+	}
 
-	// Indexes for left half, right half, and temp array
+	mid := n / 2
+
+	// Recursively sort each half, reuse appropriate portions of temp buffer
+	burstSortAux(arr[:mid], temp[:mid])
+	burstSortAux(arr[mid:], temp[mid:])
+
+	mergeBurst(arr, mid, temp)
+}
+
+func mergeBurst(arr []int, mid int, temp []int) {
+	n := len(arr)
+	// Merge the two halves into the temp array
 	left, right, idx := 0, mid, 0
 
-	// Compare and merge into temp array
-	for left < mid && right < len(arr) {
+	for left < mid && right < n {
 		if arr[left] <= arr[right] {
 			temp[idx] = arr[left]
 			left++
@@ -71,20 +58,17 @@ func mergeBurst(arr []int, mid int) {
 		}
 		idx++
 	}
-
-	// Copy remaining elements
 	for left < mid {
 		temp[idx] = arr[left]
 		left++
 		idx++
 	}
-
-	for right < len(arr) {
+	for right < n {
 		temp[idx] = arr[right]
 		right++
 		idx++
 	}
 
-	// Copy back to original array
-	copy(arr, temp)
+	// Copy merged output back to arr
+	copy(arr, temp[:idx])
 }
