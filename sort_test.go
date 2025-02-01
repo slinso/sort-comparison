@@ -10,14 +10,17 @@ import (
 // SortFunc represents a sorting function implementation
 type SortFunc func([]int)
 
+type SortNotInPlaceFunc func([]int) []int
+
 type DataGenerator struct {
 	name string
 	Data func(int) []int
 }
 
 type Sorter struct {
-	name string
-	fn   SortFunc
+	name         string
+	fn           SortFunc
+	fnNotInPlace SortNotInPlaceFunc
 }
 
 var (
@@ -35,44 +38,45 @@ var (
 	}
 
 	sortImplementations = []Sorter{
-		{"StdSort", slices.Sort[[]int, int]},
-		{"BlockSort", BlockSort},
-		{"BubbleSort", BubbleSort},
-		{"BucketSort", BucketSort[int]},
-		{"BurstSort", BurstSort},
-		{"CocktailShakerSort", CocktailShakerSort},
-		{"CombSort", CombSort},
-		// {"CountingSort", CountingSort},
+		{"StdSort", slices.Sort[[]int, int], nil},
+		{"BlockSort", BlockSort, nil},
+		{"BubbleSort", BubbleSort, nil},
+		{"BucketSort", BucketSort[int], nil},
+		{"BurstSort", BurstSort, nil},
+		{"CocktailShakerSort", CocktailShakerSort, nil},
+		{"CombSort", CombSort, nil},
+		{"CountingSort", CountingSort, CountingSortRet},
 		// {"CubeSort", CubeSort},
-		{"CycleSort", CycleSort},
-		{"ExchangeSort", ExchangeSort},
+		{"CycleSort", CycleSort, nil},
+		{"ExchangeSort", ExchangeSort, nil},
 		// {"FlashSort", FlashSort},
-		{"GnomeSort", GnomeSort},
-		{"HeapSort", HeapSort},
-		{"InsertionSort", InsertionSort},
-		{"IntroSort", IntroSort},
+		{"GnomeSort", GnomeSort, nil},
+		{"HeapSort", HeapSort, nil},
+		{"InsertionSort", InsertionSort, nil},
+		{"IntroSort", IntroSort, nil},
 		// {"LibrarySort", LibrarySort},
-		{"MergeSort", MergeSort},
-		{"OddEvenSort", OddEvenSort},
-		{"PatienceSort", PatienceSort},
+		{"MergeSort", MergeSort, nil},
+		{"OddEvenSort", OddEvenSort, nil},
+		{"PatienceSort", PatienceSort, nil},
 		// {"PigeonholeSort", PigeonholeSort},
-		{"PostmanSort", PostmanSort},
-		{"QuickSort", QuickSort},
-		{"RadixSortLSD", RadixSort},
-		{"RadixSortMSD", RadixSortMSD},
-		{"SelectionSort", SelectionSort},
-		{"ShellSort", ShellSort},
-		{"SimplePancakeSort", SimplePancakeSort},
+		{"PostmanSort", PostmanSort, nil},
+		{"QuickSort", QuickSort, nil},
+		{"RadixSortLSD", RadixSort, nil},
+		{"RadixSortMSD", RadixSortMSD, nil},
+		{"SelectionSort", SelectionSort, nil},
+		{"ShellSort", ShellSort, nil},
+		{"SimplePancakeSort", SimplePancakeSort, nil},
 		// {"SmoothSort", SmoothSort},
-		{"SpreadSort", SpreadSort},
-		{"StrandSort", StrandSort},
+		{"SpreadSort", SpreadSort, nil},
+		{"StrandSort", StrandSort, nil},
 		// {"TimSort", TimSort},
-		{"TournamentSort", TournamentSort},
-		{"TreeSort", TreeSort},
+		{"TournamentSort", TournamentSort, nil},
+		{"TreeSort", TreeSort, nil},
 	}
 
 	dataGenerators = []DataGenerator{
 		{"Random", generateRandomInts},
+		{"RandomMaxN", generateRandomIntsMaxN},
 		{"AllZero", generateAllZero},
 		{"Sorted", generateSortedInts},
 		{"Reversed", generateReversedInts},
@@ -118,6 +122,15 @@ func generateRandomInts(n int) []int {
 	data := make([]int, n)
 	for i := range data {
 		data[i] = int(rnd.Int31())
+	}
+	return data
+}
+
+// Data generation helpers
+func generateRandomIntsMaxN(n int) []int {
+	data := make([]int, n)
+	for i := range data {
+		data[i] = rnd.Intn(n)
 	}
 	return data
 }
@@ -292,19 +305,37 @@ func BenchmarkSort(b *testing.B) {
 	for _, size := range testSizes {
 		for _, gen := range dataGenerators {
 			for _, s := range sortImplementations {
-				b.Run(fmt.Sprintf("dataset=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
-					data := gen.Data(size)
-					b.ResetTimer()
-					b.StopTimer()
-					for i := 0; i < b.N; i++ {
-						testData := make([]int, len(data))
-						copy(testData, data)
-
-						b.StartTimer()
-						s.fn(testData)
+				if s.fn != nil {
+					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s/typ=ip", gen.name, s.name, formatSize(size)), func(b *testing.B) {
+						data := gen.Data(size)
+						b.ResetTimer()
 						b.StopTimer()
-					}
-				})
+						for i := 0; i < b.N; i++ {
+							testData := make([]int, len(data))
+							copy(testData, data)
+
+							b.StartTimer()
+							s.fn(testData)
+							b.StopTimer()
+						}
+					})
+				}
+
+				if s.fnNotInPlace != nil {
+					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s/typ=ret", gen.name, s.name, formatSize(size)), func(b *testing.B) {
+						data := gen.Data(size)
+						b.ResetTimer()
+						b.StopTimer()
+						for i := 0; i < b.N; i++ {
+							testData := make([]int, len(data))
+							copy(testData, data)
+
+							b.StartTimer()
+							s.fnNotInPlace(testData)
+							b.StopTimer()
+						}
+					})
+				}
 			}
 		}
 	}
@@ -317,7 +348,7 @@ func TestSort(t *testing.T) {
 		size int
 		gen  func(int) []int
 	}{
-		{"Random_100", 100, generateRandomInts},
+		{"Random_100", 100, generateRandomIntsMaxN},
 		{"AllZero_100", 100, generateAllZero},
 		{"Sorted_100", 100, generateSortedInts},
 		{"Reversed_100", 100, generateReversedInts},
@@ -338,20 +369,39 @@ func TestSort(t *testing.T) {
 
 	for _, s := range sortImplementations {
 		for _, tc := range testCases {
-			t.Run(fmt.Sprintf("%s/%s", s.name, tc.name), func(t *testing.T) {
-				data := tc.gen(tc.size)
-				s.fn(data)
+			if s.fn != nil {
+				t.Run(fmt.Sprintf("/Ret/%s/%s", s.name, tc.name), func(t *testing.T) {
+					data := tc.gen(tc.size)
+					s.fn(data)
 
-				// assert size
-				if len(data) != tc.size {
-					t.Errorf("Array size changed")
-				}
+					// assert size
+					if len(data) != tc.size {
+						t.Errorf("Array size changed")
+					}
 
-				// assert that the array is sorted
-				if !slices.IsSorted(data) {
-					t.Errorf("Array not sorted: %v", data)
-				}
-			})
+					// assert that the array is sorted
+					if !slices.IsSorted(data) {
+						t.Errorf("Array not sorted: %v", data)
+					}
+				})
+			}
+
+			if s.fnNotInPlace != nil {
+				t.Run(fmt.Sprintf("%s/%s", s.name, tc.name), func(t *testing.T) {
+					data := tc.gen(tc.size)
+					data = s.fnNotInPlace(data)
+
+					// assert size
+					if len(data) != tc.size {
+						t.Errorf("Array size changed")
+					}
+
+					// assert that the array is sorted
+					if !slices.IsSorted(data) {
+						t.Errorf("Array not sorted: %v", data)
+					}
+				})
+			}
 		}
 	}
 }
