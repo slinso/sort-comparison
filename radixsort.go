@@ -108,3 +108,119 @@ func separateNegatives(arr []int) {
 		right--
 	}
 }
+
+/*
+RadixSortMSD Implementation (Most Significant Digit)
+
+Time Complexity:
+  - Average: O(w * n) where w is word size in bits
+  - Worst:   O(w * n)
+  - Best:    O(w * n)
+
+Space Complexity:
+  - O(n) for temporary array
+  - O(w) for recursion stack
+  - Additional O(256) for count array
+
+Implementation Notes:
+  - Non-comparative integer sorting
+  - Not stable (unlike LSD variant)
+  - Cache-efficient 8-bit radix
+  - Handles negative numbers
+  - Uses insertion sort for small subarrays
+*/
+func RadixSortMSD(arr []int) {
+	if len(arr) <= 1 {
+		return
+	}
+
+	// Find maximum absolute value to determine significant digits
+	max := 0
+	for _, v := range arr {
+		abs := v
+		if abs < 0 {
+			abs = -abs
+		}
+		if abs > max {
+			max = abs
+		}
+	}
+
+	// Calculate most significant byte position
+	msbyte := 0
+	for max > 0 {
+		msbyte++
+		max >>= 8
+	}
+
+	// Allocate temp array once
+	temp := make([]int, len(arr))
+	radixSortMSDRecursive(arr, temp, msbyte-1)
+}
+
+func radixSortMSDRecursive(arr, temp []int, shift int) {
+	n := len(arr)
+
+	// Use insertion sort for small arrays
+	if n <= 16 || shift < 0 {
+		insertionSortRange(arr)
+		return
+	}
+
+	// Count array for current byte
+	count := make([]int, 256)
+
+	// Count frequencies
+	for _, num := range arr {
+		// Handle negative numbers by using highest bit
+		digit := getMSDByte(num, shift)
+		count[digit]++
+	}
+
+	// Calculate positions
+	pos := make([]int, 256)
+	sum := 0
+	for i := range count {
+		pos[i] = sum
+		sum += count[i]
+	}
+
+	// Distribute elements
+	for _, num := range arr {
+		digit := getMSDByte(num, shift)
+		temp[pos[digit]] = num
+		pos[digit]++
+	}
+
+	// Copy back
+	copy(arr, temp)
+
+	// Recursively sort each bucket
+	start := 0
+	for i := range count {
+		if count[i] > 1 {
+			radixSortMSDRecursive(arr[start:start+count[i]], temp[start:start+count[i]], shift-1)
+		}
+		start += count[i]
+	}
+}
+
+func getMSDByte(num, shift int) int {
+	// Handle negative numbers by flipping the sign bit
+	if num < 0 {
+		num = ^num
+	}
+	return (num >> (shift * 8)) & 0xFF
+}
+
+func insertionSortRange(arr []int) {
+	for i := 1; i < len(arr); i++ {
+		key := arr[i]
+		j := i - 1
+		for j >= 0 && arr[j] > key {
+			arr[j+1] = arr[j]
+			j--
+		}
+		arr[j+1] = key
+	}
+}

@@ -54,8 +54,21 @@ var (
 		// {"LibrarySort", LibrarySort},
 		{"MergeSort", MergeSort},
 		{"OddEvenSort", OddEvenSort},
+		{"PatienceSort", PatienceSort},
+		// {"PigeonholeSort", PigeonholeSort},
+		{"PostmanSort", PostmanSort},
 		{"QuickSort", QuickSort},
-		{"RadixSort", RadixSort},
+		{"RadixSortLSD", RadixSort},
+		{"RadixSortMSD", RadixSortMSD},
+		{"SelectionSort", SelectionSort},
+		{"ShellSort", ShellSort},
+		{"SimplePancakeSort", SimplePancakeSort},
+		// {"SmoothSort", SmoothSort},
+		{"SpreadSort", SpreadSort},
+		{"StrandSort", StrandSort},
+		// {"TimSort", TimSort},
+		{"TournamentSort", TournamentSort},
+		{"TreeSort", TreeSort},
 	}
 
 	dataGenerators = []DataGenerator{

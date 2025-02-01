@@ -1,51 +1,68 @@
 package sortcomparison
 
-// Node represents a binary search tree node
-type TreeNode[T any] struct {
-	value       T
-	left, right *TreeNode[T]
+type node struct {
+	value int
+	left  *node
+	right *node
 }
 
-// TreeSort sorts slice using binary search tree
-func TreeSort[T any](arr []T, less func(a, b T) bool) {
+/*
+TreeSort Implementation (Binary Search Tree Sort)
+
+Time Complexity:
+  - Average: O(n log n)
+  - Worst:   O(n²) - when tree becomes skewed
+  - Best:    O(n log n) - balanced tree
+
+Space Complexity:
+  - O(n) - requires node storage for tree
+  - O(log n) - recursion stack for balanced tree
+  - O(n) - recursion stack for skewed tree
+
+Implementation Notes:
+  - Based on binary search tree properties
+  - In-place array filling during traversal
+  - Stable sort - maintains relative order of equal elements
+  - Memory usage proportional to input size
+  - Performance depends on tree balance
+*/
+func TreeSort(arr []int) {
 	if len(arr) <= 1 {
 		return
 	}
 
-	// Build BST
-	var root *TreeNode[T]
-	for _, val := range arr {
-		root = insert(root, val, less)
+	// Build tree
+	var root *node
+	for _, v := range arr {
+		root = insert(root, v)
 	}
 
-	// Traverse BST inorder to get sorted array
+	// Fill array in-order
 	index := 0
-	inorderTraversal(root, arr, &index)
+	inorder(root, arr, &index)
 }
 
-// insert adds a new value to the BST
-func insert[T any](node *TreeNode[T], value T, less func(a, b T) bool) *TreeNode[T] {
-	if node == nil {
-		return &TreeNode[T]{value: value}
+func insert(n *node, value int) *node {
+	if n == nil {
+		return &node{value: value}
 	}
 
-	if less(value, node.value) {
-		node.left = insert(node.left, value, less)
+	if value <= n.value {
+		n.left = insert(n.left, value)
 	} else {
-		node.right = insert(node.right, value, less)
+		n.right = insert(n.right, value)
 	}
 
-	return node
+	return n
 }
 
-// inorderTraversal performs inorder traversal of BST
-func inorderTraversal[T any](node *TreeNode[T], arr []T, index *int) {
-	if node == nil {
+func inorder(n *node, arr []int, index *int) {
+	if n == nil {
 		return
 	}
 
-	inorderTraversal(node.left, arr, index)
-	arr[*index] = node.value
+	inorder(n.left, arr, index)
+	arr[*index] = n.value
 	*index++
-	inorderTraversal(node.right, arr, index)
+	inorder(n.right, arr, index)
 }
