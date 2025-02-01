@@ -1,125 +1,160 @@
 package sortcomparison
 
-/*
-LibrarySort Implementation (Gapped Insertion Sort)
+import (
+	"math"
+)
 
-Time Complexity:
-  - Average: O(n log n)
-  - Worst:   O(n log n)
-  - Best:    O(n)
-
-Space Complexity:
-  - O(n) - requires gaps between elements
-  - Additional space proportional to gap ratio
-
-Implementation Notes:
-  - Also known as Library Sort or Gapped Insertion Sort
-  - Stable sort - maintains relative order of equal elements
-  - Uses gaps for efficient insertions
-  - Amortized insertion cost is O(log n)
-  - Rebalancing maintains evenly distributed gaps
-*/
+// LibrarySort performs a gapped insertion sort known as LibrarySort.
+// It allocates a larger array (the library) with gaps and inserts each
+// element from arr into its correct position. If needed, the library is
+// rebalanced (spread out) to create gaps.
+//
+// Time Complexity:
+//   - Average: O(n log n)
+//   - Worst:   O(n log n)
+//   - Best:    O(n) on nearly sorted input
+//
+// Space Complexity:
+//   - O(n) extra space for the library array (size ≈ n*(1+ε), with ε = 0.5)
+//   - Additional space O(n) for auxiliary order slice
+//
+// Implementation Notes:
+//   - ε is chosen as 0.5 so that library size m = n + n/2.
+//   - Maintains an order slice holding indices in the library (in sorted order).
+//   - Rebalances the library (spreading out the filled positions evenly)
+//     if an insertion cannot find a gap.
+//   - Finally, the sorted order is extracted back into arr.
 func LibrarySort(arr []int) {
 	n := len(arr)
 	if n <= 1 {
 		return
 	}
+	// ε = 0.5: library size m = n + n/2.
+	m := n + n/2
+	lib := make([]int, m)
+	occupied := make([]bool, m)
+	// order holds indices in lib in sorted order.
+	order := make([]int, 0, n)
 
-	// Initialize gapped array with epsilon = 1
-	gapRatio := 1
-	gappedSize := n * (1 + gapRatio)
-	gapped := make([]struct {
-		val   int
-		valid bool
-	}, gappedSize)
+	// Insert the first element into the middle.
+	initPos := m / 2
+	lib[initPos] = arr[0]
+	occupied[initPos] = true
+	order = append(order, initPos)
 
-	// Insert first element
-	gapped[0].val = arr[0]
-	gapped[0].valid = true
-
-	// Insert remaining elements with gaps
+	// Insert remaining elements.
 	for i := 1; i < n; i++ {
-		// Find insertion position using binary search
-		pos := binarySearchGapped(gapped, arr[i], i*(1+gapRatio))
-
-		// Shift elements if needed
-		if gapped[pos].valid {
-			shiftRight(gapped, pos, i*(1+gapRatio))
+		x := arr[i]
+		// Binary search on library order.
+		pos := binarySearch(lib, order, x)
+		insPos := findGap(lib, occupied, order, pos)
+		// If no gap was found, rebalance and search again.
+		if insPos == -1 {
+			rebalance(lib, occupied, &order, m)
+			insPos = findGap(lib, occupied, order, pos)
 		}
-
-		// Insert element
-		gapped[pos].val = arr[i]
-		gapped[pos].valid = true
-
-		// Rebalance if needed
-		if i%(n/4) == 0 {
-			rebalance(gapped, i)
-		}
+		// Insert x at found position.
+		lib[insPos] = x
+		occupied[insPos] = true
+		// Insert insPos into order slice at index pos.
+		order = append(order, 0)
+		copy(order[pos+1:], order[pos:])
+		order[pos] = insPos
 	}
 
-	// Copy back to original array
-	idx := 0
-	for i := range gapped {
-		if gapped[i].valid {
-			arr[idx] = gapped[i].val
-			idx++
-		}
+	// Extract sorted result.
+	for i, idx := range order {
+		arr[i] = lib[idx]
 	}
 }
 
-func binarySearchGapped(gapped []struct {
-	val   int
-	valid bool
-}, target int, limit int,
-) int {
-	left, right := 0, int(limit)
-	for left < right {
-		mid := left + (right-left)/2
-		if !gapped[mid].valid || gapped[mid].val > target {
-			right = mid
+// binarySearch returns the position (in order) where x should be inserted.
+// order holds indices in lib. It returns an index in [0, len(order)].
+func binarySearch(lib []int, order []int, x int) int {
+	lo, hi := 0, len(order)
+	for lo < hi {
+		mid := (lo + hi) / 2
+		if lib[order[mid]] < x {
+			lo = mid + 1
 		} else {
-			left = mid + 1
+			hi = mid
 		}
 	}
-	return left
+	return lo
 }
 
-func shiftRight(gapped []struct {
-	val   int
-	valid bool
-}, pos int, limit int,
-) {
-	for i := int(limit); i > pos; i-- {
-		if gapped[i-1].valid {
-			gapped[i] = gapped[i-1]
+// findGap searches for a free spot in lib to insert an element
+// at the desired order position, pos. If no gap is found in the
+// local region, it scans the entire library. It returns -1 only
+// if no free spot exists (which should not happen if there are gaps).
+func findGap(lib []int, occupied []bool, order []int, pos int) int {
+	m := len(lib)
+	// When inserting at the very beginning.
+	if pos == 0 {
+		p := order[0] - 1
+		if p >= 0 && !occupied[p] {
+			return p
+		}
+		p = order[0] + 1
+		if p < m && !occupied[p] {
+			return p
+		}
+	} else if pos == len(order) {
+		// Inserting after the last element.
+		p := order[len(order)-1] + 1
+		if p < m && !occupied[p] {
+			return p
+		}
+		p = order[len(order)-1] - 1
+		if p >= 0 && !occupied[p] {
+			return p
+		}
+	} else {
+		// Searching between order[pos-1] and order[pos].
+		leftBound := order[pos-1]
+		rightBound := order[pos]
+		for p := leftBound + 1; p < rightBound; p++ {
+			if !occupied[p] {
+				return p
+			}
 		}
 	}
+	// If no gap is found in the local search, scan the entire library.
+	for p := 0; p < m; p++ {
+		if !occupied[p] {
+			return p
+		}
+	}
+	return -1
 }
 
-func rebalance(gapped []struct {
-	val   int
-	valid bool
-}, count int,
-) {
-	temp := make([]int, count)
-	idx := 0
-	for i := range gapped {
-		if gapped[i].valid {
-			temp[idx] = gapped[i].val
-			idx++
+// rebalance spreads out the filled positions evenly over lib.
+// It updates the order slice accordingly.
+func rebalance(lib []int, occupied []bool, order *[]int, m int) {
+	cnt := len(*order)
+	if cnt == 0 {
+		return
+	}
+	// Determine new gap: spread cnt elements evenly over m.
+	newGap := float64(m) / float64(cnt+1)
+	newOrder := make([]int, cnt)
+	// Create new lib copy.
+	newLib := make([]int, m)
+	newOccupied := make([]bool, m)
+	for i := 0; i < cnt; i++ {
+		// New position roughly at (i+1)*newGap.
+		newPos := int(math.Floor(newGap * float64(i+1)))
+		if newPos < 0 {
+			newPos = 0
+		} else if newPos >= m {
+			newPos = m - 1
 		}
+		newLib[newPos] = lib[(*order)[i]]
+		newOccupied[newPos] = true
+		newOrder[i] = newPos
 	}
-
-	// Reset gapped array
-	for i := range gapped {
-		gapped[i].valid = false
-	}
-
-	// Redistribute elements with even gaps
-	spacing := len(gapped) / count
-	for i := 0; i < count; i++ {
-		pos := i * spacing
-		gapped[pos].val = temp[i]
-		gapped[pos].valid = true
-	}
+	// Copy back into original arrays.
+	copy(lib, newLib)
+	copy(occupied, newOccupied)
+	*order = newOrder
 }
