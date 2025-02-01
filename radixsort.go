@@ -1,132 +1,110 @@
 package sortcomparison
 
-// RadixSort implements both LSD (Least Significant Digit) and MSD (Most Significant Digit) variants:
-// LSD Radix Sort:
-// 1. Starts from rightmost digit
-// 2. Performs counting sort on each digit position
-// 3. Moves left until all digits are processed
-// Time Complexity: O(d * (n + k)) where d is number of digits, n is number of elements, k is range
-//
-// MSD Radix Sort:
-// 1. Starts from leftmost digit
-// 2. Recursively sorts subarrays for each digit value
-// 3. Moves right until all digits are processed
-// Better for string sorting and variable length keys
-// Time Complexity: O(d * (n + k))
-// Space Complexity: O(n + k)
+/*
+RadixSort Implementation (LSD - Least Significant Digit)
 
-// LSDRadixSort implements Least Significant Digit radix sort
-func LSDRadixSort(arr []int) {
+Time Complexity:
+  - Average: O(d * (n + k)) where d is number of digits, k is radix
+  - Worst:   O(d * (n + k))
+  - Best:    O(d * (n + k))
+
+Space Complexity:
+  - O(n + k) where k is the range of each digit (256 in this implementation)
+  - Additional space for counting array
+
+Implementation Notes:
+  - Non-comparative integer sorting algorithm
+  - Stable sort - maintains relative order of equal elements
+  - Base-256 implementation for cache efficiency
+  - Processes integers byte by byte
+  - Excellent for fixed-length integer keys
+*/
+func RadixSort(arr []int) {
 	if len(arr) <= 1 {
 		return
 	}
 
-	// Find maximum number to know number of digits
+	// Find maximum element to determine number of digits
 	max := arr[0]
 	for _, num := range arr {
+		if num < 0 {
+			// Handle negative numbers by offsetting
+			num = -num
+		}
 		if num > max {
 			max = num
 		}
 	}
 
-	// Do counting sort for every digit
-	for exp := 1; max/exp > 0; exp *= 10 {
-		countingSortByDigit(arr, exp)
-	}
-}
+	// Allocate memory for temporary array once
+	output := make([]int, len(arr))
 
-// MSDRadixSort implements Most Significant Digit radix sort
-func MSDRadixSort(arr []int) {
-	if len(arr) <= 1 {
-		return
-	}
+	// Process each byte (8 bits)
+	for shift := uint(0); shift < 32; shift += 8 {
+		// Count array for base 256
+		count := make([]int, 256)
 
-	// Find maximum number to know number of digits
-	max := arr[0]
-	for _, num := range arr {
-		if num > max {
-			max = num
+		// Count occurrences of each digit
+		for _, num := range arr {
+			// Handle negative numbers
+			num = adjustForNegative(num)
+			digit := (num >> shift) & 0xFF
+			count[digit]++
+		}
+
+		// Calculate cumulative count
+		for i := 1; i < 256; i++ {
+			count[i] += count[i-1]
+		}
+
+		// Build output array
+		for i := len(arr) - 1; i >= 0; i-- {
+			num := adjustForNegative(arr[i])
+			digit := (num >> shift) & 0xFF
+			count[digit]--
+			output[count[digit]] = arr[i]
+		}
+
+		// Copy back to original array
+		copy(arr, output)
+
+		// Early exit if all remaining digits are zero
+		if max>>shift == 0 {
+			break
 		}
 	}
 
-	// Calculate maximum number of digits
-	exp := 1
-	for max/exp > 0 {
-		exp *= 10
-	}
-	exp /= 10
-
-	msdRadixSortRec(arr, 0, len(arr)-1, exp)
+	// Handle negative numbers by moving them to the front
+	separateNegatives(arr)
 }
 
-// Helper function for counting sort by digit
-func countingSortByDigit(arr []int, exp int) {
-	n := len(arr)
-	output := make([]int, n)
-	count := make([]int, 10)
-
-	// Store count of occurrences in count[]
-	for i := 0; i < n; i++ {
-		digit := (arr[i] / exp) % 10
-		count[digit]++
+func adjustForNegative(num int) int {
+	if num < 0 {
+		return -num
 	}
-
-	// Change count[i] to contain actual position
-	for i := 1; i < 10; i++ {
-		count[i] += count[i-1]
-	}
-
-	// Build the output array
-	for i := n - 1; i >= 0; i-- {
-		digit := (arr[i] / exp) % 10
-		output[count[digit]-1] = arr[i]
-		count[digit]--
-	}
-
-	// Copy output array to arr[]
-	copy(arr, output)
+	return num
 }
 
-// Recursive MSD radix sort helper
-func msdRadixSortRec(arr []int, low, high, exp int) {
-	if low >= high || exp == 0 {
-		return
-	}
-
-	// Create count and output arrays
-	count := make([]int, 11) // Changed to 11 to handle 0-9 digits
-	output := make([]int, high-low+1)
-
-	// Count frequencies
-	for i := low; i <= high; i++ {
-		digit := (arr[i] / exp) % 10
-		count[digit+1]++ // Shift by 1 to avoid negative indices
-	}
-
-	// Calculate cumulative count
-	for i := 1; i < 11; i++ {
-		count[i] += count[i-1]
-	}
-
-	// Build output array
-	for i := high; i >= low; i-- {
-		digit := (arr[i] / exp) % 10
-		pos := count[digit]
-		output[pos] = arr[i]
-		count[digit]++
-	}
-
-	// Copy back to original array
-	for i := 0; i < high-low+1; i++ {
-		arr[low+i] = output[i]
-	}
-
-	// Recursively sort for each digit
-	for i := 0; i < 10; i++ {
-		newLow := low + count[i]
-		newHigh := low + count[i+1] - 1
-		if newLow < newHigh {
-			msdRadixSortRec(arr, newLow, newHigh, exp/10)
+func separateNegatives(arr []int) {
+	// Partition array into negative and positive numbers
+	i, j := 0, len(arr)-1
+	for i < j {
+		for i < j && arr[i] < 0 {
+			i++
 		}
+		for i < j && arr[j] >= 0 {
+			j--
+		}
+		if i < j {
+			arr[i], arr[j] = arr[j], arr[i]
+		}
+	}
+
+	// Reverse the negative numbers to maintain stability
+	left, right := 0, i-1
+	for left < right {
+		arr[left], arr[right] = arr[right], arr[left]
+		left++
+		right--
 	}
 }

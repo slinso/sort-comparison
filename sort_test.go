@@ -41,8 +41,21 @@ var (
 		{"BucketSort", BucketSort[int]},
 		{"BurstSort", BurstSort},
 		{"CocktailShakerSort", CocktailShakerSort},
+		{"CombSort", CombSort},
+		// {"CountingSort", CountingSort},
+		// {"CubeSort", CubeSort},
+		{"CycleSort", CycleSort},
+		{"ExchangeSort", ExchangeSort},
+		// {"FlashSort", FlashSort},
+		{"GnomeSort", GnomeSort},
+		{"HeapSort", HeapSort},
+		{"InsertionSort", InsertionSort},
+		{"IntroSort", IntroSort},
+		// {"LibrarySort", LibrarySort},
 		{"MergeSort", MergeSort},
+		{"OddEvenSort", OddEvenSort},
 		{"QuickSort", QuickSort},
+		{"RadixSort", RadixSort},
 	}
 
 	dataGenerators = []DataGenerator{
