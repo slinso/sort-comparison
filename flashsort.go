@@ -4,20 +4,18 @@ package sortcomparison
 FlashSort Implementation
 
 Time Complexity:
-  - Average: O(n) - when elements are uniformly distributed
-  - Worst:   O(n²) - when all elements belong to same class
-  - Best:    O(n) - with uniform distribution
+  - Average: O(n) for uniformly distributed data.
+  - Worst:   O(n²) when all elements belong to the same class.
+  - Best:    O(n) with uniform distribution.
 
 Space Complexity:
-  - O(n) - requires classification array
-  - Additional O(m) where m is number of buckets (~0.1n)
+  - O(n) extra space for the classification array (bucket boundaries), where m ≈ 0.1*n.
 
 Implementation Notes:
-  - Distribution-based sorting algorithm
-  - Not stable - does not preserve order of equal elements
-  - Efficient for uniform distributions
-  - Performs well with floating-point numbers
-  - Requires minimal additional memory
+  - Uses a classification phase to partition the array into m classes.
+  - Performs "flash" exchanges to move most elements into their correct segment.
+  - Finishes with an insertion sort on the nearly sorted array.
+  - Tuned for competitive performance with minimal overhead.
 */
 func FlashSort(arr []int) {
 	n := len(arr)
@@ -25,67 +23,73 @@ func FlashSort(arr []int) {
 		return
 	}
 
-	// Find min and max
+	// Find minimum and maximum values and index of maximum.
 	min, max := arr[0], arr[0]
+	maxIndex := 0
 	for i := 1; i < n; i++ {
 		if arr[i] < min {
-			min = min
+			min = arr[i]
 		}
 		if arr[i] > max {
 			max = arr[i]
+			maxIndex = i
 		}
 	}
 
+	// If all elements are equal then the array is already sorted.
 	if min == max {
 		return
 	}
 
-	// Number of buckets (~0.1n)
-	m := int(0.1 * float64(n))
+	// Choose number of classes m, approximately 10% of n (at least 2).
+	m := int(float64(n) * 0.1)
 	if m < 2 {
 		m = 2
 	}
 
-	// Classification array
-	l := make([]int, m)
-
-	// Count elements per class
+	// Create and initialize the classification array L.
+	L := make([]int, m)
+	// Count the number of elements in each class.
 	for i := 0; i < n; i++ {
+		// Compute class index k for arr[i].
 		k := int(float64(m-1) * float64(arr[i]-min) / float64(max-min))
-		l[k]++
+		L[k]++
 	}
 
-	// Calculate displacement array
+	// Transform L into prefix sums (bucket boundaries).
 	for i := 1; i < m; i++ {
-		l[i] += l[i-1]
+		L[i] += L[i-1]
 	}
 
-	// Permutation
+	// Swap max element into first position.
+	arr[0], arr[maxIndex] = arr[maxIndex], arr[0]
+
+	// Flash exchange phase.
+	// Initialize counters.
 	move := 0
 	j := 0
 	k := m - 1
-	for move < n-1 {
-		for j > l[k]-1 {
+
+	// Continue until all elements have been moved.
+	for move < n {
+		// Shift j to ensure it points to an element that is not yet in its final class.
+		// While j is beyond the current bucket boundary for class k, advance j.
+		for j >= L[k] {
 			j++
+			// Recompute class index for new element.
 			k = int(float64(m-1) * float64(arr[j]-min) / float64(max-min))
 		}
 		flash := arr[j]
-		for j != l[k]-1 {
+		// While the element at position j is not in its correct bucket.
+		for j < L[k] {
 			k = int(float64(m-1) * float64(flash-min) / float64(max-min))
-			l[k]--
-			arr[l[k]], flash = flash, arr[l[k]]
+			// Swap flash with the last element of class k.
+			L[k]-- // Decrement boundary.
+			flash, arr[L[k]] = arr[L[k]], flash
 			move++
 		}
 	}
 
-	// Sort within classes using insertion sort
-	for i := 1; i < n; i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= 0 && arr[j] > key {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
-	}
+	// Final insertion sort pass to finish sorting nearly sorted array.
+	insertionSort(arr)
 }
