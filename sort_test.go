@@ -46,19 +46,19 @@ var (
 		{"CocktailShakerSort", CocktailShakerSort, nil},
 		{"CombSort", CombSort, nil},
 		{"CountingSort", CountingSort, CountingSortRet},
-		// {"CubeSort", CubeSort},
+		{"CubeSort", CubeSort, nil},
 		{"CycleSort", CycleSort, nil},
 		{"ExchangeSort", ExchangeSort, nil},
-		// {"FlashSort", FlashSort},
+		{"FlashSort", FlashSort, nil},
 		{"GnomeSort", GnomeSort, nil},
 		{"HeapSort", HeapSort, nil},
 		{"InsertionSort", InsertionSort, nil},
 		{"IntroSort", IntroSort, nil},
-		// {"LibrarySort", LibrarySort},
+		{"LibrarySort", LibrarySort, nil},
 		{"MergeSort", MergeSort, nil},
 		{"OddEvenSort", OddEvenSort, nil},
 		{"PatienceSort", PatienceSort, nil},
-		// {"PigeonholeSort", PigeonholeSort},
+		{"PigeonholeSort", PigeonholeSort, nil},
 		{"PostmanSort", PostmanSort, nil},
 		{"QuickSort", QuickSort, nil},
 		{"RadixSortLSD", RadixSort, nil},
@@ -66,10 +66,10 @@ var (
 		{"SelectionSort", SelectionSort, nil},
 		{"ShellSort", ShellSort, nil},
 		{"SimplePancakeSort", SimplePancakeSort, nil},
-		// {"SmoothSort", SmoothSort},
+		{"SmoothSort", SmoothSort, nil},
 		{"SpreadSort", SpreadSort, nil},
 		{"StrandSort", StrandSort, nil},
-		// {"TimSort", TimSort},
+		{"TimSort", TimSort, nil},
 		{"TournamentSort", TournamentSort, nil},
 		{"TreeSort", TreeSort, nil},
 	}
@@ -138,7 +138,7 @@ func generateRandomIntsMaxN(n int) []int {
 func generateAllZero(n int) []int {
 	data := make([]int, n)
 	for i := range data {
-		data[i] = int(rnd.Int31n(16))
+		data[i] = 0
 	}
 	return data
 }

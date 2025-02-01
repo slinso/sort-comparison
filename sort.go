@@ -1,9 +1,12 @@
 package sortcomparison
 
-import "golang.org/x/exp/constraints"
+import (
+	"golang.org/x/exp/constraints"
+)
 
 func insertionSort(arr []int) {
-	for i := 1; i < len(arr); i++ {
+	n := len(arr)
+	for i := 1; i < n; i++ {
 		key := arr[i]
 		j := i - 1
 		for j >= 0 && arr[j] > key {
