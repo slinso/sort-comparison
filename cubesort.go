@@ -1,121 +1,125 @@
 package sortcomparison
 
-import "math"
+import (
+	"math"
+)
 
-/*
-CubeSort Implementation (3D Merge Sort)
-
-Time Complexity:
-  - Average: O(n log n)
-  - Worst:   O(n log n)
-  - Best:    O(n)
-
-Space Complexity:
-  - O(n) - requires temporary storage for merging
-  - Additional O(n^(1/3)) for group management
-
-Implementation Notes:
-  - Divides data into cube-like structure
-  - Stable sort - maintains relative order of equal elements
-  - Cache-efficient due to localized memory access
-  - Parallelizable algorithm
-  - Good for large datasets with sufficient memory
-*/
+// CubeSort sorts the input slice using a multi–way merge strategy.
+// The algorithm divides the array into blocks of size d (where
+// d is roughly the cube root of n) and uses insertion sort to sort
+// each block. Then it repeatedly merges d sorted blocks at a time
+// using a d–way merge until the entire array is sorted.
+//
+// Time Complexity:
+//   - Average: O(n log n), with a logarithm base d = ∛n.
+//   - Worst:   O(n log n)
+//   - Best:    O(n) for nearly sorted inputs (due to insertion sort).
+//
+// Space Complexity:
+//   - O(n) extra space for a temporary buffer (allocated once).
+//
+// Implementation Notes:
+//   - Uses a “ping–pong” temporary buffer to avoid repeated allocations.
+//   - Performs an initial block sort (using insertion sort) to reduce work.
+//   - Merges d blocks at a time using an in–place d–way merge.
 func CubeSort(arr []int) {
 	n := len(arr)
-	if n <= 1 {
+	if n <= 32 {
+		insertionSort(arr)
 		return
 	}
 
-	// Calculate cube dimensions
-	dim := int(math.Ceil(math.Pow(float64(n), 1.0/3.0)))
-	if dim < 2 {
-		dim = 2
+	// Compute d as ceil(cuberoot(n)). Ensure d >= 2.
+	d := int(math.Cbrt(float64(n)))
+	if d < 2 || d*d*d < n {
+		d++
 	}
+	blockSize := d // initial block size
 
-	// Create temporary storage
-	temp := make([]int, n)
-	copy(temp, arr)
-
-	// Sort each dim x dim slice
-	for i := 0; i < n; i += dim * dim {
-		end := i + dim*dim
+	// Initial block sort using insertion sort.
+	for i := 0; i < n; i += blockSize {
+		end := i + blockSize
 		if end > n {
 			end = n
 		}
-		sortSlice(temp[i:end])
+		insertionSort(arr[i:end])
 	}
 
-	// Merge sorted slices
-	mergeCube(arr, temp, dim, n)
-}
+	// Allocate a temporary buffer once.
+	temp := make([]int, n)
 
-func sortSlice(slice []int) {
-	n := len(slice)
-	for i := 0; i < n-1; i++ {
-		for j := 0; j < n-i-1; j++ {
-			if slice[j] > slice[j+1] {
-				slice[j], slice[j+1] = slice[j+1], slice[j]
+	// Merge in passes. In each pass, we merge groups of d blocks,
+	// each block being of current size.
+	currentSize := blockSize
+	// isSrc indicates where the current sorted data is (true means in arr,
+	// false means in temp). After each merge pass we swap.
+	isSrc := true
+	for currentSize < n {
+		if isSrc {
+			// Merge from arr into temp.
+			for start := 0; start < n; start += currentSize * d {
+				multiWayMerge(arr, temp, start, currentSize, d, n)
+			}
+		} else {
+			// Merge from temp into arr.
+			for start := 0; start < n; start += currentSize * d {
+				multiWayMerge(temp, arr, start, currentSize, d, n)
 			}
 		}
+		isSrc = !isSrc
+		currentSize *= d
+	}
+	// If final sorted data is not in arr, copy it from temp.
+	if !isSrc {
+		copy(arr, temp)
 	}
 }
 
-func mergeCube(arr, temp []int, dim, n int) {
-	// Merge in x dimension
-	for z := 0; z < n; z += dim * dim {
-		for y := 0; y < dim; y++ {
-			mergeArrays(arr, temp, z+y*dim, z+(y+1)*dim-1, n)
-		}
+// multiWayMerge merges up to d sorted blocks from src into dst.
+// Each block has maximum length "size". The merge is performed
+// on the interval starting at index "start" and ending at min(n, start+d*size).
+func multiWayMerge(src, dst []int, start, size, d, n int) {
+	end := start + d*size
+	if end > n {
+		end = n
 	}
-
-	// Merge in y dimension
-	for z := 0; z < n; z += dim * dim {
-		end := z + dim*dim
-		if end > n {
-			end = n
-		}
-		mergeArrays(arr, temp, z, end-1, n)
-	}
-
-	// Final merge in z dimension
-	mergeArrays(arr, temp, 0, n-1, n)
-}
-
-func mergeArrays(arr, temp []int, left, right, n int) {
-	if right >= n {
-		right = n - 1
-	}
-	if left >= right {
-		return
-	}
-
-	mid := left + (right-left)/2
-	i, j, k := left, mid+1, left
-
-	for i <= mid && j <= right {
-		if temp[i] <= temp[j] {
-			arr[k] = temp[i]
-			i++
+	// For each block j (0 <= j < d), set up indices and end positions.
+	indices := make([]int, d)
+	seqStart := make([]int, d)
+	seqEnd := make([]int, d)
+	for j := 0; j < d; j++ {
+		s := start + j*size
+		if s >= n {
+			seqStart[j] = n
+			seqEnd[j] = n
+			indices[j] = n
 		} else {
-			arr[k] = temp[j]
-			j++
+			seqStart[j] = s
+			e := s + size
+			if e > n {
+				e = n
+			}
+			seqEnd[j] = e
+			indices[j] = s
 		}
-		k++
 	}
-
-	for i <= mid {
-		arr[k] = temp[i]
-		i++
-		k++
+	// Perform the d–way merge.
+	for pos := start; pos < end; pos++ {
+		minFound := false
+		var minVal int
+		minSeq := -1
+		for j := 0; j < d; j++ {
+			if indices[j] < seqEnd[j] {
+				val := src[indices[j]]
+				if !minFound || val < minVal {
+					minVal = val
+					minSeq = j
+					minFound = true
+				}
+			}
+		}
+		// Place the smallest value into dst.
+		dst[pos] = minVal
+		indices[minSeq]++
 	}
-
-	for j <= right {
-		arr[k] = temp[j]
-		j++
-		k++
-	}
-
-	// Update temp array for next merge
-	copy(temp[left:right+1], arr[left:right+1])
 }
