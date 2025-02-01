@@ -4,6 +4,7 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
+// insertionSort performs an in-place insertion sort on the slice.
 func insertionSort(arr []int) {
 	n := len(arr)
 	for i := 1; i < n; i++ {
