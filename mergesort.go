@@ -39,10 +39,10 @@ func MergeSort(arr []int) {
 	MergeSort(right)
 
 	// Merge sorted arrays
-	merge(arr, left, right)
+	mergeSort(arr, left, right)
 }
 
-func merge(arr, left, right []int) {
+func mergeSort(arr, left, right []int) {
 	i, j, k := 0, 0, 0
 
 	// Compare and merge
