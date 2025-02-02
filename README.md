@@ -53,11 +53,15 @@ educational purposes.
 
 ### Modern Hybrids
 
-| Name             | Best       | Average    | Worst      | Memory   | Stable | In-place | Method          | Notes                             |
-| ---------------- | ---------- | ---------- | ---------- | -------- | ------ | -------- | --------------- | --------------------------------- |
-| **GeneralSort**  | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Adaptive hybrid | Timsort-inspired adaptive sort    |
-| **HybridSort**   | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Multi-strategy  | Combines counting/radix/insertion |
-| **UltimateSort** | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      | Parallel hybrid | Dual-pivot quick + parallel merge |
+| Name               | Best       | Average    | Worst      | Memory   | Stable | In-place | Method                        | Notes                                            |
+| ------------------ | ---------- | ---------- | ---------- | -------- | ------ | -------- | ----------------------------- | ------------------------------------------------ |
+| **GeneralSort**    | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Adaptive hybrid               | Timsort-inspired adaptive sort                   |
+| **HybridSort**     | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Multi-strategy                | Combines counting/radix/insertion                |
+| **UltimateSort**   | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      | Parallel hybrid               | Dual-pivot quick + parallel merge                |
+| **CascadeSort**    | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Cascading merge sort          | Efficient for partially sorted data              |
+| **JupiterSort**    | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      | Parallel dual-pivot quicksort | Uses orbital partitioning and parallelism        |
+| **WeaveMergeSort** | O(n log n) | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Cache-optimized merge sort    | Improves cache locality with unrolled merge loop |
+| **GallopingSort**  | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      | Insertion sort with galloping | Excels on nearly sorted data                     |
 
 ## Benchmarking
 

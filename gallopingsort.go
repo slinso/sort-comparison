@@ -68,3 +68,36 @@ func gallopSearch(arr []int, target int, left, right int) int {
 	}
 	return low
 }
+
+// gallopSearch finds the first index in arr[left:right+1] where target should be inserted.
+// It first performs an exponential search ("galloping") to narrow the search interval,
+// then uses binary search to pinpoint the exact position.
+func gallopSearchO3(arr []int, target int, left, right int) int {
+	// If target is greater than all elements, return the index after the last element.
+	if arr[right] <= target {
+		return right + 1
+	}
+
+	// Exponential search phase.
+	offset := 1
+	for left+offset <= right && arr[left+offset] <= target {
+		offset *= 2
+	}
+	// Boundaries for binary search.
+	low := left + offset/2
+	high := left + offset
+	if high > right {
+		high = right
+	}
+
+	// Binary search phase within [low, high].
+	for low <= high {
+		mid := low + (high-low)/2
+		if arr[mid] <= target {
+			low = mid + 1
+		} else {
+			high = mid - 1
+		}
+	}
+	return low
+}
