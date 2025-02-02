@@ -62,6 +62,7 @@ var (
 		{"OddEvenSort", nil, OddEvenSort},
 		{"PatienceSort", PatienceSort, nil},
 		{"PigeonholeSort", PigeonholeSort, nil},
+		{"QuantumSort", nil, QuantumSort},
 		{"PostmanSort", nil, PostmanSort},
 		{"QuickSort", QuickSort, nil},
 		{"RadixSortLSD", RadixSort, nil},

@@ -75,7 +75,7 @@ func quantumSortHelperSync(arr, temp []int) {
 	mid := len(arr) / 2
 	quantumSortHelperSync(arr[:mid], temp[:mid])
 	quantumSortHelperSync(arr[mid:], temp[mid:])
-	merge(arr, temp, mid)
+	mergeQuantum(arr, temp, mid)
 }
 
 // mergeQuantum merges two sorted subarrays, arr[0:mid] and arr[mid:len(arr)], into a single sorted array.
