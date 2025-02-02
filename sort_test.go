@@ -55,6 +55,7 @@ var (
 		{"GnomeSort", GnomeSort, nil},
 		{"GrailSort", nil, GrailSort},
 		{"HeapSort", HeapSort, nil},
+		{"HybridSort", nil, HybridSort},
 		{"InsertionSort", InsertionSort, nil},
 		{"IntroSort", IntroSort, nil},
 		{"JupiterSort", JupiterSort, nil},

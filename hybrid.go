@@ -25,7 +25,7 @@ func HybridSort(arr []int) []int {
 	rng := maxVal - minVal + 1
 
 	// If very small, use insertion sort.
-	if len(arr) < insertionThreshold {
+	if len(arr) < hybridInsertionThreshold {
 		insertionSort(arr)
 		return arr
 	}
@@ -40,9 +40,9 @@ func HybridSort(arr []int) []int {
 }
 
 const (
-	insertionThreshold     = 32
-	countingSortRangeLimit = 1 << 16
-	parallelRadixThreshold = 4096
+	hybridInsertionThreshold = 32
+	countingSortRangeLimit   = 1 << 16
+	parallelRadixThreshold   = 4096
 )
 
 // countingSort sorts arr given min and max.
