@@ -6,9 +6,9 @@ import (
 )
 
 const (
-	sampleSortThreshold = 32 // below which insertion sort is used
-	defaultBuckets      = 16 // default number of buckets
-	sampleFactor        = 3  // sample size = numBuckets * sampleFactor
+	sampleSortThreshold = 32 // Use insertion sort below this size
+	numBuckets          = 8  // Must be power of 2
+	sampleFactor        = 3  // Sample size multiplier
 )
 
 // SampleSort sorts a slice of non-negative integers using a sample sort algorithm.
@@ -36,13 +36,7 @@ func SampleSort(arr []int) []int {
 		return arr
 	}
 
-	// Determine number of buckets (at most defaultBuckets, but not more than len(arr))
-	numBuckets := defaultBuckets
-	if len(arr) < numBuckets {
-		numBuckets = len(arr)
-	}
-
-	// Determine sample size and select a random sample.
+	// Select and sort sample
 	sampleSize := numBuckets * sampleFactor
 	if sampleSize > len(arr) {
 		sampleSize = len(arr)
@@ -53,45 +47,55 @@ func SampleSort(arr []int) []int {
 	}
 	sort.Ints(sample)
 
-	// Select pivots from the sorted sample to partition the data.
+	// Select pivots from sorted sample
 	pivots := make([]int, numBuckets-1)
 	for i := 0; i < numBuckets-1; i++ {
-		idx := (i + 1) * sampleSize / numBuckets
-		if idx >= sampleSize {
-			idx = sampleSize - 1
-		}
-		pivots[i] = sample[idx]
+		pivots[i] = sample[(i+1)*sampleFactor]
 	}
 
-	// Create buckets with a guessed capacity.
+	// Create buckets
 	buckets := make([][]int, numBuckets)
-	bucketCapacity := (len(arr) / numBuckets) + 1
-	for i := 0; i < numBuckets; i++ {
-		buckets[i] = make([]int, 0, bucketCapacity)
-	}
+	sizes := make([]int, numBuckets)
 
-	// Partition each element into the appropriate bucket.
+	// Count elements per bucket
 	for _, v := range arr {
-		bucketIdx := 0
-		for j, p := range pivots {
-			if v < p {
-				bucketIdx = j
-				break
-			}
-			bucketIdx = j + 1
-		}
-		buckets[bucketIdx] = append(buckets[bucketIdx], v)
+		bucket := findBucket(v, pivots)
+		sizes[bucket]++
 	}
 
-	// Recursively sort each bucket and merge back into arr.
-	pos := 0
-	for i := 0; i < numBuckets; i++ {
-		if len(buckets[i]) > 0 {
-			SampleSort(buckets[i])
-			copy(arr[pos:], buckets[i])
-			pos += len(buckets[i])
-		}
+	// Pre-allocate buckets
+	for i := range buckets {
+		buckets[i] = make([]int, 0, sizes[i])
+	}
+
+	// Distribute elements to buckets
+	for _, v := range arr {
+		bucket := findBucket(v, pivots)
+		buckets[bucket] = append(buckets[bucket], v)
+	}
+
+	// Recursively sort buckets
+	offset := 0
+	for _, bucket := range buckets {
+		SampleSort(bucket)
+		// Copy back to original array
+		copy(arr[offset:], bucket)
+		offset += len(bucket)
 	}
 
 	return arr
+}
+
+// findBucket returns the appropriate bucket index for value v using binary search
+func findBucket(v int, pivots []int) int {
+	low, high := 0, len(pivots)
+	for low < high {
+		mid := (low + high) / 2
+		if pivots[mid] <= v {
+			low = mid + 1
+		} else {
+			high = mid
+		}
+	}
+	return low
 }

@@ -1,60 +1,66 @@
 package sortcomparison
 
-// BitonicSort sorts a slice of integers in ascending order using the Bitonic Sort algorithm.
-// Bitonic Sort recursively builds a bitonic sequence and then performs a bitonic merge
-// to produce a sorted sequence.
-//
-// How it works:
-//   - The algorithm splits the array into two halves: one sorted in ascending order,
-//     the other in descending order.
-//   - It then merges these two halves into a bitonic sequence and performs recursive merges.
-//   - The merge operation compares elements that are a specific distance apart
-//     (determined by the greatest power of two less than the length) and swaps them if needed.
-//   - This in-place, recursive approach minimizes memory allocations and is idiomatic Go.
-//
-// Time Complexity:
-//   - O(n (log n)^2) in the worst-case.
-//
-// Space Complexity:
-//   - O(1) auxiliary space, aside from the recursion stack (O(log n) depth).
+// BitonicSort implements an optimized bitonic sorting network.
+// Best for parallel hardware; performs O(n log²n) comparisons.
 func BitonicSort(arr []int) []int {
 	if len(arr) < 2 {
 		return arr
 	}
-	bitonicSort(arr, 0, len(arr), true)
+
+	// Find next power of 2 length
+	n := len(arr)
+
+	bitonicSort(arr, 0, n, true)
 	return arr
 }
 
-// bitonicSort recursively sorts a bitonic sequence in the specified order.
-// low: starting index, n: number of elements, ascending: desired order.
-func bitonicSort(arr []int, low, n int, ascending bool) {
-	if n > 1 {
-		k := n / 2
-		bitonicSort(arr, low, k, true)      // sort in ascending order
-		bitonicSort(arr, low+k, n-k, false) // sort in descending order
-		bitonicMerge(arr, low, n, ascending)
+/*
+The parameter dir indicates the sorting direction, ASCENDING
+
+	or DESCENDING; if (a[i] > a[j]) agrees with the direction,
+	then a[i] and a[j] are interchanged.
+*/
+func compAndSwap(a []int, i int, j int, ascending bool) {
+	if (ascending && a[i] > a[j]) || (!ascending && a[i] < a[j]) {
+		a[i], a[j] = a[j], a[i]
 	}
 }
 
-// bitonicMerge merges a bitonic sequence into a sorted sequence in the specified order.
-func bitonicMerge(arr []int, low, n int, ascending bool) {
-	if n > 1 {
-		k := greatestPowerOfTwoLessThan(n)
-		for i := low; i < low+n-k; i++ {
-			if (ascending && arr[i] > arr[i+k]) || (!ascending && arr[i] < arr[i+k]) {
-				arr[i], arr[i+k] = arr[i+k], arr[i]
-			}
+/*
+It recursively sorts a bitonic sequence in ascending order,
+
+	if dir = 1, and in descending order otherwise (means dir=0).
+	The sequence to be sorted starts at index position low,
+	the parameter cnt is the number of elements to be sorted.
+*/
+func bitonicMerge(a []int, low int, cnt int, ascending bool) {
+	if cnt > 1 {
+		k := cnt / 2
+		for i := low; i < low+k; i++ {
+			compAndSwap(a, i, i+k, ascending)
 		}
-		bitonicMerge(arr, low, k, ascending)
-		bitonicMerge(arr, low+k, n-k, ascending)
+		bitonicMerge(a, low, k, ascending)
+		bitonicMerge(a, low+k, k, ascending)
 	}
 }
 
-// greatestPowerOfTwoLessThan returns the greatest power of two less than n.
-func greatestPowerOfTwoLessThan(n int) int {
-	k := 1
-	for k < n {
-		k <<= 1
+/*
+This function first produces a bitonic sequence by recursively
+
+	sorting its two halves in opposite sorting orders, and then
+	calls bitonicMerge to make them in the same order
+*/
+func bitonicSort(a []int, low int, cnt int, ascending bool) {
+	if cnt > 1 {
+		k := cnt / 2
+
+		// sort in ascending order
+		bitonicSort(a, low, k, true)
+
+		// sort in descending order
+		bitonicSort(a, low+k, k, false)
+
+		// Will merge whole sequence in ascending order
+		bitonicMerge(a, low, cnt, ascending)
 	}
-	return k >> 1
 }
