@@ -90,6 +90,7 @@ var (
 		{"Sorted", generateSortedInts},
 		{"Reversed", generateReversedInts},
 		{"Mountain", generateMountain},
+		{"Valley", generateValley},
 		{"Plateau", generatePlateau},
 		{"Sawtooth", generateSawtooth},
 		{"RepeatedMod8", generateRepeatedMod8},
@@ -309,6 +310,17 @@ func generateRandomMod16(n int) []int {
 	return data
 }
 
+func generateValley(n int) []int {
+	data := make([]int, n)
+	for i := 0; i < n/2; i++ {
+		data[i] = n/2 - i
+	}
+	for i := n / 2; i < n; i++ {
+		data[i] = i - n/2
+	}
+	return data
+}
+
 // General benchmark function for sorting algorithms
 func BenchmarkSort(b *testing.B) {
 	for _, size := range testSizes {
@@ -362,6 +374,7 @@ func TestSort(t *testing.T) {
 		{"Sorted_100", 100, generateSortedInts},
 		{"Reversed_100", 100, generateReversedInts},
 		{"Mountain_100", 100, generateMountain},
+		{"Valley_100", 100, generateValley},
 		{"Plateau_100", 100, generatePlateau},
 		{"Sawtooth_100", 100, generateSawtooth},
 		{"RepeatedMod8_100", 100, generateRepeatedMod8},
