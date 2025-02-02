@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	insertionThreshold = 16   // Use insertion sort for small segments.
-	parallelThreshold  = 2048 // Use parallel recursion if segment size exceeds this.
+	jupiterInsertionThreshold = 16   // Use insertion sort for small segments.
+	parallelThreshold         = 2048 // Use parallel recursion if segment size exceeds this.
 )
 
 // JupiterSort is a high-performance, parallel dual-pivot quicksort variant.
@@ -21,8 +21,8 @@ func JupiterSort(arr []int) {
 }
 
 func jupiterSortHelper(arr []int, low, high int) {
-	if high-low+1 <= insertionThreshold {
-		insertionSort(arr, low, high)
+	if high-low+1 <= jupiterInsertionThreshold {
+		insertionSortLowHigh(arr, low, high)
 		return
 	}
 
@@ -103,19 +103,6 @@ func dualPivotPartition(arr []int, low, high int) (int, int) {
 	arr[high], arr[gt] = arr[gt], arr[high]
 
 	return lt, gt
-}
-
-// insertionSort is an in-place insertion sort that operates on arr[low:high+1].
-func insertionSort(arr []int, low, high int) {
-	for i := low + 1; i <= high; i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= low && arr[j] > key {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
-	}
 }
 
 func init() {

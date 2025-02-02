@@ -57,6 +57,7 @@ var (
 		{"HeapSort", HeapSort, nil},
 		{"InsertionSort", InsertionSort, nil},
 		{"IntroSort", IntroSort, nil},
+		{"JupiterSort", JupiterSort, nil},
 		{"LibrarySort", LibrarySort, nil},
 		{"MergeSort", MergeSort, nil},
 		{"OddEvenSort", nil, OddEvenSort},
