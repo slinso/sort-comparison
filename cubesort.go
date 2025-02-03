@@ -42,7 +42,7 @@ func CubeSort(arr []int) {
 		if end > n {
 			end = n
 		}
-		insertionSort(arr[i:end])
+		insertionSortRange(arr, i, end)
 	}
 
 	// Allocate a temporary buffer once.

@@ -46,7 +46,7 @@ func WikiSort(arr []int) []int {
 		if end > n {
 			end = n
 		}
-		insertionSort(arr[i:end])
+		insertionSortRange(arr, i, end)
 		runs = append(runs, run{start: i, end: end})
 	}
 
