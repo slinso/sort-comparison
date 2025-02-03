@@ -369,8 +369,12 @@ func BenchmarkSort(b *testing.B) {
 	for _, size := range testSizes {
 		for _, gen := range dataGenerators {
 			for _, s := range sortImplementations {
+				if s.fn != nil && s.fnNotInPlace != nil {
+					b.Fail()
+				}
+
 				if s.fn != nil {
-					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s/typ=ip", gen.name, s.name, formatSize(size)), func(b *testing.B) {
+					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
 						data := gen.Data(size)
 						b.ResetTimer()
 						b.StopTimer()
@@ -386,7 +390,7 @@ func BenchmarkSort(b *testing.B) {
 				}
 
 				if s.fnNotInPlace != nil {
-					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s/typ=ret", gen.name, s.name, formatSize(size)), func(b *testing.B) {
+					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
 						data := gen.Data(size)
 						b.ResetTimer()
 						b.StopTimer()
