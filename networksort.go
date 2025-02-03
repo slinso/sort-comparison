@@ -72,14 +72,6 @@ func oddevenMerge(a []int, lo, n, r int, dir bool) {
 	}
 }
 
-// compareAndSwap compares a[i] and a[j] and swaps them if they are not in the order specified
-// by dir. If dir == true, then a[i] should be less than or equal to a[j].
-func compareAndSwap(a []int, i, j int, dir bool) {
-	if (dir && a[i] > a[j]) || (!dir && a[i] < a[j]) {
-		a[i], a[j] = a[j], a[i]
-	}
-}
-
 // nextPowerOfTwo returns the smallest power of two greater than or equal to n.
 func nextPowerOfTwo(n int) int {
 	if n < 1 {

@@ -31,6 +31,13 @@ func insertionSortLowHigh(arr []int, low, high int) {
 	}
 }
 
+// compareAndSwap swaps the elements if they are not in the desired order
+func compareAndSwap(arr []int, i, j int, ascending bool) {
+	if (arr[i] > arr[j] && ascending) || (arr[i] < arr[j] && !ascending) {
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+}
+
 func min[T constraints.Ordered](a, b T) T {
 	if a < b {
 		return a
