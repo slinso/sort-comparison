@@ -1,7 +1,7 @@
 package sortcomparison
 
 /*
-RadixSort Implementation (LSD - Least Significant Digit)
+RadixSortLSD Implementation (LSD - Least Significant Digit)
 
 Time Complexity:
   - Average: O(d * (n + k)) where d is number of digits, k is radix
@@ -19,8 +19,9 @@ Implementation Notes:
   - Processes integers byte by byte
   - Excellent for fixed-length integer keys
 */
-func RadixSort(arr []int) {
-	if len(arr) <= 1 {
+func RadixSortLSD(arr []int) {
+	nLen := len(arr)
+	if nLen < 2 {
 		return
 	}
 
@@ -37,7 +38,7 @@ func RadixSort(arr []int) {
 	}
 
 	// Allocate memory for temporary array once
-	output := make([]int, len(arr))
+	output := make([]int, nLen)
 
 	// Process each byte (8 bits)
 	for shift := uint(0); shift < 32; shift += 8 {
@@ -58,7 +59,7 @@ func RadixSort(arr []int) {
 		}
 
 		// Build output array
-		for i := len(arr) - 1; i >= 0; i-- {
+		for i := nLen - 1; i >= 0; i-- {
 			num := adjustForNegative(arr[i])
 			digit := (num >> shift) & 0xFF
 			count[digit]--
@@ -130,7 +131,8 @@ Implementation Notes:
   - Uses insertion sort for small subarrays
 */
 func RadixSortMSD(arr []int) {
-	if len(arr) <= 1 {
+	nLen := len(arr)
+	if nLen < 2 {
 		return
 	}
 
@@ -154,7 +156,7 @@ func RadixSortMSD(arr []int) {
 	}
 
 	// Allocate temp array once
-	temp := make([]int, len(arr))
+	temp := make([]int, nLen)
 	radixSortMSDRecursive(arr, temp, msbyte-1)
 }
 
