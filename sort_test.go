@@ -59,7 +59,7 @@ var (
 		{"FlashSort", FlashSort, nil},
 		{"GallopingSort", GallopingSort, nil},
 		{"GnomeSort", GnomeSort, nil},
-		{"GrailSort", nil, GrailSort},
+		{"GrailSort", GrailSort, nil},
 		{"HeapSort", HeapSort, nil},
 		{"HybridSortSonnet", nil, HybridSort},
 		{"InsertionSort", InsertionSort, nil},

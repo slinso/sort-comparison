@@ -53,7 +53,7 @@ func TimSort(arr []int) {
 			if end > n {
 				end = n
 			}
-			insertionSortTim(arr, runStart, end)
+			insertionSortRange(arr, runStart, end)
 			runLen = end - runStart
 			i = end
 		}
@@ -86,19 +86,6 @@ func minRunLength(n int) int {
 		n >>= 1
 	}
 	return n + r
-}
-
-// insertionSort sorts the subarray arr[left:right] using insertion sort.
-func insertionSortTim(arr []int, left, right int) {
-	for i := left + 1; i < right; i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= left && arr[j] > key {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
-	}
 }
 
 // merge merges two sorted subarrays: arr[left:mid] and arr[mid:right] into one sorted segment.

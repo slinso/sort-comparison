@@ -16,11 +16,11 @@ import (
 //
 // Space Complexity:
 //   - O(√n) auxiliary space for the fixed buffer (with rare larger temporary allocations).
-func GrailSort(arr []int) []int {
+func GrailSort(arr []int) {
 	n := len(arr)
 	if n < 32 {
 		insertionSort(arr)
-		return arr
+		return
 	}
 
 	// Choose fixed buffer size approximately equal to √n.
@@ -44,7 +44,6 @@ func GrailSort(arr []int) []int {
 			mergeWithBuffer(arr, i, mid, end, buf)
 		}
 	}
-	return arr
 }
 
 // mergeWithBuffer merges two consecutive sorted subarrays: arr[left:mid] and arr[mid:right].

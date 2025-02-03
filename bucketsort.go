@@ -1,8 +1,6 @@
 package sortcomparison
 
 import (
-	"cmp"
-
 	"golang.org/x/exp/constraints"
 )
 
@@ -48,7 +46,7 @@ func BucketSort[T constraints.Integer | constraints.Float](arr []T) {
 	// Sort individual buckets using insertion sort
 	for i := 0; i < numBuckets; i++ {
 		if len(buckets[i]) > 1 {
-			insertionSortBucket(buckets[i])
+			insertionSort(buckets[i])
 		}
 	}
 
@@ -80,16 +78,4 @@ func getBucketIndex[T constraints.Float | constraints.Integer](item T, numBucket
 	}
 
 	return index
-}
-
-func insertionSortBucket[T constraints.Ordered](bucket []T) {
-	for i := 1; i < len(bucket); i++ {
-		key := bucket[i]
-		j := i - 1
-		for j >= 0 && cmp.Less(key, bucket[j]) {
-			bucket[j+1] = bucket[j]
-			j--
-		}
-		bucket[j+1] = key
-	}
 }

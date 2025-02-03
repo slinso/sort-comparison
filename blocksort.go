@@ -37,7 +37,7 @@ func BlockSort(arr []int) {
 		if end > n {
 			end = n
 		}
-		insertionSortBlock(arr[start:end])
+		insertionSort(arr[start:end])
 	}
 
 	// Merge sorted blocks
@@ -56,18 +56,6 @@ func BlockSort(arr []int) {
 				mergeBlocks(arr, temp, left, mid, right, func(a, b int) bool { return a < b })
 			}
 		}
-	}
-}
-
-func insertionSortBlock(arr []int) {
-	for i := 1; i < len(arr); i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= 0 && arr[j] > key {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
 	}
 }
 

@@ -23,7 +23,7 @@ func WeaveMergeSort(arr []int) []int {
 // weaveMergeSortHelper recursively sorts the subarray arr[low:high].
 func weaveMergeSortHelper(arr, temp []int, low, high int) {
 	if high-low < 16 { // small slice threshold for insertion sort
-		insertionSortWeave(arr, low, high)
+		insertionSortRange(arr, low, high)
 		return
 	}
 	mid := low + (high-low)/2
@@ -51,18 +51,5 @@ func weaveMerge(arr, temp []int, low, mid, high int) {
 			}
 			k++
 		}
-	}
-}
-
-// insertionSort performs an in-place insertion sort on arr[low:high].
-func insertionSortWeave(arr []int, low, high int) {
-	for i := low + 1; i < high; i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= low && arr[j] > key {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
 	}
 }

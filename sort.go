@@ -1,7 +1,9 @@
 package sortcomparison
 
+import "golang.org/x/exp/constraints"
+
 // insertionSort performs an in-place insertion sort on the slice.
-func insertionSort(arr []int) {
+func insertionSort[T constraints.Ordered](arr []T) {
 	n := len(arr)
 	for i := 1; i < n; i++ {
 		key := arr[i]
@@ -15,8 +17,8 @@ func insertionSort(arr []int) {
 }
 
 // insertionSortRange is an in-place insertion sort that operates on arr[low:high+1].
-func insertionSortRange(arr []int, left int, right int) {
-	for i := left + 1; i <= right; i++ {
+func insertionSortRange[T constraints.Ordered](arr []T, left int, right int) {
+	for i := left + 1; i < right; i++ {
 		key := arr[i]
 		j := i - 1
 		for j >= left && arr[j] > key {
