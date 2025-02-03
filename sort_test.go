@@ -76,7 +76,7 @@ var (
 		{"QuickSort", QuickSort, nil},
 		{"RadixSortLSD", RadixSortLSD, nil},
 		{"RadixSortMSD", RadixSortMSD, nil},
-		// {"SampleSort", nil, SampleSort},
+		{"SampleSort", SampleSort, nil},
 		{"SelectionSort", SelectionSort, nil},
 		{"ShellSort", ShellSort, nil},
 		{"SimplePancakeSort", SimplePancakeSort, nil},

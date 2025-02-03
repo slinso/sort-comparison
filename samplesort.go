@@ -1,101 +1,150 @@
 package sortcomparison
 
 import (
+	"math"
 	"math/rand"
 	"sort"
 )
 
 const (
-	sampleSortThreshold = 32 // Use insertion sort below this size
-	numBuckets          = 8  // Must be power of 2
-	sampleFactor        = 3  // Sample size multiplier
+	basecaseSize = 1024
+	logBuckets   = 8
+	numBuckets   = 1 << logBuckets
 )
 
-// SampleSort sorts a slice of non-negative integers using a sample sort algorithm.
-// It selects a random sample of the input to determine bucket pivots, partitions the input
-// into multiple buckets, recursively sorts each bucket, and then merges them. This approach
-// is efficient, GC friendly, and idiomatic Go code.
-//
-// How it works:
-//   - For small slices (< sampleSortThreshold), insertion sort is used.
-//   - Otherwise, a sample is drawn from the input. The sample is sorted to select pivot values
-//     that partition the data into buckets.
-//   - The input is partitioned into buckets based on the pivots via a simple linear/binary search.
-//   - Each bucket is recursively sorted with SampleSort.
-//   - Finally, the buckets are concatenated back into the original array.
-//
-// Time Complexity:
-//   - Average-case: O(n) with a good pivot selection and uniformly distributed input.
-//   - Worst-case: O(n log n) if the bucketing is imbalanced.
-//
-// Space Complexity:
-//   - Auxiliary space is O(n) for temporary buckets, but this is minimized by preallocating slices.
-func SampleSort(arr []int) []int {
-	if len(arr) < sampleSortThreshold {
-		insertionSort(arr)
-		return arr
-	}
+type bucket uint32
 
-	// Select and sort sample
-	sampleSize := numBuckets * sampleFactor
-	if sampleSize > len(arr) {
-		sampleSize = len(arr)
-	}
-	sample := make([]int, sampleSize)
-	for i := 0; i < sampleSize; i++ {
-		sample[i] = arr[rand.Intn(len(arr))]
-	}
-	sort.Ints(sample)
-
-	// Select pivots from sorted sample
-	pivots := make([]int, numBuckets-1)
-	for i := 0; i < numBuckets-1; i++ {
-		pivots[i] = sample[(i+1)*sampleFactor]
-	}
-
-	// Create buckets
-	buckets := make([][]int, numBuckets)
-	sizes := make([]int, numBuckets)
-
-	// Count elements per bucket
-	for _, v := range arr {
-		bucket := findBucket(v, pivots)
-		sizes[bucket]++
-	}
-
-	// Pre-allocate buckets
-	for i := range buckets {
-		buckets[i] = make([]int, 0, sizes[i])
-	}
-
-	// Distribute elements to buckets
-	for _, v := range arr {
-		bucket := findBucket(v, pivots)
-		buckets[bucket] = append(buckets[bucket], v)
-	}
-
-	// Recursively sort buckets
-	offset := 0
-	for _, bucket := range buckets {
-		SampleSort(bucket)
-		// Copy back to original array
-		copy(arr[offset:], bucket)
-		offset += len(bucket)
-	}
-
-	return arr
+// Classifier handles the classification of elements into buckets
+type Classifier struct {
+	splitters    []int
+	numSplitters int
+	bktout       []bucket
+	bktsize      []int
 }
 
-// findBucket returns the appropriate bucket index for value v using binary search
-func findBucket(v int, pivots []int) int {
-	low, high := 0, len(pivots)
-	for low < high {
-		mid := (low + high) / 2
-		if pivots[mid] <= v {
-			low = mid + 1
-		} else {
-			high = mid
-		}
+// SampleSort implements Super Scalar Sample Sort
+func SampleSort(arr []int) {
+	n := len(arr)
+	if n < basecaseSize {
+		sort.Ints(arr)
+		return
 	}
-	return low
+
+	// Draw and sort samples
+	sampleSize := oversamplingFactor(n) * numBuckets
+	samples := make([]int, sampleSize)
+	drawSample(arr, samples)
+	sort.Ints(samples)
+
+	// Check if all samples are equal
+	if samples[0] == samples[len(samples)-1] {
+		sort.Ints(arr)
+		return
+	}
+
+	// Classify elements
+	bktout := make([]bucket, n)
+	classifier := newClassifier(samples, bktout)
+	classifier.classify(arr)
+
+	// Distribute elements
+	temp := make([]int, n)
+	offset := 0
+	prefixSum := make([]int, numBuckets)
+
+	// Calculate prefix sums
+	sum := 0
+	for i := 0; i < numBuckets; i++ {
+		prefixSum[i] = sum
+		sum += classifier.bktsize[i]
+	}
+
+	// Distribute
+	for i, v := range arr {
+		pos := prefixSum[bktout[i]]
+		temp[pos] = v
+		prefixSum[bktout[i]]++
+	}
+
+	// Recursive sorting of buckets
+	offset = 0
+	for i := 0; i < numBuckets; i++ {
+		size := classifier.bktsize[i]
+		if size == 0 {
+			continue
+		}
+
+		bucket := temp[offset : offset+size]
+		if size <= basecaseSize || float64(n)/float64(size) < 2 {
+			sort.Ints(bucket)
+		} else {
+			SampleSort(bucket)
+		}
+		copy(arr[offset:], bucket)
+		offset += size
+	}
+}
+
+func newClassifier(samples []int, bktout []bucket) *Classifier {
+	c := &Classifier{
+		splitters:    make([]int, 1<<logBuckets),
+		numSplitters: (1 << logBuckets) - 1,
+		bktout:       bktout,
+		bktsize:      make([]int, 1<<logBuckets),
+	}
+	c.buildRecursive(samples, 0, len(samples)-1, 1)
+	return c
+}
+
+func (c *Classifier) buildRecursive(samples []int, lo, hi, pos int) {
+	mid := lo + (hi-lo)/2
+	c.splitters[pos] = samples[mid]
+
+	if 2*pos < c.numSplitters {
+		c.buildRecursive(samples, lo, mid, 2*pos)
+		c.buildRecursive(samples, mid+1, hi, 2*pos+1)
+	}
+}
+
+func (c *Classifier) step(i bucket, key int) bucket {
+	return 2*i + bucket(boolToInt(c.splitters[i] < key))
+}
+
+func (c *Classifier) findBucket(key int) bucket {
+	i := bucket(1)
+	for i <= bucket(c.numSplitters) {
+		i = c.step(i, key)
+	}
+	return i - bucket(1<<logBuckets)
+}
+
+func (c *Classifier) classify(arr []int) {
+	for i, v := range arr {
+		bucket := c.findBucket(v)
+		c.bktout[i] = bucket
+		c.bktsize[bucket]++
+	}
+}
+
+func oversamplingFactor(n int) int {
+	r := math.Sqrt(float64(n) / float64(2*numBuckets*(logBuckets+4)))
+	if r < 1 {
+		return 1
+	}
+	return int(r)
+}
+
+func drawSample(arr []int, samples []int) {
+	n := len(arr)
+	for i := range samples {
+		idx := rand.Intn(n)
+		samples[i] = arr[idx]
+	}
+}
+
+func boolToInt(b bool) int {
+	if b {
+		return 1
+	}
+	return 0
 }
