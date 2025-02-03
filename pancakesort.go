@@ -35,19 +35,10 @@ func PancakeSort(arr []int) {
 		if maxIndex != currSize-1 {
 			// Flip the maximum element to the front if it's not already at index 0.
 			if maxIndex != 0 {
-				reversePancake(arr, 0, maxIndex)
+				reverseRange(arr, 0, maxIndex)
 			}
 			// Flip it to its correct position at the end of the unsorted portion.
-			reversePancake(arr, 0, currSize-1)
+			reverseRange(arr, 0, currSize-1)
 		}
-	}
-}
-
-// reverse reverses the slice arr from index start to end (inclusive).
-func reversePancake(arr []int, start, end int) {
-	for start < end {
-		arr[start], arr[end] = arr[end], arr[start]
-		start++
-		end--
 	}
 }

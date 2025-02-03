@@ -92,3 +92,12 @@ func minMaxValue(arr []int) (int, int) {
 
 	return minValue, maxValue
 }
+
+// reverseRange reverses the subarray arr[left:right] in place.
+func reverseRange(arr []int, left, right int) {
+	for left < right {
+		arr[left], arr[right] = arr[right], arr[left]
+		left++
+		right--
+	}
+}
