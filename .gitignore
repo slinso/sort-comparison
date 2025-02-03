@@ -26,3 +26,4 @@ go.work.sum
 
 out.txt
 pprof.*
+test.csv

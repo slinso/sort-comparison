@@ -23,7 +23,7 @@ func AmericanFlagSort(arr []int) {
 	}
 
 	// Find the maximum value to determine the number of 8-bit digits needed.
-	max := maxValue(arr)
+	max := MaxValue(arr)
 
 	// Determine the starting shift (most significant 8-bit group).
 	shift := 0

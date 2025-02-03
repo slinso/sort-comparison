@@ -27,7 +27,7 @@ func BeadSort(arr []int) {
 		return
 	}
 
-	max := maxValue(arr)
+	max := MaxValue(arr)
 
 	// Optimization: if the maximum value is very high, fallback to built-in sort
 	maxThreshold := nLen * 100
@@ -82,7 +82,7 @@ func BeadSortInspired(arr []int) []int {
 		return arr
 	}
 
-	max := maxValue(arr)
+	max := MaxValue(arr)
 	maxThreshold := nLen * 100
 	if max > maxThreshold {
 		slices.Sort(arr)

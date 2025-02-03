@@ -27,7 +27,7 @@ func PostmanSort(arr []int) []int {
 	}
 
 	// Find minimum and maximum values
-	min, max := minMaxValue(arr)
+	min, max := MinMaxValue(arr)
 
 	rangeSize := max - min + 1
 

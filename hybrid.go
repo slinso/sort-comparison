@@ -17,7 +17,7 @@ func HybridSort(arr []int) []int {
 	}
 
 	// Analyze array to decide.
-	minVal, maxVal := minMaxValue(arr)
+	minVal, maxVal := MinMaxValue(arr)
 	rng := maxVal - minVal + 1
 
 	// If very small, use insertion sort.
@@ -60,7 +60,7 @@ func countingSort(arr []int, min, max int) []int {
 
 // parallelRadixSort implements a parallel LSD radix for large arrays.
 func parallelRadixSort(arr []int) []int {
-	max := maxValue(arr)
+	max := MaxValue(arr)
 
 	passes := 0
 	for tmp := max; tmp > 0; tmp >>= 8 {
