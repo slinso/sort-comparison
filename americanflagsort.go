@@ -17,18 +17,13 @@ package sortcomparison
 //
 // Space Complexity:
 //   - O(1) auxiliary space aside from recursion (fixed arrays of size 256 are used).
-func AmericanFlagSort(arr []int) []int {
+func AmericanFlagSort(arr []int) {
 	if len(arr) < 2 {
-		return arr
+		return
 	}
 
 	// Find the maximum value to determine the number of 8-bit digits needed.
-	max := arr[0]
-	for _, v := range arr {
-		if v > max {
-			max = v
-		}
-	}
+	max := maxValue(arr)
 
 	// Determine the starting shift (most significant 8-bit group).
 	shift := 0
@@ -40,7 +35,6 @@ func AmericanFlagSort(arr []int) []int {
 	}
 
 	americanFlagSort(arr, 0, len(arr), shift)
-	return arr
 }
 
 // americanFlagSort recursively sorts arr[start:end] using American Flag Sort,
