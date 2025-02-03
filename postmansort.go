@@ -1,6 +1,8 @@
 package sortcomparison
 
-import "sort"
+import (
+	"slices"
+)
 
 // PostmanSort sorts a slice of non-negative integers using a stable counting sort approach,
 // often referred to as PostmanSort because it "delivers" elements into their proper buckets.
@@ -19,26 +21,19 @@ import "sort"
 // Space Complexity:
 //   - O(n + r), due to the count array and auxiliary output slice.
 func PostmanSort(arr []int) []int {
-	if len(arr) < 2 {
+	nLen := len(arr)
+	if nLen < 2 {
 		return arr
 	}
 
 	// Find minimum and maximum values
-	min, max := arr[0], arr[0]
-	for _, v := range arr {
-		if v < min {
-			min = v
-		}
-		if v > max {
-			max = v
-		}
-	}
+	min, max := minMaxValue(arr)
 
 	rangeSize := max - min + 1
 
-	// TODO: if the range is too large, use a different sorting algorithm
-	if rangeSize > 1000000 {
-		sort.Ints(arr)
+	// Optimization: if the range is too large, fall back to a stdlib sort
+	if rangeSize > 2*nLen {
+		slices.Sort(arr)
 		return arr
 	}
 
@@ -54,15 +49,13 @@ func PostmanSort(arr []int) []int {
 	}
 
 	// Build the output slice
-	output := make([]int, len(arr))
+	output := make([]int, nLen)
 	// Iterate backwards for stability
-	for i := len(arr) - 1; i >= 0; i-- {
+	for i := nLen - 1; i >= 0; i-- {
 		val := arr[i]
 		count[val-min]--
 		output[count[val-min]] = val
 	}
 
-	// Copy the sorted output back to the original array
-	copy(arr, output)
-	return arr
+	return output
 }

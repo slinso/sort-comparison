@@ -71,6 +71,7 @@ var (
 		{"PancakeSort", PancakeSort, nil},
 		{"PatienceSort", PatienceSort, nil},
 		{"PigeonholeSort", PigeonholeSort, nil},
+		{"PostmanSort", nil, PostmanSort},
 		{"QuantumSort", nil, QuantumSort},
 		{"PostmanSort", nil, PostmanSort},
 		{"QuickSort", QuickSort, nil},
