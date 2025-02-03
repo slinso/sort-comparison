@@ -1,0 +1,57 @@
+goos: linux
+goarch: amd64
+pkg: github.com/slinso/sortcomparison
+cpu: Intel(R) Core(TM) i7-6700T CPU @ 2.80GHz
+                                                       │   out.txt    │
+                                                       │    sec/op    │
+Sort/dist=RandomMaxN/algo=StdSort/size=10-8              54.34n ±  9%
+Sort/dist=RandomMaxN/algo=AdaptiveSort/size=10-8         594.4n ± 31%
+Sort/dist=RandomMaxN/algo=AmericanFlagSort/size=10-8     997.5n ±  1%
+Sort/dist=RandomMaxN/algo=BeadSort/size=10-8             722.2n ± 11%
+Sort/dist=RandomMaxN/algo=BeadSortInspired/size=10-8     164.7n ±  9%
+Sort/dist=RandomMaxN/algo=BitonicSort/size=10-8          215.8n ± 17%
+Sort/dist=RandomMaxN/algo=BitonicSortAny/size=10-8       646.0n ±  6%
+Sort/dist=RandomMaxN/algo=BlockSort/size=10-8            188.0n ±  9%
+Sort/dist=RandomMaxN/algo=BubbleSort/size=10-8           77.36n ± 14%
+Sort/dist=RandomMaxN/algo=BucketSort/size=10-8           460.9n ±  6%
+Sort/dist=RandomMaxN/algo=BurstSort/size=10-8            233.6n ±  7%
+Sort/dist=RandomMaxN/algo=CascadeSort/size=10-8          604.3n ±  7%
+Sort/dist=RandomMaxN/algo=CocktailShakerSort/size=10-8   60.39n ± 22%
+Sort/dist=RandomMaxN/algo=CombSort/size=10-8             79.52n ±  8%
+Sort/dist=RandomMaxN/algo=CountingSort/size=10-8         135.7n ±  9%
+Sort/dist=RandomMaxN/algo=CubeSort/size=10-8             42.25n ± 10%
+Sort/dist=RandomMaxN/algo=CycleSort/size=10-8            132.9n ± 18%
+Sort/dist=RandomMaxN/algo=ExchangeSort/size=10-8         70.67n ±  6%
+Sort/dist=RandomMaxN/algo=FlashSort/size=10-8            262.1n ±  3%
+Sort/dist=RandomMaxN/algo=GallopingSort/size=10-8        114.4n ± 15%
+Sort/dist=RandomMaxN/algo=GnomeSort/size=10-8            77.62n ± 28%
+Sort/dist=RandomMaxN/algo=GrailSort/size=10-8            48.13n ±  8%
+Sort/dist=RandomMaxN/algo=HeapSort/size=10-8             129.3n ± 20%
+Sort/dist=RandomMaxN/algo=HybridSortSonnet/size=10-8     56.40n ±  9%
+Sort/dist=RandomMaxN/algo=InsertionSort/size=10-8        48.78n ± 10%
+Sort/dist=RandomMaxN/algo=IntroSort/size=10-8            88.77n ± 10%
+Sort/dist=RandomMaxN/algo=JupiterSort/size=10-8          53.96n ± 24%
+Sort/dist=RandomMaxN/algo=LibrarySort/size=10-8          305.6n ± 11%
+Sort/dist=RandomMaxN/algo=MergeSort/size=10-8            658.5n ± 11%
+Sort/dist=RandomMaxN/algo=OddEvenSort/size=10-8          67.72n ± 18%
+Sort/dist=RandomMaxN/algo=PancakeSort/size=10-8          144.3n ±  6%
+Sort/dist=RandomMaxN/algo=PatienceSort/size=10-8         853.5n ± 16%
+Sort/dist=RandomMaxN/algo=PigeonholeSort/size=10-8       520.2n ± 14%
+Sort/dist=RandomMaxN/algo=PostmanSort/size=10-8          137.0n ±  8%
+Sort/dist=RandomMaxN/algo=QuantumSortO3/size=10-8        138.2n ±  8%
+Sort/dist=RandomMaxN/algo=QuickSort/size=10-8            73.73n ± 16%
+Sort/dist=RandomMaxN/algo=RadixSortLSD/size=10-8         1.251µ ±  1%
+Sort/dist=RandomMaxN/algo=RadixSortMSD/size=10-8         100.9n ±  9%
+Sort/dist=RandomMaxN/algo=SampleSort/size=10-8           57.41n ± 20%
+Sort/dist=RandomMaxN/algo=SelectionSort/size=10-8        110.9n ±  4%
+Sort/dist=RandomMaxN/algo=ShellSort/size=10-8            63.77n ±  5%
+Sort/dist=RandomMaxN/algo=SimplePancakeSort/size=10-8    135.7n ±  9%
+Sort/dist=RandomMaxN/algo=SmoothSort/size=10-8           167.8n ± 11%
+Sort/dist=RandomMaxN/algo=SpreadSort/size=10-8           59.18n ±  5%
+Sort/dist=RandomMaxN/algo=StrandSort/size=10-8           543.8n ± 29%
+Sort/dist=RandomMaxN/algo=TimSort/size=10-8              99.48n ±  8%
+Sort/dist=RandomMaxN/algo=TournamentSort/size=10-8       184.1n ±  1%
+Sort/dist=RandomMaxN/algo=TreeSort/size=10-8             588.0n ±  9%
+Sort/dist=RandomMaxN/algo=WeaveMergeSort/size=10-8       107.1n ±  8%
+Sort/dist=RandomMaxN/algo=WikiSort/size=10-8             413.0n ±  3%
+geomean                                                  164.0n

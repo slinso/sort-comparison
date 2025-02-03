@@ -138,15 +138,12 @@ func BenchmarkSort(b *testing.B) {
 				if s.fn != nil {
 					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
 						data := gen.Data(size)
-						b.ResetTimer()
-						b.StopTimer()
+						testData := make([]int, len(data))
+
 						for i := 0; i < b.N; i++ {
-							testData := make([]int, len(data))
 							copy(testData, data)
 
-							b.StartTimer()
 							s.fn(testData)
-							b.StopTimer()
 						}
 					})
 				}
@@ -154,15 +151,12 @@ func BenchmarkSort(b *testing.B) {
 				if s.fnNotInPlace != nil {
 					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
 						data := gen.Data(size)
-						b.ResetTimer()
-						b.StopTimer()
+						testData := make([]int, len(data))
+
 						for i := 0; i < b.N; i++ {
-							testData := make([]int, len(data))
 							copy(testData, data)
 
-							b.StartTimer()
 							s.fnNotInPlace(testData)
-							b.StopTimer()
 						}
 					})
 				}

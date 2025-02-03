@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1200" height="700"
+    xmlns="http://www.w3.org/2000/svg">
+    <!-- Define margins -->
+    <rect x="0" y="0" width="1200" height="700" fill="white"/>
+    <!-- Axes -->
+    <line x1="100" y1="50" x2="100" y2="600" stroke="black" stroke-width="2"/>
+    <line x1="100" y1="600" x2="1150" y2="600" stroke="black" stroke-width="2"/>
+
+    <!-- Title -->
+    <text x="600" y="30" text-anchor="middle" font-size="18" fill="black">
+    Sorting Algorithms Runtime (in nanoseconds)
+    </text>
+
+    <!-- Y-Axis label -->
+    <text x="40" y="325" transform="rotate(-90 40,325)" text-anchor="middle" font-size="14" fill="black">
+    Runtime (ns)
+    </text>
+
+    <!-- X-Axis label -->
+    <text x="625" y="680" text-anchor="middle" font-size="14" fill="black">
+    Algorithm
+    </text>
+
+    <!-- Configuration for bars -->
+    <!-- Chart area: x from 100 to 1150, y from 50 to 600 (height=550) -->
+    <!-- Each bar: width = 20, gap = 10 -->
+    <!-- Scaling: max runtime approx 1000ns => height = 550px -->
+
+    <!-- Data points -->
+    <!-- Format: [Label, runtime]  -->
+    <!-- runtimes in ns: -->
+    <!-- StdSort: 54.34, AdaptiveSort: 594.4, AmericanFlagSort: 997.5, BeadSort: 722.2, -->
+    <!-- BeadSortInspired: 164.7, BitonicSort: 215.8, BitonicSortAny: 646.0, BlockSort: 188.0, -->
+    <!-- BubbleSort: 77.36, BucketSort: 460.9, BurstSort: 233.6, CascadeSort: 604.3, -->
+    <!-- CocktailShakerSort: 60.39, CombSort: 79.52, CountingSort: 135.7, CubeSort: 42.25, -->
+    <!-- CycleSort: 132.9, ExchangeSort: 70.67, FlashSort: 262.1, GallopingSort: 114.4, -->
+    <!-- GnomeSort: 77.62, GrailSort: 48.13, HeapSort: 129.3, HybridSortSonnet: 56.40, -->
+    <!-- InsertionSort: 48.78, IntroSort: 88.77, JupiterSort: 53.96, LibrarySort: 305.6, -->
+    <!-- MergeSort: 658.5, OddEvenSort: 67.72, PancakeSort: 144.3, PatienceSort: 853.5, -->
+    <!-- PigeonholeSort: 520.2 -->
+
+    <!-- Loop through bars (manually laid out) -->
+
+    <!-- Bar configuration -->
+    <!-- Starting X = 100, bar width = 20, gap = 10 -->
+
+    <!-- 1. StdSort -->
+    <rect x="100" y="{calcY(54.34)}" width="20" height="{calcH(54.34)}" fill="#3498db"/>
+    <!-- Since SVG doesn't support inline calc, we precompute: height = 54.34/1000*550 = ~29.887, y = 600 - 29.887 = 570.11 -->
+    <rect x="100" y="570.1" width="20" height="29.9" fill="#3498db"/>
+    <text x="110" y="615" text-anchor="middle" font-size="10" transform="rotate(45 110,615)">StdSort</text>
+
+    <!-- 2. AdaptiveSort -->
+    <!-- Height: 594.4/1000*550 = 326.92; y = 600 - 326.92 = 273.08 -->
+    <rect x="130" y="273.1" width="20" height="326.9" fill="#2ecc71"/>
+    <text x="140" y="615" text-anchor="middle" font-size="10" transform="rotate(45 140,615)">AdaptiveSort</text>
+
+    <!-- 3. AmericanFlagSort -->
+    <!-- Height: 997.5/1000*550 = 548.6; y = 600 - 548.6 = 51.4 -->
+    <rect x="160" y="51.4" width="20" height="548.6" fill="#e74c3c"/>
+    <text x="170" y="615" text-anchor="middle" font-size="10" transform="rotate(45 170,615)">AmericanFlagSort</text>
+
+    <!-- 4. BeadSort -->
+    <!-- Height: 722.2 ns -> 722.2/1000 * 550 = 397.21; y = 600 - 397.21 = 202.79 -->
+    <rect x="190" y="202.8" width="20" height="397.2" fill="#9b59b6"/>
+    <text x="200" y="615" text-anchor="middle" font-size="10" transform="rotate(45 200,615)">BeadSort</text>
+
+    <!-- 5. BeadSortInspired -->
+    <!-- Height: 164.7 -> 90.59; y = 600 - 90.59 = 509.41 -->
+    <rect x="220" y="509.4" width="20" height="90.6" fill="#f1c40f"/>
+    <text x="230" y="615" text-anchor="middle" font-size="10" transform="rotate(45 230,615)">BeadSortInspired</text>
+
+    <!-- 6. BitonicSort -->
+    <!-- Height: 215.8 -> 215.8/1000*550 = 118.69; y = 600 - 118.69 = 481.31 -->
+    <rect x="250" y="481.3" width="20" height="118.7" fill="#e67e22"/>
+    <text x="260" y="615" text-anchor="middle" font-size="10" transform="rotate(45 260,615)">BitonicSort</text>
+
+    <!-- 7. BitonicSortAny -->
+    <!-- Height: 646.0 -> 646/1000*550 = 355.30; y = 600 - 355.3 = 244.7 -->
+    <rect x="280" y="244.7" width="20" height="355.3" fill="#1abc9c"/>
+    <text x="290" y="615" text-anchor="middle" font-size="10" transform="rotate(45 290,615)">BitonicSortAny</text>
+
+    <!-- 8. BlockSort -->
+    <!-- Height: 188.0 -> 103.4; y = 600 - 103.4 = 496.6 -->
+    <rect x="310" y="496.6" width="20" height="103.4" fill="#34495e"/>
+    <text x="320" y="615" text-anchor="middle" font-size="10" transform="rotate(45 320,615)">BlockSort</text>
+
+    <!-- 9. BubbleSort -->
+    <!-- Height: 77.36 -> 42.55; y = 600 - 42.55 = 557.45 -->
+    <rect x="340" y="557.5" width="20" height="42.6" fill="#d35400"/>
+    <text x="350" y="615" text-anchor="middle" font-size="10" transform="rotate(45 350,615)">BubbleSort</text>
+
+    <!-- 10. BucketSort -->
+    <!-- Height: 460.9 -> 253.50; y = 600 - 253.5 = 346.5 -->
+    <rect x="370" y="346.5" width="20" height="253.5" fill="#27ae60"/>
+    <text x="380" y="615" text-anchor="middle" font-size="10" transform="rotate(45 380,615)">BucketSort</text>
+
+    <!-- 11. BurstSort -->
+    <!-- Height: 233.6 -> 128.48; y = 600 - 128.48 = 471.52 -->
+    <rect x="400" y="471.5" width="20" height="128.5" fill="#8e44ad"/>
+    <text x="410" y="615" text-anchor="middle" font-size="10" transform="rotate(45 410,615)">BurstSort</text>
+
+    <!-- 12. CascadeSort -->
+    <!-- Height: 604.3 -> 332.37; y = 600 - 332.37 = 267.63 -->
+    <rect x="430" y="267.6" width="20" height="332.4" fill="#c0392b"/>
+    <text x="440" y="615" text-anchor="middle" font-size="10" transform="rotate(45 440,615)">CascadeSort</text>
+
+    <!-- 13. CocktailShakerSort -->
+    <!-- Height: 60.39 -> 33.21; y = 600 - 33.21 = 566.79 -->
+    <rect x="460" y="566.8" width="20" height="33.2" fill="#16a085"/>
+    <text x="470" y="615" text-anchor="middle" font-size="10" transform="rotate(45 470,615)">CocktailShakerSort</text>
+
+    <!-- 14. CombSort -->
+    <!-- Height: 79.52 -> 43.74; y = 600 - 43.74 = 556.26 -->
+    <rect x="490" y="556.3" width="20" height="43.7" fill="#2980b9"/>
+    <text x="500" y="615" text-anchor="middle" font-size="10" transform="rotate(45 500,615)">CombSort</text>
+
+    <!-- 15. CountingSort -->
+    <!-- Height: 135.7 -> 74.635; y = 600 - 74.64 = 525.36 -->
+    <rect x="520" y="525.4" width="20" height="74.6" fill="#f39c12"/>
+    <text x="530" y="615" text-anchor="middle" font-size="10" transform="rotate(45 530,615)">CountingSort</text>
+
+    <!-- 16. CubeSort -->
+    <!-- Height: 42.25 -> 23.24; y = 600 - 23.24 = 576.76 -->
+    <rect x="550" y="576.8" width="20" height="23.2" fill="#d35400"/>
+    <text x="560" y="615" text-anchor="middle" font-size="10" transform="rotate(45 560,615)">CubeSort</text>
+
+    <!-- 17. CycleSort -->
+    <!-- Height: 132.9 -> 73.10; y = 600 - 73.1 = 526.90 -->
+    <rect x="580" y="526.9" width="20" height="73.1" fill="#27ae60"/>
+    <text x="590" y="615" text-anchor="middle" font-size="10" transform="rotate(45 590,615)">CycleSort</text>
+
+    <!-- 18. ExchangeSort -->
+    <!-- Height: 70.67 -> 38.87; y = 600 - 38.87 = 561.13 -->
+    <rect x="610" y="561.1" width="20" height="38.9" fill="#8e44ad"/>
+    <text x="620" y="615" text-anchor="middle" font-size="10" transform="rotate(45 620,615)">ExchangeSort</text>
+
+    <!-- 19. FlashSort -->
+    <!-- Height: 262.1 -> 144.16; y = 600 - 144.16 = 455.84 -->
+    <rect x="640" y="455.8" width="20" height="144.2" fill="#c0392b"/>
+    <text x="650" y="615" text-anchor="middle" font-size="10" transform="rotate(45 650,615)">FlashSort</text>
+
+    <!-- 20. GallopingSort -->
+    <!-- Height: 114.4 -> 62.92; y = 600 - 62.92 = 537.08 -->
+    <rect x="670" y="537.1" width="20" height="62.9" fill="#16a085"/>
+    <text x="680" y="615" text-anchor="middle" font-size="10" transform="rotate(45 680,615)">GallopingSort</text>
+
+    <!-- 21. GnomeSort -->
+    <!-- Height: 77.62 -> 42.69; y = 600 - 42.69 = 557.31 -->
+    <rect x="700" y="557.3" width="20" height="42.7" fill="#2980b9"/>
+    <text x="710" y="615" text-anchor="middle" font-size="10" transform="rotate(45 710,615)">GnomeSort</text>
+
+    <!-- 22. GrailSort -->
+    <!-- Height: 48.13 -> 26.47; y = 600 - 26.47 = 573.53 -->
+    <rect x="730" y="573.5" width="20" height="26.5" fill="#f39c12"/>
+    <text x="740" y="615" text-anchor="middle" font-size="10" transform="rotate(45 740,615)">GrailSort</text>
+
+    <!-- 23. HeapSort -->
+    <!-- Height: 129.3 -> 71.12; y = 600 - 71.12 = 528.88 -->
+    <rect x="760" y="528.9" width="20" height="71.1" fill="#d35400"/>
+    <text x="770" y="615" text-anchor="middle" font-size="10" transform="rotate(45 770,615)">HeapSort</text>
+
+    <!-- 24. HybridSortSonnet -->
+    <!-- Height: 56.40 -> 30.99; y = 600 - 31.0 = 569.0 -->
+    <rect x="790" y="569.0" width="20" height="31.0" fill="#27ae60"/>
+    <text x="800" y="615" text-anchor="middle" font-size="10" transform="rotate(45 800,615)">HybridSortSonnet</text>
+
+    <!-- 25. InsertionSort -->
+    <!-- Height: 48.78 -> 26.83; y = 600 - 26.83 = 573.17 -->
+    <rect x="820" y="573.2" width="20" height="26.8" fill="#8e44ad"/>
+    <text x="830" y="615" text-anchor="middle" font-size="10" transform="rotate(45 830,615)">InsertionSort</text>
+
+    <!-- 26. IntroSort -->
+    <!-- Height: 88.77 -> 48.82; y = 600 - 48.82 = 551.18 -->
+    <rect x="850" y="551.2" width="20" height="48.8" fill="#c0392b"/>
+    <text x="860" y="615" text-anchor="middle" font-size="10" transform="rotate(45 860,615)">IntroSort</text>
+
+    <!-- 27. JupiterSort -->
+    <!-- Height: 53.96 -> 29.68; y = 600 - 29.68 = 570.32 -->
+    <rect x="880" y="570.3" width="20" height="29.7" fill="#16a085"/>
+    <text x="890" y="615" text-anchor="middle" font-size="10" transform="rotate(45 890,615)">JupiterSort</text>
+
+    <!-- 28. LibrarySort -->
+    <!-- Height: 305.6 -> 168.08; y = 600 - 168.08 = 431.92 -->
+    <rect x="910" y="431.9" width="20" height="168.1" fill="#2980b9"/>
+    <text x="920" y="615" text-anchor="middle" font-size="10" transform="rotate(45 920,615)">LibrarySort</text>
+
+    <!-- 29. MergeSort -->
+    <!-- Height: 658.5 -> 362.18; y = 600 - 362.18 = 237.82 -->
+    <rect x="940" y="237.8" width="20" height="362.2" fill="#f39c12"/>
+    <text x="950" y="615" text-anchor="middle" font-size="10" transform="rotate(45 950,615)">MergeSort</text>
+
+    <!-- 30. OddEvenSort -->
+    <!-- Height: 67.72 -> 37.25; y = 600 - 37.25 = 562.75 -->
+    <rect x="970" y="562.8" width="20" height="37.2" fill="#d35400"/>
+    <text x="980" y="615" text-anchor="middle" font-size="10" transform="rotate(45 980,615)">OddEvenSort</text>
+
+    <!-- 31. PancakeSort -->
+    <!-- Height: 144.3 -> 79.37; y = 600 - 79.37 = 520.63 -->
+    <rect x="1000" y="520.6" width="20" height="79.4" fill="#27ae60"/>
+    <text x="1010" y="615" text-anchor="middle" font-size="10" transform="rotate(45 1010,615)">PancakeSort</text>
+
+    <!-- 32. PatienceSort -->
+    <!-- Height: 853.5 -> 469.43; y = 600 - 469.43 = 130.57 -->
+    <rect x="1030" y="130.6" width="20" height="469.4" fill="#8e44ad"/>
+    <text x="1040" y="615" text-anchor="middle" font-size="10" transform="rotate(45 1040,615)">PatienceSort</text>
+
+    <!-- 33. PigeonholeSort -->
+    <!-- Height: 520.2 -> 286.11; y = 600 - 286.11 = 313.89 -->
+    <rect x="1060" y="313.9" width="20" height="286.1" fill="#c0392b"/>
+    <text x="1070" y="615" text-anchor="middle" font-size="10" transform="rotate(45 1070,615)">PigeonholeSort</text>
+
+    <!-- Y-Axis ticks and labels (every 200ns) -->
+    <line x1="95" y1="600" x2="100" y2="600" stroke="black" stroke-width="1"/>
+    <text x="70" y="605" font-size="10" fill="black">0</text>
+
+    <line x1="95" y1="600-550*0.2" x2="100" y2="600-550*0.2" stroke="black" stroke-width="1"/>
+    <!-- 200ns: height = 200/1000*550 = 110, y = 600 -110 = 490 -->
+    <line x1="95" y1="490" x2="100" y2="490" stroke="black" stroke-width="1"/>
+    <text x="70" y="495" font-size="10" fill="black">200</text>
+
+    <line x1="95" y1="600-550*0.4" x2="100" y2="600-550*0.4" stroke="black" stroke-width="1"/>
+    <!-- 400ns: height = 220, y = 600 -220 = 380 -->
+    <line x1="95" y1="380" x2="100" y2="380" stroke="black" stroke-width="1"/>
+    <text x="70" y="385" font-size="10" fill="black">400</text>
+
+    <line x1="95" y1="600-550*0.6" x2="100" y2="600-550*0.6" stroke="black" stroke-width="1"/>
+    <!-- 600ns: height = 330, y = 600 -330 = 270 -->
+    <line x1="95" y1="270" x2="100" y2="270" stroke="black" stroke-width="1"/>
+    <text x="70" y="275" font-size="10" fill="black">600</text>
+
+    <line x1="95" y1="600-550*0.8" x2="100" y2="600-550*0.8" stroke="black" stroke-width="1"/>
+    <!-- 800ns: height = 440, y = 600 -440 = 160 -->
+    <line x1="95" y1="160" x2="100" y2="160" stroke="black" stroke-width="1"/>
+    <text x="70" y="165" font-size="10" fill="black">800</text>
+
+    <line x1="95" y1="50" x2="100" y2="50" stroke="black" stroke-width="1"/>
+    <text x="70" y="55" font-size="10" fill="black">1000</text>
+</svg>

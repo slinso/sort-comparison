@@ -3,6 +3,14 @@
 A comprehensive collection of sorting algorithm implementations in Go for
 educational purposes.
 
+# ideas
+
+- one svg bar chart for each algo
+- one svg bar chart for each distribution
+- svg generation might be simpler to incorporate into a local test setup
+- a single gigantic echarts with distribution as series + on algo has to be
+  selectable as well
+
 ## Sorting Algorithms
 
 ### Comparison Based
