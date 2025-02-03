@@ -57,6 +57,7 @@ var (
 		{"CycleSort", CycleSort, nil},
 		{"ExchangeSort", ExchangeSort, nil},
 		{"FlashSort", FlashSort, nil},
+		{"GallopingSort", GallopingSort, nil},
 		{"GnomeSort", GnomeSort, nil},
 		{"GrailSort", nil, GrailSort},
 		{"HeapSort", HeapSort, nil},

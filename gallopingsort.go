@@ -11,13 +11,13 @@ package sortcomparison
 //
 // Space Complexity: O(1) auxiliary space
 // Stable: Yes
-func GallopingSort(arr []int) []int {
-	n := len(arr)
-	if n < 2 {
-		return arr
+func GallopingSort(arr []int) {
+	nLen := len(arr)
+	if nLen < 2 {
+		return
 	}
 
-	for i := 1; i < n; i++ {
+	for i := 1; i < nLen; i++ {
 		if arr[i] < arr[i-1] {
 			// Found inversion, find correct position using galloping search
 			target := arr[i]
@@ -29,7 +29,6 @@ func GallopingSort(arr []int) []int {
 			}
 		}
 	}
-	return arr
 }
 
 // gallopSearch uses exponential probing followed by binary search
@@ -61,39 +60,6 @@ func gallopSearch(arr []int, target int, left, right int) int {
 	for low <= high {
 		mid := low + (high-low)/2
 		if arr[mid] < target {
-			low = mid + 1
-		} else {
-			high = mid - 1
-		}
-	}
-	return low
-}
-
-// gallopSearch finds the first index in arr[left:right+1] where target should be inserted.
-// It first performs an exponential search ("galloping") to narrow the search interval,
-// then uses binary search to pinpoint the exact position.
-func gallopSearchO3(arr []int, target int, left, right int) int {
-	// If target is greater than all elements, return the index after the last element.
-	if arr[right] <= target {
-		return right + 1
-	}
-
-	// Exponential search phase.
-	offset := 1
-	for left+offset <= right && arr[left+offset] <= target {
-		offset *= 2
-	}
-	// Boundaries for binary search.
-	low := left + offset/2
-	high := left + offset
-	if high > right {
-		high = right
-	}
-
-	// Binary search phase within [low, high].
-	for low <= high {
-		mid := low + (high-low)/2
-		if arr[mid] <= target {
 			low = mid + 1
 		} else {
 			high = mid - 1
