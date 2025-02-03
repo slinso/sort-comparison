@@ -5,8 +5,8 @@ package sortcomparison
 // It is efficient for partially sorted data, GC friendly (single aux allocation)
 // and idiomatic Go code.
 func CascadeSort(arr []int) []int {
-	n := len(arr)
-	if n < 2 {
+	nLen := len(arr)
+	if nLen < 2 {
 		return arr
 	}
 
@@ -14,10 +14,10 @@ func CascadeSort(arr []int) []int {
 	// Each run is represented as a two-element array: [start, end)
 	var runs [][2]int
 	start := 0
-	for start < n {
+	for start < nLen {
 		end := start + 1
 		// Extend run as long as next element is in order.
-		for end < n && arr[end-1] <= arr[end] {
+		for end < nLen && arr[end-1] <= arr[end] {
 			end++
 		}
 		runs = append(runs, [2]int{start, end})
@@ -30,7 +30,7 @@ func CascadeSort(arr []int) []int {
 	}
 
 	// Allocate temporary buffer once for merging.
-	temp := make([]int, n)
+	temp := make([]int, nLen)
 
 	// Cascade merge: merge adjacent runs until one run remains.
 	for len(runs) > 1 {

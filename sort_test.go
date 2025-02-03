@@ -49,6 +49,7 @@ var (
 		{"BubbleSort", BubbleSort, nil},
 		{"BucketSort", BucketSort[int], nil},
 		{"BurstSort", BurstSort, nil},
+		{"CascadeSort", nil, CascadeSort},
 		{"CocktailShakerSort", CocktailShakerSort, nil},
 		{"CombSort", CombSort, nil},
 		{"CountingSort", CountingSort, CountingSortRet},
