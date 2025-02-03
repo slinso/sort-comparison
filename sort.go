@@ -1,9 +1,5 @@
 package sortcomparison
 
-import (
-	"golang.org/x/exp/constraints"
-)
-
 // insertionSort performs an in-place insertion sort on the slice.
 func insertionSort(arr []int) {
 	n := len(arr)
@@ -50,9 +46,33 @@ func nextPowerOfTwo(n int) int {
 	return p
 }
 
-func min[T constraints.Ordered](a, b T) T {
-	if a < b {
-		return a
+func minValue(arr []int) int {
+	m := arr[0]
+
+	for _, v := range arr {
+		m = min(m, v)
 	}
-	return b
+
+	return m
+}
+
+func maxValue(arr []int) int {
+	m := arr[0]
+
+	for _, v := range arr {
+		m = max(m, v)
+	}
+
+	return m
+}
+
+func minMaxValue(arr []int) (int, int) {
+	minValue, maxValue := arr[0], arr[0]
+
+	for _, v := range arr {
+		minValue = min(minValue, v)
+		maxValue = max(maxValue, v)
+	}
+
+	return minValue, maxValue
 }

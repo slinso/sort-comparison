@@ -39,7 +39,9 @@ var (
 
 	sortImplementations = []Sorter{
 		{"StdSort", slices.Sort[[]int, int], nil},
-		{"BeadSort", nil, BeadSort},
+		{"AdaptiveSort", nil, AdaptiveSort},
+		{"BeadSort", BeadSort, nil},
+		{"BeadSortInspired", nil, BeadSortInspired},
 		{"BitonicSort", BitonicSort, nil},
 		{"BitonicSortAny", BitonicSortAny, nil},
 		{"BlockSort", BlockSort, nil},

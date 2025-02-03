@@ -65,6 +65,7 @@ func AdaptiveSort(arr []int) []int {
 		}
 		runs = newRuns
 	}
+
 	return arr
 }
 

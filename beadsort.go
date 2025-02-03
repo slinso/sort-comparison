@@ -1,7 +1,7 @@
 package sortcomparison
 
 import (
-	"sort"
+	"slices"
 )
 
 // BeadSort sorts an array of non-negative integers using the bead sort algorithm.
@@ -20,28 +20,24 @@ import (
 //
 // Note:
 // - If the maximum value exceeds a predefined threshold, the algorithm falls back to the built-in sort.
-func BeadSort(arr []int) []int {
-	if len(arr) < 2 {
-		return arr
+func BeadSort(arr []int) {
+	nLen := len(arr)
+
+	if nLen < 2 {
+		return
 	}
 
-	// Find maximum element
-	max := arr[0]
-	for _, v := range arr {
-		if v > max {
-			max = v
-		}
-	}
+	max := maxValue(arr)
 
-	// TODO: Optimization: if the maximum value is very high, fallback to built-in sort
-	const maxThreshold = 10000
+	// Optimization: if the maximum value is very high, fallback to built-in sort
+	maxThreshold := nLen * 100
 	if max > maxThreshold {
-		sort.Ints(arr)
-		return arr
+		slices.Sort(arr)
+		return
 	}
 
 	// Create grid
-	beads := make([][]bool, len(arr))
+	beads := make([][]bool, nLen)
 	for i := range beads {
 		beads[i] = make([]bool, max)
 		// Set beads
@@ -53,22 +49,22 @@ func BeadSort(arr []int) []int {
 	// Let beads fall
 	for j := 0; j < max; j++ {
 		sum := 0
-		for i := 0; i < len(arr); i++ {
+		for i := 0; i < nLen; i++ {
 			if beads[i][j] {
 				sum++
 			}
 		}
 		// Place beads at bottom
-		for i := len(arr) - 1; i >= len(arr)-sum; i-- {
+		for i := nLen - 1; i >= nLen-sum; i-- {
 			beads[i][j] = true
 		}
-		for i := len(arr) - sum - 1; i >= 0; i-- {
+		for i := nLen - sum - 1; i >= 0; i-- {
 			beads[i][j] = false
 		}
 	}
 
 	// Count final beads to form the sorted array
-	for i := 0; i < len(arr); i++ {
+	for i := 0; i < nLen; i++ {
 		arr[i] = 0
 		for j := 0; j < max; j++ {
 			if beads[i][j] {
@@ -76,6 +72,40 @@ func BeadSort(arr []int) []int {
 			}
 		}
 	}
+}
 
-	return arr
+// BeadSortInspired heavy use of bit-level optimizations changes the character of the algorithm.
+// In that sense, it's more of an optimized variant **inspired** by bead sort rather than a pure bead sort.
+func BeadSortInspired(arr []int) []int {
+	nLen := len(arr)
+	if nLen < 2 {
+		return arr
+	}
+
+	max := maxValue(arr)
+	maxThreshold := nLen * 100
+	if max > maxThreshold {
+		slices.Sort(arr)
+		return arr
+	}
+
+	// Process one column at a time
+	counts := make([]int, nLen)
+	for pos := 0; pos < max; pos++ {
+		// Count beads at this position
+		beadsInColumn := 0
+		for i := 0; i < nLen; i++ {
+			if arr[i] > pos {
+				beadsInColumn++
+			}
+		}
+
+		// Add to running counts - represents fallen beads
+		for i := nLen - beadsInColumn; i < nLen; i++ {
+			counts[i]++
+		}
+	}
+
+	// Update original array with counts
+	return counts
 }
