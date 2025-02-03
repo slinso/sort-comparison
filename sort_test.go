@@ -41,6 +41,7 @@ var (
 		{"StdSort", slices.Sort[[]int, int], nil},
 		{"BeadSort", nil, BeadSort},
 		{"BitonicSort", BitonicSort, nil},
+		{"BitonicSortAny", BitonicSortAny, nil},
 		{"BlockSort", BlockSort, nil},
 		{"BubbleSort", BubbleSort, nil},
 		{"BucketSort", BucketSort[int], nil},
@@ -88,12 +89,15 @@ var (
 		{"RandomMaxN", generateRandomIntsMaxN},
 		{"AllZero", generateAllZero},
 		{"Sorted", generateSortedInts},
+		{"Rotated", generateRotated},
 		{"Reversed", generateReversedInts},
 		{"Mountain", generateMountain},
 		{"Valley", generateValley},
 		{"Plateau", generatePlateau},
-		{"Sawtooth", generateSawtooth},
+		{"SmallHills", generateSmallHills},
+		{"RandomMod8", generateRandomMod8},
 		{"RepeatedMod8", generateRepeatedMod8},
+		{"RandomMod16", generateRandomMod16},
 		{"RepeatedMod16", generateRepeatedMod16},
 		{"PushFront", generatePushFront},
 		{"PushBack", generatePushBack},
@@ -101,8 +105,6 @@ var (
 		{"PushMiddle", generatePushMiddle},
 		{"NearlySorted", generateNearlySorted},
 		{"NearlyReversed", generateNearlyReversed},
-		{"RandomMod8", generateRandomMod8},
-		{"RandomMod16", generateRandomMod16},
 	}
 )
 
@@ -171,13 +173,21 @@ func generateReversedInts(n int) []int {
 
 func generateMountain(n int) []int {
 	data := make([]int, n)
-	for i := 0; i < n/2; i++ {
-		data[i] = i
-	}
-	for i := n / 2; i < n; i++ {
-		data[i] = n - i
+	mid := n / 2
+	for i := 0; i < n; i++ {
+		if i <= mid {
+			data[i] = i
+		} else {
+			data[i] = n - i
+		}
 	}
 	return data
+}
+
+func generateRotated(n int) []int {
+	data := generateSortedInts(n)
+	pivot := n / 2
+	return append(data[pivot:], data[:pivot]...)
 }
 
 func generatePlateau(n int) []int {
@@ -191,13 +201,43 @@ func generatePlateau(n int) []int {
 	return data
 }
 
-func generateSawtooth(n int) []int {
+// add a sawtooth distribution implementation
+func generateMod8(n int) []int {
 	data := make([]int, n)
-	for i := range data {
-		if i%2 == 0 {
-			data[i] = i / 2
-		} else {
-			data[i] = i
+	for i := 0; i < n; i++ {
+		data[i] = i % 8
+	}
+	return data
+}
+
+// add a sawtooth distribution implementation
+func generateMod16(n int) []int {
+	data := make([]int, n)
+	for i := 0; i < n; i++ {
+		data[i] = i % 16
+	}
+	return data
+}
+
+// add a small hills distribution implementation
+func generateSmallHills(n int) []int {
+	data := make([]int, n)
+	segment := 20
+	if n < segment {
+		segment = n
+	}
+	for i := 0; i < n; i += segment {
+		end := i + segment
+		if end > n {
+			end = n
+		}
+		mid := (i + end) / 2
+		for j := i; j < end; j++ {
+			if j <= mid {
+				data[j] = j
+			} else {
+				data[j] = end - j + i
+			}
 		}
 	}
 	return data
@@ -369,28 +409,34 @@ func TestSort(t *testing.T) {
 		size int
 		gen  func(int) []int
 	}{
-		{"Random_100", 64, generateRandomIntsMaxN},
-		{"AllZero_100", 64, generateAllZero},
-		{"Sorted_100", 64, generateSortedInts},
-		{"Reversed_100", 64, generateReversedInts},
-		{"Mountain_100", 64, generateMountain},
-		{"Valley_100", 64, generateValley},
-		{"Plateau_100", 64, generatePlateau},
-		{"Sawtooth_100", 64, generateSawtooth},
-		{"RepeatedMod8_100", 64, generateRepeatedMod8},
-		{"RepeatedMod16_100", 64, generateRepeatedMod16},
-		{"PushFront_100", 64, generatePushFront},
-		{"PushBack_100", 64, generatePushBack},
-		{"MiddleToBack_100", 64, generateMiddleToBack},
-		{"PushMiddle_100", 64, generatePushMiddle},
-		{"NearlySorted_100", 64, generateNearlySorted},
-		{"NearlyReversed_100", 64, generateNearlyReversed},
-		{"RandomMod8_100", 64, generateRandomMod8},
-		{"RandomMod16_100", 64, generateRandomMod16},
+		{"Random_100", 100, generateRandomIntsMaxN},
+		{"AllZero_100", 100, generateAllZero},
+		{"Sorted_100", 100, generateSortedInts},
+		{"Rotated_100", 100, generateRotated},
+		{"Reversed_100", 100, generateReversedInts},
+		{"Mountain_100", 100, generateMountain},
+		{"Valley_100", 100, generateValley},
+		{"Plateau_100", 100, generatePlateau},
+		{"SmallHills_100", 100, generateSmallHills},
+		{"RepeatedMod8_100", 100, generateRepeatedMod8},
+		{"RepeatedMod16_100", 100, generateRepeatedMod16},
+		{"PushFront_100", 100, generatePushFront},
+		{"PushBack_100", 100, generatePushBack},
+		{"MiddleToBack_100", 100, generateMiddleToBack},
+		{"PushMiddle_100", 100, generatePushMiddle},
+		{"NearlySorted_100", 100, generateNearlySorted},
+		{"NearlyReversed_100", 100, generateNearlyReversed},
+		{"RandomMod8_100", 100, generateRandomMod8},
+		{"RandomMod16_100", 100, generateRandomMod16},
 	}
 
 	for _, s := range sortImplementations {
 		for _, tc := range testCases {
+			// special case for BitonicSort
+			if s.name == "BitonicSort" {
+				tc.size = 64
+			}
+
 			if s.fn != nil {
 				t.Run(fmt.Sprintf("/Ret/%s/%s", s.name, tc.name), func(t *testing.T) {
 					data := tc.gen(tc.size)

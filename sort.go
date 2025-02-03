@@ -38,6 +38,18 @@ func compareAndSwap(arr []int, i, j int, ascending bool) {
 	}
 }
 
+// nextPowerOfTwo returns the smallest power of two greater than or equal to n.
+func nextPowerOfTwo(n int) int {
+	if n < 1 {
+		return 1
+	}
+	p := 1
+	for p < n {
+		p *= 2
+	}
+	return p
+}
+
 func min[T constraints.Ordered](a, b T) T {
 	if a < b {
 		return a

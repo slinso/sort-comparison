@@ -71,15 +71,3 @@ func oddevenMerge(a []int, lo, n, r int, dir bool) {
 		compareAndSwap(a, lo, lo+r, dir)
 	}
 }
-
-// nextPowerOfTwo returns the smallest power of two greater than or equal to n.
-func nextPowerOfTwo(n int) int {
-	if n < 1 {
-		return 1
-	}
-	p := 1
-	for p < n {
-		p *= 2
-	}
-	return p
-}
