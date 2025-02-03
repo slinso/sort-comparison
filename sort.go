@@ -14,12 +14,12 @@ func insertionSort(arr []int) {
 	}
 }
 
-// insertionSortLowHigh is an in-place insertion sort that operates on arr[low:high+1].
-func insertionSortLowHigh(arr []int, low, high int) {
-	for i := low + 1; i <= high; i++ {
+// insertionSortRange is an in-place insertion sort that operates on arr[low:high+1].
+func insertionSortRange(arr []int, left int, right int) {
+	for i := left + 1; i <= right; i++ {
 		key := arr[i]
 		j := i - 1
-		for j >= low && arr[j] > key {
+		for j >= left && arr[j] > key {
 			arr[j+1] = arr[j]
 			j--
 		}

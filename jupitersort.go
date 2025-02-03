@@ -22,7 +22,7 @@ func JupiterSort(arr []int) {
 
 func jupiterSortHelper(arr []int, low, high int) {
 	if high-low+1 <= jupiterInsertionThreshold {
-		insertionSortLowHigh(arr, low, high)
+		insertionSortRange(arr, low, high)
 		return
 	}
 

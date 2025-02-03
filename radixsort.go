@@ -163,7 +163,7 @@ func radixSortMSDRecursive(arr, temp []int, shift int) {
 
 	// Use insertion sort for small arrays
 	if n <= 16 || shift < 0 {
-		insertionSortRange(arr)
+		insertionSort(arr)
 		return
 	}
 
@@ -211,16 +211,4 @@ func getMSDByte(num, shift int) int {
 		num = ^num
 	}
 	return (num >> (shift * 8)) & 0xFF
-}
-
-func insertionSortRange(arr []int) {
-	for i := 1; i < len(arr); i++ {
-		key := arr[i]
-		j := i - 1
-		for j >= 0 && arr[j] > key {
-			arr[j+1] = arr[j]
-			j--
-		}
-		arr[j+1] = key
-	}
 }
