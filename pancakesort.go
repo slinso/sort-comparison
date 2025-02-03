@@ -21,16 +21,16 @@ package sortcomparison
 // Note:
 //   - This implementation is efficient for small to moderate input sizes and minimizes garbage
 //     collection overhead by performing operations in-place.
-func PancakeSort(arr []int) []int {
-	n := len(arr)
-	if n < 2 {
-		return arr
+func PancakeSort(arr []int) {
+	nLen := len(arr)
+	if nLen < 2 {
+		return
 	}
 
 	// Perform pancake sort on the unsorted part of the array.
-	for currSize := n; currSize > 1; currSize-- {
+	for currSize := nLen; currSize > 1; currSize-- {
 		// Find index of the maximum element in arr[0:currSize]
-		maxIndex := findMaxIndex(arr, currSize)
+		maxIndex := maxIndexBounded(arr, currSize)
 		// If the max element is not already at its place, move it
 		if maxIndex != currSize-1 {
 			// Flip the maximum element to the front if it's not already at index 0.
@@ -41,18 +41,6 @@ func PancakeSort(arr []int) []int {
 			reversePancake(arr, 0, currSize-1)
 		}
 	}
-	return arr
-}
-
-// findMaxIndex returns the index of the maximum element in arr[0:n].
-func findMaxIndex(arr []int, n int) int {
-	maxIndex := 0
-	for i := 1; i < n; i++ {
-		if arr[i] > arr[maxIndex] {
-			maxIndex = i
-		}
-	}
-	return maxIndex
 }
 
 // reverse reverses the slice arr from index start to end (inclusive).

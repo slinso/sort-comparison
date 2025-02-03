@@ -68,6 +68,7 @@ var (
 		{"LibrarySort", LibrarySort, nil},
 		{"MergeSort", MergeSort, nil},
 		{"OddEvenSort", nil, OddEvenSort},
+		{"PancakeSort", PancakeSort, nil},
 		{"PatienceSort", PatienceSort, nil},
 		{"PigeonholeSort", PigeonholeSort, nil},
 		{"QuantumSort", nil, QuantumSort},

@@ -56,6 +56,8 @@ func minValue(arr []int) int {
 	return m
 }
 
+// maxValue returns the maximum integer value from the provided slice.
+// Attention: The slice must contain at least one element, as the function assumes non-empty input.
 func maxValue(arr []int) int {
 	m := arr[0]
 
@@ -64,6 +66,20 @@ func maxValue(arr []int) int {
 	}
 
 	return m
+}
+
+// maxIndexBounded returns the index of the maximum element in the slice arr,
+// considering only the first n elements.
+func maxIndexBounded(arr []int, n int) int {
+	maxIndex := 0
+
+	for i := 1; i < n; i++ {
+		if arr[i] > arr[maxIndex] {
+			maxIndex = i
+		}
+	}
+
+	return maxIndex
 }
 
 func minMaxValue(arr []int) (int, int) {
