@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/aclements/go-moremath/stats"
-	"github.com/kortschak/utter"
 	"github.com/samber/lo"
 	"github.com/vicanso/go-charts/v2"
 	"golang.org/x/perf/benchfmt"
@@ -176,8 +175,6 @@ func main() {
 			}
 		}
 
-		utter.Dump(values)
-
 		output := "svg"
 
 		p, err := charts.BarRender(
@@ -186,7 +183,7 @@ func main() {
 			charts.WidthOptionFunc(2400),
 			charts.HeightOptionFunc(800),
 			charts.LegendOptionFunc(charts.LegendOption{
-				Data: series,
+				Data: lo.Ternary(*flagAvg, []string{"Average"}, series),
 				Padding: charts.Box{
 					Top:  30,
 					Left: 50,
