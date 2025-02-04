@@ -27,6 +27,8 @@ func main() {
 	flagSeries := flag.String("series", "", "[a|d|s]")
 	flagAvg := flag.Bool("avg", false, "average per category")
 	flagFilter := flag.String("filter", "", "filter benchmarks (regexp pattern)")
+	flagWidth := flag.Int("width", 2400, "chart width")
+	flagHeight := flag.Int("height", 800, "chart height")
 
 	flag.Parse()
 
@@ -180,8 +182,8 @@ func main() {
 		p, err := charts.BarRender(
 			values,
 			charts.PaddingOptionFunc(charts.Box{Top: 10, Right: 50, Bottom: 100, Left: 10}),
-			charts.WidthOptionFunc(2400),
-			charts.HeightOptionFunc(800),
+			charts.WidthOptionFunc(*flagWidth),
+			charts.HeightOptionFunc(*flagHeight),
 			charts.LegendOptionFunc(charts.LegendOption{
 				Data: lo.Ternary(*flagAvg, []string{"Average"}, series),
 				Padding: charts.Box{
@@ -205,7 +207,9 @@ func main() {
 					Data:         categories,
 					TextRotation: 4.8,
 					LabelOffset: charts.Box{
-						Top: -5,
+						Top:   -5,
+						Left:  0,
+						Right: 0,
 					},
 					FontSize: 10,
 				}
