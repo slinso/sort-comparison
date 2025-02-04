@@ -11,6 +11,21 @@ educational purposes.
 - a single gigantic echarts with distribution as series + on algo has to be
   selectable as well
 
+# what benchmarks work
+- StdSort up to 1B
+- AdaptiveSort up to 100M
+- AmericanFlagSort up to 100M
+- BeadSort up to 10K - ohne Random
+- BitonicSort up to 10M
+- BlockSort up to 10M
+- BubbleSort up to 100K
+- BucketSort up to 100K
+- BurstSort up to 100M
+- CascadeSort up to 10M
+- CocktailshakerSort up to 10K
+- CombSort up to 10M
+- CountingSort up to 100M
+
 ## Sorting Algorithms
 
 ### Comparison Based

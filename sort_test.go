@@ -24,15 +24,15 @@ type Sorter struct {
 
 var (
 	testSizes = []int{
-		10,         // 10
-		100,        // 100
-		1000,       // 1K
-		10000,      // 10K
-		100000,     // 100K
-		1000000,    // 1M
-		10000000,   // 10M
-		100000000,  // 100M
-		1000000000, // 1B
+		10,    // 10
+		100,   // 100
+		1000,  // 1K
+		10000, // 10K
+		// 100000,     // 100K
+		// 1000000,    // 1M
+		// 10000000,   // 10M
+		// 100000000,  // 100M
+		// 1000000000, // 1B
 	}
 
 	sortImplementations = []Sorter{
@@ -44,7 +44,7 @@ var (
 		{"BitonicSort", BitonicSort, nil},
 		{"BitonicSortAny", BitonicSortAny, nil},
 		{"BlockSort", BlockSort, nil},
-		{"BubbleSort", BubbleSort, nil},
+		{"BubbleSortEarly", BubbleSortEarly[int], nil},
 		{"BucketSort", BucketSort[int], nil},
 		{"BurstSort", BurstSort, nil},
 		{"CascadeSort", nil, CascadeSort},
@@ -115,12 +115,12 @@ var (
 // Helper function to format size for benchmark name
 func formatSize(size int) string {
 	switch {
-	case size >= 1000000000:
-		return fmt.Sprintf("%dB", size/1000000000)
-	case size >= 1000000:
-		return fmt.Sprintf("%dM", size/1000000)
-	case size >= 1000:
-		return fmt.Sprintf("%dK", size/1000)
+	// case size >= 1000000000:
+	// 	return fmt.Sprintf("%dB", size/1000000000)
+	// case size >= 1000000:
+	// 	return fmt.Sprintf("%dM", size/1000000)
+	// case size >= 1000:
+	// 	return fmt.Sprintf("%dK", size/1000)
 	default:
 		return fmt.Sprintf("%d", size)
 	}

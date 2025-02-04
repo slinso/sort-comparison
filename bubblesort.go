@@ -1,5 +1,7 @@
 package sortcomparison
 
+import "golang.org/x/exp/constraints"
+
 /*
 BubbleSort Implementation
 
@@ -18,7 +20,7 @@ Implementation Notes:
   - Practical for very small arrays (n < 50)
   - Adaptive - stops early when array becomes sorted
 */
-func BubbleSort(arr []int) {
+func BubbleSortEarly[T constraints.Ordered](arr []T) {
 	n := len(arr)
 	if n <= 1 {
 		return
