@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"strings"
 
 	"github.com/aclements/go-moremath/stats"
+	"github.com/kortschak/utter"
 	"github.com/samber/lo"
 	"github.com/vicanso/go-charts/v2"
 	"golang.org/x/perf/benchfmt"
@@ -24,6 +26,8 @@ func main() {
 	flagTable := flag.String("table", "", "[a|d|s] split data into multiple charts")
 	flagCategories := flag.String("categories", "", "[a|d|s]")
 	flagSeries := flag.String("series", "", "[a|d|s]")
+	flagAvg := flag.Bool("avg", false, "average per category")
+	flagFilter := flag.String("filter", "", "filter benchmarks (regexp pattern)")
 
 	flag.Parse()
 
@@ -97,7 +101,18 @@ func main() {
 		meta.Category = fromFlag(meta, *flagCategories)
 		meta.Series = fromFlag(meta, *flagSeries)
 
-		benchmarks = append(benchmarks, meta)
+		if *flagFilter != "" {
+			re, err := regexp.Compile(*flagFilter)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Invalid regexp pattern: %v\n", err)
+				os.Exit(1)
+			}
+			if re.MatchString(key) {
+				benchmarks = append(benchmarks, meta)
+			}
+		} else {
+			benchmarks = append(benchmarks, meta)
+		}
 	}
 
 	tables := lo.UniqMap(benchmarks, func(b BenchmarkMeta, _ int) string {
@@ -143,30 +158,48 @@ func main() {
 	for _, t := range tables {
 		values := make([][]float64, 0)
 
-		for _, s := range series {
+		if *flagAvg {
 			row := make([]float64, 0)
 			for _, c := range categories {
-				row = append(row, plots[t].Values[c][s]...)
+				row = append(row, lo.Reduce(series, func(acc float64, s string, _ int) float64 {
+					return acc + plots[t].Values[c][s][0]
+				}, 0)/float64(len(series)))
 			}
 			values = append(values, row)
+		} else {
+			for _, s := range series {
+				row := make([]float64, 0)
+				for _, c := range categories {
+					row = append(row, plots[t].Values[c][s]...)
+				}
+				values = append(values, row)
+			}
 		}
+
+		utter.Dump(values)
 
 		output := "svg"
 
 		p, err := charts.BarRender(
 			values,
-			charts.PaddingOptionFunc(charts.Box{Top: 10, Right: 10, Bottom: 100, Left: 10}),
-			charts.WidthOptionFunc(1200),
+			charts.PaddingOptionFunc(charts.Box{Top: 10, Right: 50, Bottom: 100, Left: 10}),
+			charts.WidthOptionFunc(2400),
 			charts.HeightOptionFunc(800),
+			charts.LegendOptionFunc(charts.LegendOption{
+				Data: series,
+				Padding: charts.Box{
+					Top:  30,
+					Left: 50,
+				},
+			}),
 			charts.TypeOptionFunc(output),
-			charts.TitleOptionFunc(charts.TitleOption{Text: t}),
+			charts.TitleOptionFunc(charts.TitleOption{Text: t, FontSize: 20}),
 			charts.XAxisDataOptionFunc(categories),
 			charts.YAxisOptionFunc(
 				charts.YAxisOption{
 					Formatter: "{value} ns",
 				},
 			),
-			charts.LegendLabelsOptionFunc(series, charts.PositionRight),
 			charts.MarkLineOptionFunc(0, charts.SeriesMarkDataTypeAverage),
 			charts.MarkPointOptionFunc(0, charts.SeriesMarkDataTypeMax, charts.SeriesMarkDataTypeMin),
 			// custom option func
@@ -179,11 +212,11 @@ func main() {
 					},
 					FontSize: 10,
 				}
-				opt.SeriesList[1].MarkPoint = charts.NewMarkPoint(
+				opt.SeriesList[0].MarkPoint = charts.NewMarkPoint(
 					charts.SeriesMarkDataTypeMax,
 					charts.SeriesMarkDataTypeMin,
 				)
-				opt.SeriesList[1].MarkLine = charts.NewMarkLine(
+				opt.SeriesList[0].MarkLine = charts.NewMarkLine(
 					charts.SeriesMarkDataTypeAverage,
 				)
 			},
@@ -196,21 +229,30 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		err = writeFile(buf, t, output)
+		err = writeFile(buf, t, *flagCategories, *flagSeries, *flagFilter, *flagAvg, output)
 		if err != nil {
 			panic(err)
 		}
 	}
 }
 
-func writeFile(buf []byte, tablename string, output string) error {
+func writeFile(buf []byte, tablename string, categorie string, series string, filter string, avg bool, output string) error {
 	tmpPath := "./tmp"
 	err := os.MkdirAll(tmpPath, 0o700)
 	if err != nil {
 		return err
 	}
 
-	file := filepath.Join(tmpPath, tablename+"_bars."+output)
+	filename := fmt.Sprintf("%s_cat_%s_series_%s", tablename, categorie, series)
+	if avg {
+		filename += "_avg"
+	}
+	if filter != "" {
+		filename += fmt.Sprintf("_%s", filter)
+	}
+	filename += fmt.Sprintf("_bars.%s", output)
+
+	file := filepath.Join(tmpPath, filename)
 	err = os.WriteFile(file, buf, 0o600)
 	if err != nil {
 		return err
