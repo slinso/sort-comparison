@@ -60,6 +60,7 @@ educational purposes.
 | **RadixSort**        | O(d(n+k))  | O(d(n+k))      | O(d(n+k))  | O(n+k) | Yes    | No       | Digit by digit | d is number of digits             |
 | **SpreadSort**       | O(n)       | O(n log log n) | O(n log n) | O(n)   | No     | No       | Distribution   | Adaptive to input distribution    |
 | **AmericanFlagSort** | O(n+k)     | O(n+k)         | O(n+k)     | O(1)   | Yes    | Yes      | MSD radix      | In-place radix sort variant       |
+| **SampleSort**       | O(n log n) | O(n log n)     | O(n log n) | O(n)   | No     | No       | Distribution   | Super scalar sampling strategy    |
 
 ### Specialized
 
@@ -86,6 +87,17 @@ educational purposes.
 | **JupiterSort**    | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      | Parallel dual-pivot quicksort | Uses orbital partitioning and parallelism        |
 | **WeaveMergeSort** | O(n log n) | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Cache-optimized merge sort    | Improves cache locality with unrolled merge loop |
 | **GallopingSort**  | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      | Insertion sort with galloping | Excels on nearly sorted data                     |
+| **QuantumSort**    | O(n log n) | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Parallel merge sort           | Uses goroutines for concurrent sorting           |
+| **GrailSort**      | O(n log n) | O(n log n) | O(n log n) | O(√n)    | Yes    | No       | Bottom-up merge sort          | Uses fixed buffer for efficient merging          |
+| **CubeSort**       | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       | Multi-way merge               | Uses cube root block size for merging            |
+| **WikiSort**       | O(n log n) | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      | Block merge sort              | In-place stable sorting algorithm                |
+
+### Special Purpose
+
+| Name            | Best | Average | Worst   | Memory  | Stable | In-place | Method          | Notes                                    |
+| --------------- | ---- | ------- | ------- | ------- | ------ | -------- | --------------- | ---------------------------------------- |
+| **BeadSort**    | O(n) | O(n\*m) | O(n\*m) | O(n\*m) | Yes    | No       | Gravity         | m is max value, visual/physical metaphor |
+| **PancakeSort** | O(n) | O(n²)   | O(n²)   | O(1)    | No     | Yes      | Prefix reversal | Sorts by flipping prefixes of the array  |
 
 ## Benchmarking
 
