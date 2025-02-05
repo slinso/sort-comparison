@@ -29,6 +29,7 @@ func main() {
 	flagFilter := flag.String("filter", "", "filter benchmarks (regexp pattern)")
 	flagWidth := flag.Int("width", 2400, "chart width")
 	flagHeight := flag.Int("height", 800, "chart height")
+	flagDir := flag.String("dir", "./tmp", "output directory relative to current path")
 
 	flag.Parse()
 
@@ -205,7 +206,7 @@ func main() {
 			func(opt *charts.ChartOption) {
 				opt.XAxis = charts.XAxisOption{
 					Data:         categories,
-					TextRotation: 4.8,
+					TextRotation: 4.75,
 					LabelOffset: charts.Box{
 						Top:   -5,
 						Left:  0,
@@ -220,6 +221,7 @@ func main() {
 				opt.SeriesList[0].MarkLine = charts.NewMarkLine(
 					charts.SeriesMarkDataTypeAverage,
 				)
+				opt.BarMargin = 2
 			},
 		)
 		if err != nil {
@@ -230,16 +232,15 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		err = writeFile(buf, t, *flagCategories, *flagSeries, *flagFilter, *flagAvg, output)
+		err = writeFile(buf, *flagDir, t, *flagCategories, *flagSeries, *flagFilter, *flagAvg, output)
 		if err != nil {
 			panic(err)
 		}
 	}
 }
 
-func writeFile(buf []byte, tablename string, categorie string, series string, filter string, avg bool, output string) error {
-	tmpPath := "./tmp"
-	err := os.MkdirAll(tmpPath, 0o700)
+func writeFile(buf []byte, dir string, tablename string, categorie string, series string, filter string, avg bool, output string) error {
+	err := os.MkdirAll(dir, 0o700)
 	if err != nil {
 		return err
 	}
@@ -253,7 +254,7 @@ func writeFile(buf []byte, tablename string, categorie string, series string, fi
 	}
 	filename += fmt.Sprintf("_bars.%s", output)
 
-	file := filepath.Join(tmpPath, filename)
+	file := filepath.Join(dir, filename)
 	err = os.WriteFile(file, buf, 0o600)
 	if err != nil {
 		return err
