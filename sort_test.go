@@ -75,6 +75,13 @@ var (
 		{"SampleSort", SampleSort, nil},
 		{"ShellSort", ShellSort, nil},
 		{"SimplePancakeSort", SimplePancakeSort, nil},
+		{"SpreadSort", nil, SpreadSort},
+		{"StrandSort", StrandSort, nil},
+		{"TimSort", TimSort, nil},
+		{"TournamentSort", TournamentSort, nil},
+		{"TreeSortAVL", TreeSortAVL, nil},
+		{"WeaveMergeSort", nil, WeaveMergeSort},
+		{"WikiSort", nil, WikiSort},
 	}
 
 	mediumSortImplementations = []Sorter{}
@@ -93,14 +100,7 @@ var (
 		{"PancakeSort", PancakeSort, nil},
 		{"SelectionSort", SelectionSort, nil},
 		{"SmoothSort", SmoothSort, nil},
-		{"SpreadSort", nil, SpreadSort},
-		{"StrandSort", StrandSort, nil},
-		{"TimSort", TimSort, nil},
-		{"TournamentSort", TournamentSort, nil},
 		{"TreeSort", TreeSort, nil},
-		{"TreeSortAVL", TreeSortAVL, nil},
-		{"WeaveMergeSort", nil, WeaveMergeSort},
-		{"WikiSort", nil, WikiSort},
 	}
 
 	dataGenerators = []DataGenerator{
