@@ -34,16 +34,15 @@ educational purposes.
 | **FlashSort**        | O(n)       | O(n)        | O(n²)       | O(n)     | No     | No       |
 | **AmericanFlagSort** | O(n+k)     | O(n+k)      | O(n+k)      | O(1)     | Yes    | Yes      |
 | **CountingSort**     | O(n+k)     | O(n+k)      | O(n+k)      | O(k)     | Yes    | No       |
-| **BucketSort**       | O(n+k)     | O(n+k)      | O(n²)       | O(n+k)   | Yes    | No       |
 | **PigeonholeSort**   | O(n+r)     | O(n+r)      | O(n+r)      | O(r)     | Yes    | No       |
 | **PostmanSort**      | O(n+r)     | O(n+r)      | O(n+r)      | O(n)     | Yes    | No       |
 | **BlockSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **BurstSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| **CycleSortOpt**     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | Yes      |
 | **GrailSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(√n)    | Yes    | No       |
 | **HeapSort**         | O(n log n) | O(n log n)  | O(n log n)  | O(1)     | No     | Yes      |
 | **IntroSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
 | **JupiterSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
-| **LibrarySort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **MergeSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **PatienceSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **QuantumSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
@@ -58,29 +57,39 @@ educational purposes.
 | **GallopingSort**    | O(n)       | O(n log n)  | O(n log n)  | O(1)     | Yes    | Yes      |
 | **GeneralSort**      | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **HybridSort**       | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **SmoothSort**       | O(n)       | O(n log n)  | O(n log n)  | O(1)     | No     | Yes      |
 | **TimSort**          | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **CombSort**         | O(n log n) | O(n log n)  | O(n²)       | O(1)     | No     | Yes      |
 | **QuickSort**        | O(n log n) | O(n log n)  | O(n²)       | O(log n) | No     | Yes      |
 | **SpreadSort**       | O(n)       | O(n log² n) | O(n log² n) | O(n)     | No     | No       |
 | **ShellSort**        | O(n log n) | O(n log² n) | O(n log² n) | O(1)     | No     | Yes      |
-| **BubbleSort**       | O(n)       | O(n²)       | O(n²)       | O(1)     | Yes    | Yes      |
-| **CocktailSort**     | O(n)       | O(n²)       | O(n²)       | O(1)     | Yes    | Yes      |
-| **CycleSort**        | O(n²)      | O(n²)       | O(n²)       | O(1)     | No     | Yes      |
-| **ExchangeSort**     | O(n²)      | O(n²)       | O(n²)       | O(1)     | No     | Yes      |
-| **GnomeSort**        | O(n)       | O(n²)       | O(n²)       | O(1)     | Yes    | Yes      |
-| **InsertionSort**    | O(n)       | O(n²)       | O(n²)       | O(1)     | Yes    | Yes      |
-| **OddEvenSort**      | O(n)       | O(n²)       | O(n²)       | O(1)     | Yes    | Yes      |
-| **PancakeSort**      | O(n)       | O(n²)       | O(n²)       | O(1)     | No     | Yes      |
-| **SelectionSort**    | O(n²)      | O(n²)       | O(n²)       | O(1)     | No     | Yes      |
 | **StrandSort**       | O(n)       | O(n²)       | O(n²)       | O(n)     | Yes    | No       |
+
+### only up to 10k elements for benchmarking
+
+> :warning: O(n²) was expected to being slow. But some implementations needs to be analyzed for performance improvements.
+
+| Name                   | Best       | Average    | Worst      | Memory  | Stable | In-place |
+| ---------------------- | ---------- | ---------- | ---------- | ------- | ------ | -------- |
+| **BeadSortInspired**   | O(n)       | O(n\*m)    | O(n\*m)    | O(n\*m) | Yes    | No       |
+| **BubbleSort**         | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| **BucketSort**         | O(n+k)     | O(n+k)     | O(n²)      | O(n+k)  | Yes    | No       |
+| **CocktailShakerSort** | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| **CycleSort**          | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| **ExchangeSort**       | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| **GnomeSort**          | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| **InsertionSort**      | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| **LibrarySort**        | O(n log n) | O(n log n) | O(n log n) | O(n)    | Yes    | No       |
+| **OddEvenSort**        | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| **PancakeSort**        | O(n)       | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| **SelectionSort**      | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| **SmoothSort**         | O(n)       | O(n log n) | O(n log n) | O(1)    | No     | Yes      |
+| **TreeSort**           | O(n log n) | O(n log n) | O(n²)      | O(n)    | Yes    | No       |
 
 ### removed from benchmarking
 
-| Name         | Best       | Average    | Worst   | Memory  | Stable | In-place | Notes                                                                         |
-| ------------ | ---------- | ---------- | ------- | ------- | ------ | -------- | ----------------------------------------------------------------------------- |
-| **BeadSort** | O(n)       | O(n\*m)    | O(n\*m) | O(n\*m) | Yes    | No       | visual/physical metaphor, BeadSortInspired with Bitset optimzations was added |
-| **TreeSort** | O(n log n) | O(n log n) | O(n²)   | O(n)    | Yes    | No       | classic BST gets too slow for 10k elements                                    |
+| Name         | Best | Average | Worst   | Memory  | Stable | In-place | Notes                                                                         |
+| ------------ | ---- | ------- | ------- | ------- | ------ | -------- | ----------------------------------------------------------------------------- |
+| **BeadSort** | O(n) | O(n\*m) | O(n\*m) | O(n\*m) | Yes    | No       | visual/physical metaphor, BeadSortInspired with Bitset optimzations was added |
 
 ## Benchmarking
 

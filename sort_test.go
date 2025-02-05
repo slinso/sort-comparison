@@ -23,49 +23,48 @@ type Sorter struct {
 }
 
 var (
-	testSizes = []int{
+	smallTestSizes = []int{
 		10,    // 10
 		100,   // 100
 		1000,  // 1K
 		10000, // 10K
+	}
+
+	mediumTestSizes = []int{
 		// 100000,     // 100K
 		// 1000000,    // 1M
+	}
+
+	bigTestSizes = []int{
 		// 10000000,   // 10M
 		// 100000000,  // 100M
 		// 1000000000, // 1B
 	}
 
-	sortImplementations = []Sorter{
+	testOnlyImplementations = []Sorter{
+		{"BeadSort", BeadSort, nil},
+	}
+
+	bigSortImplementations = []Sorter{
 		{"StdSort", slices.Sort[[]int, int], nil},
 		{"AdaptiveSort", nil, AdaptiveSort},
 		{"AmericanFlagSort", AmericanFlagSort, nil},
-		{"BeadSortInspired", nil, BeadSortInspired},
 		{"BitonicSort", BitonicSort, nil},
 		{"BitonicSortAny", BitonicSortAny, nil},
 		{"BlockSort", BlockSort, nil},
-		{"BubbleSortEarly", BubbleSortEarly[int], nil},
-		{"BucketSort", BucketSort[int], nil},
 		{"BurstSort", BurstSort, nil},
 		{"CascadeSort", nil, CascadeSort},
-		{"CocktailShakerSort", CocktailShakerSort, nil},
 		{"CombSort", CombSort, nil},
 		{"CountingSort", nil, CountingSort},
 		{"CubeSort", CubeSort, nil},
-		{"CycleSort", CycleSort, nil},
-		{"ExchangeSort", ExchangeSort, nil},
 		{"FlashSort", FlashSort, nil},
 		{"GallopingSort", GallopingSort, nil},
-		{"GnomeSort", GnomeSort, nil},
 		{"GrailSort", GrailSort, nil},
 		{"HeapSort", HeapSort, nil},
 		{"HybridSortSonnet", nil, HybridSort},
-		{"InsertionSort", InsertionSort, nil},
 		{"IntroSort", IntroSort, nil},
 		{"JupiterSort", JupiterSort, nil},
-		{"LibrarySort", LibrarySort, nil},
 		{"MergeSort", MergeSort, nil},
-		{"OddEvenSort", nil, OddEvenSort},
-		{"PancakeSort", PancakeSort, nil},
 		{"PatienceSort", PatienceSort, nil},
 		{"PigeonholeSort", PigeonholeSort, nil},
 		{"PostmanSort", nil, PostmanSort},
@@ -74,14 +73,31 @@ var (
 		{"RadixSortLSD", RadixSortLSD, nil},
 		{"RadixSortMSD", RadixSortMSD, nil},
 		{"SampleSort", SampleSort, nil},
-		{"SelectionSort", SelectionSort, nil},
 		{"ShellSort", ShellSort, nil},
 		{"SimplePancakeSort", SimplePancakeSort, nil},
+	}
+
+	mediumSortImplementations = []Sorter{}
+
+	smallSortImplementations = []Sorter{
+		{"BeadSortInspired", nil, BeadSortInspired},
+		{"BubbleSortEarly", BubbleSortEarly[int], nil},
+		{"BucketSort", BucketSort[int], nil},
+		{"CocktailShakerSort", CocktailShakerSort, nil},
+		{"CycleSortOpt", CycleSortOpt, nil},
+		{"ExchangeSort", ExchangeSort, nil},
+		{"GnomeSort", GnomeSort, nil},
+		{"InsertionSort", InsertionSort, nil},
+		{"LibrarySort", LibrarySort, nil},
+		{"OddEvenSort", nil, OddEvenSort},
+		{"PancakeSort", PancakeSort, nil},
+		{"SelectionSort", SelectionSort, nil},
 		{"SmoothSort", SmoothSort, nil},
 		{"SpreadSort", nil, SpreadSort},
 		{"StrandSort", StrandSort, nil},
 		{"TimSort", TimSort, nil},
 		{"TournamentSort", TournamentSort, nil},
+		{"TreeSort", TreeSort, nil},
 		{"TreeSortAVL", TreeSortAVL, nil},
 		{"WeaveMergeSort", nil, WeaveMergeSort},
 		{"WikiSort", nil, WikiSort},
@@ -127,9 +143,9 @@ func formatSize(size int) string {
 
 // General benchmark function for sorting algorithms
 func BenchmarkSort(b *testing.B) {
-	for _, size := range testSizes {
+	for _, size := range smallTestSizes {
 		for _, gen := range dataGenerators {
-			for _, s := range sortImplementations {
+			for _, s := range smallSortImplementations {
 				if s.fn != nil && s.fnNotInPlace != nil {
 					b.Fail()
 				}
@@ -192,7 +208,7 @@ func TestSort(t *testing.T) {
 		{"RandomMod16_100", 100, GenerateRandomMod16},
 	}
 
-	for _, s := range sortImplementations {
+	for _, s := range smallSortImplementations {
 		for _, tc := range testCases {
 			// special case for BitonicSort
 			if s.name == "BitonicSort" {

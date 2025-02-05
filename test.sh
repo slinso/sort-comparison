@@ -20,7 +20,7 @@ TEMP_FILE=$(mktemp)
 go run ./cmd/benchplot/main.go -categories a -series s -table d -width 1920 -filter "10$" -dir ./images/perf/distribution/ data/all-to-10k.txt
 go run ./cmd/benchplot/main.go -categories a -series s -table d -width 1920 -filter "100$" -dir ./images/perf/distribution/ data/all-to-10k.txt
 go run ./cmd/benchplot/main.go -categories a -series s -table d -width 1920 -filter "1000$" -dir ./images/perf/distribution/ data/all-to-10k.txt
-go run ./cmd/benchplot/main.go -categories a -series s -table d -width 1920 -filter "10000$" -dir ./images/perf/distribution/ data/all-to-10k.txt
+go run ./cmd/benchplot/main.go -categories a -series s -table d -width 1920 -filter "10000$" -dir ./images/perf/distribution/ data/size-10000.txt
 
 # Cleanup
 rm "$TEMP_FILE"
