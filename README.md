@@ -75,6 +75,7 @@ educational purposes.
 | **StrandSort**     | O(n)       | O(n²)      | O(n²)      | O(n)   | Yes    | No       | Natural merging  | Good for nearly sorted data   |
 | **TournamentSort** | O(n log n) | O(n log n) | O(n log n) | O(n)   | No     | No       | Tree-based       | Selection tree variant        |
 | **TreeSort**       | O(n log n) | O(n log n) | O(n²)      | O(n)   | Yes    | No       | BST-based        | Binary search tree sort       |
+| **TreeSortAVL**    | O(n log n) | O(n log n) | O(n log n) | O(n)   | Yes    | No       | BST-based        | Binary search tree sort       |
 
 ### Modern Hybrids
 
@@ -101,18 +102,27 @@ educational purposes.
 
 ### removed from benchmarking
 
-- **BeadSort**
+- **BeadSort** 
+- **TreeSort** classic BST gets too slow for 10k elements
 
 ## Benchmarking
 
+Attention: running all benchmarks really takes a long time. It is recommended to run benchmarks for specific algorithms or distributions.
+
 ```go
-go test -bench=.
+go test -bench=. -timeout 6h
 ```
 
 Compare specific algorithms:
 
 ```go
 go test -bench "//Quick/10"
+```
+
+Compare specific distributions:
+
+```go
+go test -bench "/RandomMax//10"
 ```
 
 Benchmarks test each algorithm against different:

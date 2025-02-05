@@ -8,7 +8,7 @@ type node struct {
 }
 
 /*
-TreeSort Implementation (Binary Search Tree Sort with balance optimization)
+TreeSortAVL Implementation (Binary Search Tree Sort with balance optimization)
 
 Time Complexity:
   - Average: O(n log n)
@@ -27,7 +27,7 @@ Implementation Notes:
   - Memory usage proportional to input size
   - Guaranteed log n height with balancing
 */
-func TreeSort(arr []int) {
+func TreeSortAVL(arr []int) {
 	if len(arr) <= 1 {
 		return
 	}
@@ -164,4 +164,64 @@ func inorderIterative(root *node, arr []int, index *int) {
 
 		current = current.right
 	}
+}
+
+// Node represents a node in the binary search tree
+type Node struct {
+	key         int
+	left, right *Node
+}
+
+// newNode creates a new BST Node
+func newNode(item int) *Node {
+	return &Node{
+		key:   item,
+		left:  nil,
+		right: nil,
+	}
+}
+
+// storeSorted stores inorder traversal of the BST in arr
+func storeSorted(root *Node, arr []int, i *int) {
+	if root != nil {
+		storeSorted(root.left, arr, i)
+		arr[*i] = root.key
+		*i++
+		storeSorted(root.right, arr, i)
+	}
+}
+
+// insert inserts a new node with given key in BST
+func insert(node *Node, key int) *Node {
+	// If the tree is empty, return a new node
+	if node == nil {
+		return newNode(key)
+	}
+
+	// Otherwise, recur down the tree
+	if key <= node.key {
+		node.left = insert(node.left, key)
+	} else {
+		node.right = insert(node.right, key)
+	}
+
+	// Return the (unchanged) node pointer
+	return node
+}
+
+// TreeSort sorts arr using Tree Sort algorithm
+func TreeSort(arr []int) {
+	if len(arr) < 2 {
+		return
+	}
+
+	// Construct the BST
+	root := insert(nil, arr[0])
+	for i := 1; i < len(arr); i++ {
+		root = insert(root, arr[i])
+	}
+
+	// Store inorder traversal of the BST in arr
+	i := 0
+	storeSorted(root, arr, &i)
 }

@@ -82,7 +82,7 @@ var (
 		{"StrandSort", StrandSort, nil},
 		{"TimSort", TimSort, nil},
 		{"TournamentSort", TournamentSort, nil},
-		{"TreeSort", TreeSort, nil},
+		{"TreeSortAVL", TreeSortAVL, nil},
 		{"WeaveMergeSort", nil, WeaveMergeSort},
 		{"WikiSort", nil, WikiSort},
 	}
@@ -200,7 +200,7 @@ func TestSort(t *testing.T) {
 			}
 
 			if s.fn != nil {
-				t.Run(fmt.Sprintf("/Ret/%s/%s", s.name, tc.name), func(t *testing.T) {
+				t.Run(fmt.Sprintf("%s/%s", s.name, tc.name), func(t *testing.T) {
 					data := tc.gen(tc.size)
 					s.fn(data)
 
