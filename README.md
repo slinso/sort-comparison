@@ -96,9 +96,7 @@ educational purposes.
 <details>
   <summary>One giant benchstat result</summary>
 
-```
-# data/benchstat-result.txt
-```
+https://github.com/slinso/sort-comparison/blob/235172277f416803318aab4d600f05584aad594c/data/benchstat-result.txt
 
 </details>
 
