@@ -39,7 +39,6 @@ var (
 		{"StdSort", slices.Sort[[]int, int], nil},
 		{"AdaptiveSort", nil, AdaptiveSort},
 		{"AmericanFlagSort", AmericanFlagSort, nil},
-		{"BeadSort", BeadSort, nil},
 		{"BeadSortInspired", nil, BeadSortInspired},
 		{"BitonicSort", BitonicSort, nil},
 		{"BitonicSortAny", BitonicSortAny, nil},

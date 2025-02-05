@@ -99,6 +99,10 @@ educational purposes.
 | **BeadSort**    | O(n) | O(n\*m) | O(n\*m) | O(n\*m) | Yes    | No       | Gravity         | m is max value, visual/physical metaphor |
 | **PancakeSort** | O(n) | O(n²)   | O(n²)   | O(1)    | No     | Yes      | Prefix reversal | Sorts by flipping prefixes of the array  |
 
+### removed from benchmarking
+
+- **BeadSort**
+
 ## Benchmarking
 
 ```go
@@ -119,27 +123,27 @@ Benchmarks test each algorithm against different:
 
 ## Data Distributions
 
-| Name           | Description                               | Image                                                     |
-| -------------- | ----------------------------------------- | --------------------------------------------------------- |
-| AllZero        | Array of all zeros                        | ![AllZero](images/distribution/AllZero.svg)               |
-| BackToFront    | Single element pushed from back to front  | ![BackToFront](images/distribution/BackToFront.svg)       |
-| FrontToBack    | Single element pushed from front to back  | ![FrontToBack](images/distribution/FrontToBack.svg)       |
-| MiddleToBack   | Single element pushed from middle to back | ![MiddleToBack](images/distribution/MiddleToBack.svg)     |
-| Mountain       | Elements form a mountain shape            | ![Mountain](images/distribution/Mountain.svg)             |
-| NearlyReversed | Almost completely reversed sequence       | ![NearlyReversed](images/distribution/NearlyReversed.svg) |
-| NearlySorted   | Almost completely sorted sequence         | ![NearlySorted](images/distribution/NearlySorted.svg)     |
-| Plateau        | Elements form a plateau shape             | ![Plateau](images/distribution/Plateau.svg)               |
-| PushMiddle     | Elements pushed towards the middle        | ![PushMiddle](images/distribution/PushMiddle.svg)         |
-| Random         | Completely random distribution            | ![Random](images/distribution/Random.svg)                 |
-| RandomMaxN     | Random integers up to max N               | ![RandomMaxN](images/distribution/RandomMaxN.svg)         |
-| RandomMod8     | Random values modulo 8                    | ![RandomMod8](images/distribution/RandomMod8.svg)         |
-| RandomMod16    | Random values modulo 16                   | ![RandomMod16](images/distribution/RandomMod16.svg)       |
-| RepeatedMod8   | Repeated sequence modulo 8                | ![RepeatedMod8](images/distribution/RepeatedMod8.svg)     |
-| RepeatedMod16  | Repeated sequence modulo 16               | ![RepeatedMod16](images/distribution/RepeatedMod16.svg)   |
-| Reversed       | Completely reversed sequence              | ![Reversed](images/distribution/Reversed.svg)             |
-| Rotated        | Sorted sequence rotated by N positions    | ![Rotated](images/distribution/Rotated.svg)               |
-| SmallHills     | Elements form small hill patterns         | ![SmallHills](images/distribution/SmallHills.svg)         |
-| Sorted         | Completely sorted sequence                | ![Sorted](images/distribution/Sorted.svg)                 |
-| Valley         | Elements form a valley shape              | ![Valley](images/distribution/Valley.svg)                 |
+| Name                                                  | Description                               | Image                                                     |
+| ----------------------------------------------------- | ----------------------------------------- | --------------------------------------------------------- |
+| [AllZero](docs/distribution/AllZero.md)               | Array of all zeros                        | ![AllZero](images/distribution/AllZero.svg)               |
+| [BackToFront](docs/distribution/BackToFront.md)       | Single element pushed from back to front  | ![BackToFront](images/distribution/BackToFront.svg)       |
+| [FrontToBack](docs/distribution/FrontToBack.md)       | Single element pushed from front to back  | ![FrontToBack](images/distribution/FrontToBack.svg)       |
+| [MiddleToBack](docs/distribution/MiddleToBack.md)     | Single element pushed from middle to back | ![MiddleToBack](images/distribution/MiddleToBack.svg)     |
+| [Mountain](docs/distribution/Mountain.md)             | Elements form a mountain shape            | ![Mountain](images/distribution/Mountain.svg)             |
+| [NearlyReversed](docs/distribution/NearlyReversed.md) | Almost completely reversed sequence       | ![NearlyReversed](images/distribution/NearlyReversed.svg) |
+| [NearlySorted](docs/distribution/NearlySorted.md)     | Almost completely sorted sequence         | ![NearlySorted](images/distribution/NearlySorted.svg)     |
+| [Plateau](docs/distribution/Plateau.md)               | Elements form a plateau shape             | ![Plateau](images/distribution/Plateau.svg)               |
+| [PushMiddle](docs/distribution/PushMiddle.md)         | Elements pushed towards the middle        | ![PushMiddle](images/distribution/PushMiddle.svg)         |
+| [Random](docs/distribution/Random.md)                 | Completely random distribution            | ![Random](images/distribution/Random.svg)                 |
+| [RandomMaxN](docs/distribution/RandomMaxN.md)         | Random integers up to max N               | ![RandomMaxN](images/distribution/RandomMaxN.svg)         |
+| [RandomMod8](docs/distribution/RandomMod8.md)         | Random values modulo 8                    | ![RandomMod8](images/distribution/RandomMod8.svg)         |
+| [RandomMod16](docs/distribution/RandomMod16.md)       | Random values modulo 16                   | ![RandomMod16](images/distribution/RandomMod16.svg)       |
+| [RepeatedMod8](docs/distribution/RepeatedMod8.md)     | Repeated sequence modulo 8                | ![RepeatedMod8](images/distribution/RepeatedMod8.svg)     |
+| [RepeatedMod16](docs/distribution/RepeatedMod16.md)   | Repeated sequence modulo 16               | ![RepeatedMod16](images/distribution/RepeatedMod16.svg)   |
+| [Reversed](docs/distribution/Reversed.md)             | Completely reversed sequence              | ![Reversed](images/distribution/Reversed.svg)             |
+| [Rotated](docs/distribution/Rotated.md)               | Sorted sequence rotated by N positions    | ![Rotated](images/distribution/Rotated.svg)               |
+| [SmallHills](docs/distribution/SmallHills.md)         | Elements form small hill patterns         | ![SmallHills](images/distribution/SmallHills.svg)         |
+| [Sorted](docs/distribution/Sorted.md)                 | Completely sorted sequence                | ![Sorted](images/distribution/Sorted.svg)                 |
+| [Valley](docs/distribution/Valley.md)                 | Elements form a valley shape              | ![Valley](images/distribution/Valley.svg)                 |
 
 Usage License This project is licensed under the MIT License.
