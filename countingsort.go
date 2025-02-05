@@ -19,64 +19,54 @@ Implementation Notes:
   - Linear time complexity when k = O(n)
   - Cache-friendly sequential access pattern
 */
-func CountingSort(arr []int) []int {
-	n := len(arr)
-	if n <= 1 {
-		return arr
+func CountingSort(arr []int) {
+	nLen := len(arr)
+	if nLen <= 1 {
+		return
 	}
 
-	// Find min and max in single pass
-	min, max := arr[0], arr[0]
-	for i := 1; i < n; i++ {
-		if arr[i] < min {
-			min = arr[i]
-		}
-		if arr[i] > max {
-			max = arr[i]
-		}
-	}
-
+	min, max := MinMaxValue(arr)
 	range_ := max - min + 1
 
-	if range_ >= 2*n {
-		return countMapRet(arr, min, n)
+	if range_ >= 2*nLen {
+		countingSortMap(arr, min, nLen)
+
+		return
 	}
 
-	// Create count array
-	count := make([]int, range_)
-
-	// Count occurrences
-	for i := 0; i < n; i++ {
-		count[arr[i]-min]++
-	}
-
-	// Calculate cumulative count
-	for i := 1; i < range_; i++ {
-		count[i] += count[i-1]
-	}
-
-	// Build output array
-	output := make([]int, n)
-	for i := n - 1; i >= 0; i-- {
-		output[count[arr[i]-min]-1] = arr[i]
-		count[arr[i]-min]--
-	}
-
-	return output
+	countingSort(arr, min, range_)
 }
 
-func countMapRet(arr []int, min int, n int) []int {
-	m := make(map[int]int, n)
+func countingSortMap(arr []int, min int, n int) {
+	counts := make(map[int]int, n)
 
 	for i := 0; i < n; i++ {
-		m[arr[i]-min]++
+		counts[arr[i]-min]++
 	}
 
-	output := make([]int, n)
-	for i := n - 1; i >= 0; i-- {
-		output[m[arr[i]-min]-1] = arr[i]
-		m[arr[i]-min]--
+	idx := 0
+	for val, count := range counts {
+		for count > 0 {
+			arr[idx] = val + min
+			idx++
+			count--
+		}
+	}
+}
+
+func countingSort(arr []int, min int, range_ int) {
+	counts := make([]int, range_)
+
+	for _, v := range arr {
+		counts[v-min]++
 	}
 
-	return output
+	idx := 0
+	for val, count := range counts {
+		for count > 0 {
+			arr[idx] = val + min
+			idx++
+			count--
+		}
+	}
 }
