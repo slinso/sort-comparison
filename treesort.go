@@ -8,7 +8,7 @@ type node struct {
 }
 
 /*
-TreeSortAVL Implementation (Binary Search Tree Sort with balance optimization)
+TreeAVLSort Implementation (Binary Search Tree Sort with balance optimization)
 
 Time Complexity:
   - Average: O(n log n)
@@ -27,7 +27,7 @@ Implementation Notes:
   - Memory usage proportional to input size
   - Guaranteed log n height with balancing
 */
-func TreeSortAVL(arr []int) {
+func TreeAVLSort(arr []int) {
 	if len(arr) <= 1 {
 		return
 	}

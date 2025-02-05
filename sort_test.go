@@ -79,8 +79,7 @@ var (
 		{"CubeSort", CubeSort, nil},
 		{"PatienceSort", PatienceSort, nil},
 		{"ShellSort", ShellSort, nil},
-		{"StrandSort", StrandSort, nil},
-		{"TreeSortAVL", TreeSortAVL, nil},
+		{"TreeAVLSort", TreeAVLSort, nil},
 		{"WikiSort", nil, WikiSort},
 	}
 
@@ -98,6 +97,7 @@ var (
 		{"OddEvenSort", nil, OddEvenSort},
 		{"PancakeSort", PancakeSort, nil},
 		{"SelectionSort", SelectionSort, nil},
+		{"StrandSort", StrandSort, nil},
 		{"SmoothSort", SmoothSort, nil},
 		{"TreeSort", TreeSort, nil},
 	}
@@ -125,20 +125,6 @@ var (
 		{"NearlyReversed", GenerateNearlyReversed},
 	}
 )
-
-// Helper function to format size for benchmark name
-func formatSize(size int) string {
-	switch {
-	// case size >= 1000000000:
-	// 	return fmt.Sprintf("%dB", size/1000000000)
-	// case size >= 1000000:
-	// 	return fmt.Sprintf("%dM", size/1000000)
-	// case size >= 1000:
-	// 	return fmt.Sprintf("%dK", size/1000)
-	default:
-		return fmt.Sprintf("%d", size)
-	}
-}
 
 // Helper closure to eliminate duplicate benchmarking code.
 func runBenchmark(b *testing.B, gen DataGenerator, sortName string, size int, sortFunc func([]int)) {
