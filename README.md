@@ -91,6 +91,17 @@ educational purposes.
 
 ## Benchmarking
 
+### Results
+
+<details>
+  <summary>One giant benchstat result</summary>
+
+```
+# data/benchstat-result.txt
+```
+
+</details>
+
 Attention: running all benchmarks really takes a long time. It is recommended to run benchmarks for specific algorithms or distributions.
 
 ```go
