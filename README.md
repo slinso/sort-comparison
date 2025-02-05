@@ -11,60 +11,57 @@ educational purposes.
 - a single gigantic echarts with distribution as series + on algo has to be
   selectable as well
 
-# what benchmarks work
-
-- StdSort up to 1B
-- AdaptiveSort up to 100M
-- AmericanFlagSort up to 100M
-- BeadSort up to 10K - ohne Random
-- BitonicSort up to 10M
-- BlockSort up to 10M
-- BubbleSort up to 100K
-- BucketSort up to 100K
-- BurstSort up to 100M
-- CascadeSort up to 10M
-- CocktailshakerSort up to 10K
-- CombSort up to 10M
-- CountingSort up to 100M
-
 ## Sorting Algorithms
 
-| Name                 | Best       | Average     | Worst       | Memory   | Stable | In-place |
-| -------------------- | ---------- | ----------- | ----------- | -------- | ------ | -------- |
-| **FlashSort**        | O(n)       | O(n)        | O(n²)       | O(n)     | No     | No       |
-| **AmericanFlagSort** | O(n+k)     | O(n+k)      | O(n+k)      | O(1)     | Yes    | Yes      |
-| **CountingSort**     | O(n+k)     | O(n+k)      | O(n+k)      | O(k)     | Yes    | No       |
-| **PigeonholeSort**   | O(n+r)     | O(n+r)      | O(n+r)      | O(r)     | Yes    | No       |
-| **PostmanSort**      | O(n+r)     | O(n+r)      | O(n+r)      | O(n)     | Yes    | No       |
-| **BlockSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **BurstSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **CycleSortOpt**     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | Yes      |
-| **GrailSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(√n)    | Yes    | No       |
-| **HeapSort**         | O(n log n) | O(n log n)  | O(n log n)  | O(1)     | No     | Yes      |
-| **IntroSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
-| **JupiterSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
-| **MergeSort**        | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **PatienceSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **QuantumSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **SampleSort**       | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
-| **TournamentSort**   | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
-| **TreeSortAVL**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **UltimateSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
-| **WeaveMergeSort**   | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **WikiSort**         | O(n log n) | O(n log n)  | O(n log n)  | O(1)     | Yes    | Yes      |
-| **CascadeSort**      | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **CubeSort**         | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **GallopingSort**    | O(n)       | O(n log n)  | O(n log n)  | O(1)     | Yes    | Yes      |
-| **GeneralSort**      | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **HybridSort**       | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **TimSort**          | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **CombSort**         | O(n log n) | O(n log n)  | O(n²)       | O(1)     | No     | Yes      |
-| **QuickSort**        | O(n log n) | O(n log n)  | O(n²)       | O(log n) | No     | Yes      |
-| **SpreadSort**       | O(n)       | O(n log² n) | O(n log² n) | O(n)     | No     | No       |
-| **ShellSort**        | O(n log n) | O(n log² n) | O(n log² n) | O(1)     | No     | Yes      |
-| **StrandSort**       | O(n)       | O(n²)       | O(n²)       | O(n)     | Yes    | No       |
+### Benchmarks up to 1B elements
 
-### only up to 10k elements for benchmarking
+| Name                 | Best       | Average    | Worst      | Memory   | Stable | In-place |
+| -------------------- | ---------- | ---------- | ---------- | -------- | ------ | -------- |
+| **slices.Sort**      | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      |
+| **AmericanFlagSort** | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
+| **HybridSort**       | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       |
+| **JupiterSort**      | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      |
+| **RadixSort**        | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
+
+### Benchmarks up to 100M elements
+
+| Name               | Best       | Average     | Worst       | Memory   | Stable | In-place |
+| ------------------ | ---------- | ----------- | ----------- | -------- | ------ | -------- |
+| **BurstSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| **CascadeSort**    | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| **CombSort**       | O(n log n) | O(n log n)  | O(n²)       | O(1)     | No     | Yes      |
+| **CountingSort**   | O(n+k)     | O(n+k)      | O(n+k)      | O(k)     | Yes    | No       |
+| **CycleSortOpt**   | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | Yes      |
+| **FlashSort**      | O(n)       | O(n)        | O(n²)       | O(n)     | No     | No       |
+| **GeneralSort**    | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| **GrailSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(√n)    | Yes    | No       |
+| **HeapSort**       | O(n log n) | O(n log n)  | O(n log n)  | O(1)     | No     | Yes      |
+| **IntroSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
+| **MergeSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| **PigeonholeSort** | O(n+r)     | O(n+r)      | O(n+r)      | O(r)     | Yes    | No       |
+| **PostmanSort**    | O(n)       | O(n*m)      | O(n*m)      | O(n)     | Yes    | No       |
+| **QuickSort**      | O(n log n) | O(n log n)  | O(n²)       | O(log n) | No     | Yes      |
+| **SampleSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
+| **SpreadSort**     | O(n)       | O(n log² n) | O(n log² n) | O(n)     | No     | No       |
+| **TimSort**        | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| **TournamentSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
+| **UltimateSort**   | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
+| **WeaveMergeSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+
+### Benchmarks up to 1M elements
+
+| Name             | Best       | Average     | Worst       | Memory | Stable | In-place |
+| ---------------- | ---------- | ----------- | ----------- | ------ | ------ | -------- |
+| **BitonicSort**  | O(n log n) | O(n log² n) | O(n log² n) | O(1)   | No     | Yes      |
+| **BlockSort**    | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| **CubeSort**     | O(n)       | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| **PatienceSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| **ShellSort**    | O(n log n) | O(n log² n) | O(n log² n) | O(1)   | No     | Yes      |
+| **StrandSort**   | O(n)       | O(n²)       | O(n²)       | O(n)   | Yes    | No       |
+| **TreeSortAVL**  | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| **WikiSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(1)   | Yes    | Yes      |
+
+### Benchmarks up to 10k elements
 
 > :warning: O(n²) was expected to being slow. But some implementations needs to be analyzed for performance improvements.
 
@@ -76,6 +73,7 @@ educational purposes.
 | **CocktailShakerSort** | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
 | **CycleSort**          | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
 | **ExchangeSort**       | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| **GallopingSort**      | O(n)       | O(n log n) | O(n log n) | O(1)    | Yes    | Yes      |
 | **GnomeSort**          | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
 | **InsertionSort**      | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
 | **LibrarySort**        | O(n log n) | O(n log n) | O(n log n) | O(n)    | Yes    | No       |
