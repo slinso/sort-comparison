@@ -164,6 +164,10 @@ func main() {
 			row := make([]float64, 0)
 			for _, c := range categories {
 				row = append(row, lo.Reduce(series, func(acc float64, s string, _ int) float64 {
+					if len(plots[t].Values[c][s]) == 0 {
+						return acc
+					}
+
 					return acc + plots[t].Values[c][s][0]
 				}, 0)/float64(len(series)))
 			}
@@ -200,8 +204,6 @@ func main() {
 					Formatter: "{value} ns",
 				},
 			),
-			charts.MarkLineOptionFunc(0, charts.SeriesMarkDataTypeAverage),
-			charts.MarkPointOptionFunc(0, charts.SeriesMarkDataTypeMax, charts.SeriesMarkDataTypeMin),
 			// custom option func
 			func(opt *charts.ChartOption) {
 				opt.XAxis = charts.XAxisOption{
@@ -214,13 +216,15 @@ func main() {
 					},
 					FontSize: 10,
 				}
-				opt.SeriesList[0].MarkPoint = charts.NewMarkPoint(
-					charts.SeriesMarkDataTypeMax,
-					charts.SeriesMarkDataTypeMin,
-				)
-				opt.SeriesList[0].MarkLine = charts.NewMarkLine(
-					charts.SeriesMarkDataTypeAverage,
-				)
+				if len(series) == 1 || *flagAvg {
+					opt.SeriesList[0].MarkPoint = charts.NewMarkPoint(
+						charts.SeriesMarkDataTypeMax,
+						charts.SeriesMarkDataTypeMin,
+					)
+					opt.SeriesList[0].MarkLine = charts.NewMarkLine(
+						charts.SeriesMarkDataTypeAverage,
+					)
+				}
 				opt.BarMargin = 2
 			},
 		)

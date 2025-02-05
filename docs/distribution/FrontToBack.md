@@ -6,7 +6,7 @@ A distribution where a single element is pushed from the front to the back of th
 
 | Elements | Performance                                                                                                                                                                    |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 10       | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_10$_bars.svg" width="300">](../../images/perf/distribution/FrontToBack_cat_a_series_s_10$_bars.svg)       |
-| 100      | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_100$_bars.svg" width="300">](../../images/perf/distribution/FrontToBack_cat_a_series_s_100$_bars.svg)     |
-| 1000     | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_1000$_bars.svg" width="300">](../../images/perf/distribution/FrontToBack_cat_a_series_s_1000$_bars.svg)   |
-| 10000    | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_10000$_bars.svg" width="300">](../../images/perf/distribution/FrontToBack_cat_a_series_s_10000$_bars.svg) |
+| 10       | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_10$_bars.svg" width="600">](../../images/perf/distribution/FrontToBack_cat_a_series_s_10$_bars.svg)       |
+| 100      | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_100$_bars.svg" width="600">](../../images/perf/distribution/FrontToBack_cat_a_series_s_100$_bars.svg)     |
+| 1000     | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_1000$_bars.svg" width="600">](../../images/perf/distribution/FrontToBack_cat_a_series_s_1000$_bars.svg)   |
+| 10000    | [<img src="../../images/perf/distribution/FrontToBack_cat_a_series_s_10000$_bars.svg" width="600">](../../images/perf/distribution/FrontToBack_cat_a_series_s_10000$_bars.svg) |

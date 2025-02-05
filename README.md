@@ -15,13 +15,13 @@ educational purposes.
 
 ### Benchmarks up to 1B elements
 
-| Name                 | Best       | Average    | Worst      | Memory   | Stable | In-place |
-| -------------------- | ---------- | ---------- | ---------- | -------- | ------ | -------- |
-| **slices.Sort**      | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      |
-| **AmericanFlagSort** | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
-| **HybridSort**       | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       |
-| **JupiterSort**      | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      |
-| **RadixSort**        | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
+| Name                                                  | Best       | Average    | Worst      | Memory   | Stable | In-place |
+| ----------------------------------------------------- | ---------- | ---------- | ---------- | -------- | ------ | -------- |
+| **slices.Sort**                                       | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      |
+| [**AmericanFlagSort**](docs/algo/AmericanFlagSort.md) | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
+| **HybridSort**                                        | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       |
+| **JupiterSort**                                       | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      |
+| **RadixSort**                                         | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
 
 ### Benchmarks up to 100M elements
 
@@ -91,16 +91,14 @@ educational purposes.
 
 ## Benchmarking
 
-### Results
-
-<details>
-  <summary>One giant benchstat result</summary>
-
-https://github.com/slinso/sort-comparison/blob/235172277f416803318aab4d600f05584aad594c/data/benchstat-result.txt
-
-</details>
 
 Attention: running all benchmarks really takes a long time. It is recommended to run benchmarks for specific algorithms or distributions.
+
+### Results
+
+[benchstat-results.txt](data/benchstat-result.txt)
+
+### Run Benchmarks
 
 ```go
 go test -bench=. -timeout 6h
