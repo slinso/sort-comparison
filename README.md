@@ -45,7 +45,6 @@ educational purposes.
 | **SpreadSort**     | O(n)       | O(n log² n) | O(n log² n) | O(n)     | No     | No       |
 | **TimSort**        | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 | **TournamentSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
-| **UltimateSort**   | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
 | **WeaveMergeSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 
 ### Benchmarks up to 1M elements
