@@ -13,80 +13,95 @@ educational purposes.
 
 ## Sorting Algorithms
 
+### Average Results
+
+| Number of Elements | Results                                                                           |
+| ------------------ | --------------------------------------------------------------------------------- |
+| 10                 | <img src="images/perf/algo/_cat_a_series_d_avg_10$_bars.svg" width="600">         |
+| 100                | <img src="images/perf/algo/_cat_a_series_d_avg_100$_bars.svg" width="600">        |
+| 1,000              | <img src="images/perf/algo/_cat_a_series_d_avg_1000$_bars.svg" width="600">       |
+| 10,000             | <img src="images/perf/algo/_cat_a_series_d_avg_10000$_bars.svg" width="600">      |
+| 100,000            | <img src="images/perf/algo/_cat_a_series_d_avg_100000$_bars.svg" width="600">     |
+| 1,000,000          | <img src="images/perf/algo/_cat_a_series_d_avg_1000000$_bars.svg" width="600">    |
+| 10,000,000         | <img src="images/perf/algo/_cat_a_series_d_avg_10000000$_bars.svg" width="600">   |
+| 100,000,000        | <img src="images/perf/algo/_cat_a_series_d_avg_100000000$_bars.svg" width="600">  |
+| 1,000,000,000      | <img src="images/perf/algo/_cat_a_series_d_avg_1000000000$_bars.svg" width="600"> |
+
+
 ### Benchmarks up to 1B elements
 
 | Name                                                  | Best       | Average    | Worst      | Memory   | Stable | In-place |
 | ----------------------------------------------------- | ---------- | ---------- | ---------- | -------- | ------ | -------- |
-| **slices.Sort**                                       | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      |
+| [**slices.Sort**](docs/algo/slices.Sort.md)           | O(n)       | O(n log n) | O(n log n) | O(1)     | Yes    | Yes      |
 | [**AmericanFlagSort**](docs/algo/AmericanFlagSort.md) | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
-| **HybridSort**                                        | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       |
-| **JupiterSort**                                       | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      |
-| **RadixSort**                                         | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
+| [**HybridSort**](docs/algo/HybridSort.md)             | O(n)       | O(n log n) | O(n log n) | O(n)     | Yes    | No       |
+| [**JupiterSort**](docs/algo/JupiterSort.md)           | O(n log n) | O(n log n) | O(n log n) | O(log n) | No     | Yes      |
+| [**RadixSort**](docs/algo/RadixSort.md)               | O(n+k)     | O(n+k)     | O(n+k)     | O(1)     | Yes    | Yes      |
 
 ### Benchmarks up to 100M elements
 
-| Name               | Best       | Average     | Worst       | Memory   | Stable | In-place |
-| ------------------ | ---------- | ----------- | ----------- | -------- | ------ | -------- |
-| **BurstSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **CascadeSort**    | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **CombSort**       | O(n log n) | O(n log n)  | O(n²)       | O(1)     | No     | Yes      |
-| **CountingSort**   | O(n+k)     | O(n+k)      | O(n+k)      | O(k)     | Yes    | No       |
-| **CycleSortOpt**   | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | Yes      |
-| **FlashSort**      | O(n)       | O(n)        | O(n²)       | O(n)     | No     | No       |
-| **GeneralSort**    | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **GrailSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(√n)    | Yes    | No       |
-| **HeapSort**       | O(n log n) | O(n log n)  | O(n log n)  | O(1)     | No     | Yes      |
-| **IntroSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
-| **MergeSort**      | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **PigeonholeSort** | O(n+r)     | O(n+r)      | O(n+r)      | O(r)     | Yes    | No       |
-| **PostmanSort**    | O(n)       | O(n*m)      | O(n*m)      | O(n)     | Yes    | No       |
-| **QuickSort**      | O(n log n) | O(n log n)  | O(n²)       | O(log n) | No     | Yes      |
-| **SampleSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
-| **SpreadSort**     | O(n)       | O(n log² n) | O(n log² n) | O(n)     | No     | No       |
-| **TimSort**        | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
-| **TournamentSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
-| **WeaveMergeSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| Name                                              | Best       | Average     | Worst       | Memory   | Stable | In-place |
+| ------------------------------------------------- | ---------- | ----------- | ----------- | -------- | ------ | -------- |
+| [**BurstSort**](docs/algo/BurstSort.md)           | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| [**CascadeSort**](docs/algo/CascadeSort.md)       | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| [**CombSort**](docs/algo/CombSort.md)             | O(n log n) | O(n log n)  | O(n²)       | O(1)     | No     | Yes      |
+| [**CountingSort**](docs/algo/CountingSort.md)     | O(n+k)     | O(n+k)      | O(n+k)      | O(k)     | Yes    | No       |
+| [**CycleSortOpt**](docs/algo/CycleSortOpt.md)     | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | Yes      |
+| [**FlashSort**](docs/algo/FlashSort.md)           | O(n)       | O(n)        | O(n²)       | O(n)     | No     | No       |
+| [**GeneralSort**](docs/algo/GeneralSort.md)       | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| [**GrailSort**](docs/algo/GrailSort.md)           | O(n log n) | O(n log n)  | O(n log n)  | O(√n)    | Yes    | No       |
+| [**HeapSort**](docs/algo/HeapSort.md)             | O(n log n) | O(n log n)  | O(n log n)  | O(1)     | No     | Yes      |
+| [**IntroSort**](docs/algo/IntroSort.md)           | O(n log n) | O(n log n)  | O(n log n)  | O(log n) | No     | Yes      |
+| [**MergeSort**](docs/algo/MergeSort.md)           | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| [**PigeonholeSort**](docs/algo/PigeonholeSort.md) | O(n+r)     | O(n+r)      | O(n+r)      | O(r)     | Yes    | No       |
+| [**PostmanSort**](docs/algo/PostmanSort.md)       | O(n)       | O(n*m)      | O(n*m)      | O(n)     | Yes    | No       |
+| [**QuickSort**](docs/algo/QuickSort.md)           | O(n log n) | O(n log n)  | O(n²)       | O(log n) | No     | Yes      |
+| [**SampleSort**](docs/algo/SampleSort.md)         | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
+| [**SpreadSort**](docs/algo/SpreadSort.md)         | O(n)       | O(n log² n) | O(n log² n) | O(n)     | No     | No       |
+| [**TimSort**](docs/algo/TimSort.md)               | O(n)       | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
+| [**TournamentSort**](docs/algo/TournamentSort.md) | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | No     | No       |
+| [**WeaveMergeSort**](docs/algo/WeaveMergeSort.md) | O(n log n) | O(n log n)  | O(n log n)  | O(n)     | Yes    | No       |
 
 ### Benchmarks up to 1M elements
 
-| Name             | Best       | Average     | Worst       | Memory | Stable | In-place |
-| ---------------- | ---------- | ----------- | ----------- | ------ | ------ | -------- |
-| **BitonicSort**  | O(n log n) | O(n log² n) | O(n log² n) | O(1)   | No     | Yes      |
-| **BlockSort**    | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
-| **CubeSort**     | O(n)       | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
-| **PatienceSort** | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
-| **ShellSort**    | O(n log n) | O(n log² n) | O(n log² n) | O(1)   | No     | Yes      |
-| **StrandSort**   | O(n)       | O(n²)       | O(n²)       | O(n)   | Yes    | No       |
-| **TreeSortAVL**  | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
-| **WikiSort**     | O(n log n) | O(n log n)  | O(n log n)  | O(1)   | Yes    | Yes      |
+| Name                                          | Best       | Average     | Worst       | Memory | Stable | In-place |
+| --------------------------------------------- | ---------- | ----------- | ----------- | ------ | ------ | -------- |
+| [**BitonicSort**](docs/algo/BitonicSort.md)   | O(n log n) | O(n log² n) | O(n log² n) | O(1)   | No     | Yes      |
+| [**BlockSort**](docs/algo/BlockSort.md)       | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| [**CubeSort**](docs/algo/CubeSort.md)         | O(n)       | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| [**PatienceSort**](docs/algo/PatienceSort.md) | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| [**ShellSort**](docs/algo/ShellSort.md)       | O(n log n) | O(n log² n) | O(n log² n) | O(1)   | No     | Yes      |
+| [**StrandSort**](docs/algo/StrandSort.md)     | O(n)       | O(n²)       | O(n²)       | O(n)   | Yes    | No       |
+| [**TreeSortAVL**](docs/algo/TreeSortAVL.md)   | O(n log n) | O(n log n)  | O(n log n)  | O(n)   | Yes    | No       |
+| [**WikiSort**](docs/algo/WikiSort.md)         | O(n log n) | O(n log n)  | O(n log n)  | O(1)   | Yes    | Yes      |
 
 ### Benchmarks up to 10k elements
 
 > :warning: O(n²) was expected to being slow. But some implementations needs to be analyzed for performance improvements.
 
-| Name                   | Best       | Average    | Worst      | Memory  | Stable | In-place |
-| ---------------------- | ---------- | ---------- | ---------- | ------- | ------ | -------- |
-| **BeadSortInspired**   | O(n)       | O(n\*m)    | O(n\*m)    | O(n\*m) | Yes    | No       |
-| **BubbleSort**         | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
-| **BucketSort**         | O(n+k)     | O(n+k)     | O(n²)      | O(n+k)  | Yes    | No       |
-| **CocktailShakerSort** | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
-| **CycleSort**          | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
-| **ExchangeSort**       | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
-| **GallopingSort**      | O(n)       | O(n log n) | O(n log n) | O(1)    | Yes    | Yes      |
-| **GnomeSort**          | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
-| **InsertionSort**      | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
-| **LibrarySort**        | O(n log n) | O(n log n) | O(n log n) | O(n)    | Yes    | No       |
-| **OddEvenSort**        | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
-| **PancakeSort**        | O(n)       | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
-| **SelectionSort**      | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
-| **SmoothSort**         | O(n)       | O(n log n) | O(n log n) | O(1)    | No     | Yes      |
-| **TreeSort**           | O(n log n) | O(n log n) | O(n²)      | O(n)    | Yes    | No       |
+| Name                                                      | Best       | Average    | Worst      | Memory  | Stable | In-place |
+| --------------------------------------------------------- | ---------- | ---------- | ---------- | ------- | ------ | -------- |
+| [**BeadSortInspired**](docs/algo/BeadSortInspired.md)     | O(n)       | O(n\*m)    | O(n\*m)    | O(n\*m) | Yes    | No       |
+| [**BubbleSort**](docs/algo/BubbleSort.md)                 | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| [**BucketSort**](docs/algo/BucketSort.md)                 | O(n+k)     | O(n+k)     | O(n²)      | O(n+k)  | Yes    | No       |
+| [**CocktailShakerSort**](docs/algo/CocktailShakerSort.md) | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| [**CycleSort**](docs/algo/CycleSort.md)                   | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| [**ExchangeSort**](docs/algo/ExchangeSort.md)             | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| [**GallopingSort**](docs/algo/GallopingSort.md)           | O(n)       | O(n log n) | O(n log n) | O(1)    | Yes    | Yes      |
+| [**GnomeSort**](docs/algo/GnomeSort.md)                   | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| [**InsertionSort**](docs/algo/InsertionSort.md)           | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| [**LibrarySort**](docs/algo/LibrarySort.md)               | O(n log n) | O(n log n) | O(n log n) | O(n)    | Yes    | No       |
+| [**OddEvenSort**](docs/algo/OddEvenSort.md)               | O(n)       | O(n²)      | O(n²)      | O(1)    | Yes    | Yes      |
+| [**PancakeSort**](docs/algo/PancakeSort.md)               | O(n)       | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| [**SelectionSort**](docs/algo/SelectionSort.md)           | O(n²)      | O(n²)      | O(n²)      | O(1)    | No     | Yes      |
+| [**SmoothSort**](docs/algo/SmoothSort.md)                 | O(n)       | O(n log n) | O(n log n) | O(1)    | No     | Yes      |
+| [**TreeSort**](docs/algo/TreeSort.md)                     | O(n log n) | O(n log n) | O(n²)      | O(n)    | Yes    | No       |
 
 ### removed from benchmarking
 
-| Name         | Best | Average | Worst   | Memory  | Stable | In-place | Notes                                                                         |
-| ------------ | ---- | ------- | ------- | ------- | ------ | -------- | ----------------------------------------------------------------------------- |
-| **BeadSort** | O(n) | O(n\*m) | O(n\*m) | O(n\*m) | Yes    | No       | visual/physical metaphor, BeadSortInspired with Bitset optimzations was added |
+| Name                                  | Best | Average | Worst   | Memory  | Stable | In-place | Notes                                                                         |
+| ------------------------------------- | ---- | ------- | ------- | ------- | ------ | -------- | ----------------------------------------------------------------------------- |
+| [**BeadSort**](docs/algo/BeadSort.md) | O(n) | O(n\*m) | O(n\*m) | O(n\*m) | Yes    | No       | visual/physical metaphor, BeadSortInspired with Bitset optimzations was added |
 
 ## Benchmarking
 
