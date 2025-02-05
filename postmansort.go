@@ -1,61 +1,65 @@
 package sortcomparison
 
-import (
-	"slices"
-)
+import "math"
 
-// PostmanSort sorts a slice of non-negative integers using a stable counting sort approach,
-// often referred to as PostmanSort because it "delivers" elements into their proper buckets.
+// PostmanSort performs the Postman Sort algorithm on a slice of integers.
+// The algorithm sorts by distributing numbers into buckets based on their
+// most significant digits first.
 //
-// How it works:
-//   - It scans the array to determine the minimum and maximum values.
-//   - It creates a count array of size (max - min + 1) to count occurrences.
-//   - It computes cumulative counts to identify the final positions of each element.
-//   - It iterates backwards through the input array to maintain stability when placing elements
-//     in the output slice.
-//   - The sorted output is copied back into the original array.
+// Complexity:
+// - Best case: O(n) when all numbers have the same number of digits and are evenly distributed
+// - Average: O(n * m) where n is the number of items and m is the max number of digits
+// - Worst case: O(n * m) when all numbers end up in the same bucket at each level
+// - Space: O(n) for the buckets and result slice
 //
-// Time Complexity:
-//   - O(n + r), where n is the number of elements and r is the range of the input values.
-//
-// Space Complexity:
-//   - O(n + r), due to the count array and auxiliary output slice.
+// Note: This implementation assumes non-negative integers. For negative numbers,
+// additional preprocessing would be required.
 func PostmanSort(arr []int) []int {
 	nLen := len(arr)
 	if nLen < 2 {
 		return arr
 	}
 
-	// Find minimum and maximum values
-	min, max := MinMaxValue(arr)
+	max := MaxValue(arr)
+	maxDigits := getNumDigits(max)
 
-	rangeSize := max - min + 1
+	return postmanSort(arr, maxDigits-1)
+}
 
-	// Optimization: if the range is too large, fall back to a stdlib sort
-	if rangeSize > 2*nLen {
-		slices.Sort(arr)
+// getNumDigits returns the number of digits in an integer
+func getNumDigits(num int) int {
+	if num == 0 {
+		return 1
+	}
+	if num < 0 {
+		num = -num
+	}
+	return int(math.Floor(math.Log10(float64(num)))) + 1
+}
+
+func postmanSort(arr []int, position int) []int {
+	if position < 0 || len(arr) <= 1 {
 		return arr
 	}
 
-	// Create and populate the count array
-	count := make([]int, rangeSize)
-	for _, v := range arr {
-		count[v-min]++
+	// Create buckets (0-9)
+	buckets := make([][]int, 10)
+	divisor := int(math.Pow10(position))
+
+	// Distribute numbers into buckets
+	for _, num := range arr {
+		digit := (num / divisor) % 10
+		buckets[digit] = append(buckets[digit], num)
 	}
 
-	// Compute cumulative count for positions
-	for i := 1; i < rangeSize; i++ {
-		count[i] += count[i-1]
+	// Recursively sort each non-empty bucket and collect results
+	result := make([]int, 0, len(arr))
+	for i := 0; i < 10; i++ {
+		if len(buckets[i]) > 0 {
+			sorted := postmanSort(buckets[i], position-1)
+			result = append(result, sorted...)
+		}
 	}
 
-	// Build the output slice
-	output := make([]int, nLen)
-	// Iterate backwards for stability
-	for i := nLen - 1; i >= 0; i-- {
-		val := arr[i]
-		count[val-min]--
-		output[count[val-min]] = val
-	}
-
-	return output
+	return result
 }

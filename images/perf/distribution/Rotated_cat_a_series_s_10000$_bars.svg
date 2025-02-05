@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2400" height="800">\n<path  d="M 0 0
+L 2400 0
+L 2400 800
+L 0 800
+L 0 0" style="stroke-width:0;stroke:none;fill:rgba(255,255,255,1.0)"/><path  d="M 1168 44
+L 1198 44" style="stroke-width:3;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><circle cx="1183" cy="44" r="5" style="stroke-width:3;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><path  d="" style="stroke-width:3;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><text x="1200" y="50" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">10000</text><text x="10" y="35" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:25.6px;font-family:'Roboto Medium',sans-serif">Rotated</text><text x="10" y="77" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">76.01M ns</text><text x="10" y="177" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">63.34M ns</text><text x="10" y="277" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">50.67M ns</text><text x="10" y="377" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">38.00M ns</text><text x="10" y="477" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">25.33M ns</text><text x="10" y="577" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">12.66M ns</text><text x="54" y="677" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:15.3px;font-family:'Roboto Medium',sans-serif">0 ns</text><path  d="M 93 70
+L 2350 70" style="stroke-width:1;stroke:rgba(224,230,242,1.0);fill:none"/><path  d="M 93 170
+L 2350 170" style="stroke-width:1;stroke:rgba(224,230,242,1.0);fill:none"/><path  d="M 93 270
+L 2350 270" style="stroke-width:1;stroke:rgba(224,230,242,1.0);fill:none"/><path  d="M 93 370
+L 2350 370" style="stroke-width:1;stroke:rgba(224,230,242,1.0);fill:none"/><path  d="M 93 470
+L 2350 470" style="stroke-width:1;stroke:rgba(224,230,242,1.0);fill:none"/><path  d="M 93 570
+L 2350 570" style="stroke-width:1;stroke:rgba(224,230,242,1.0);fill:none"/><path  d="M 93 675
+L 93 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 140 675
+L 140 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 187 675
+L 187 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 234 675
+L 234 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 281 675
+L 281 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 328 675
+L 328 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 375 675
+L 375 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 422 675
+L 422 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 469 675
+L 469 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 516 675
+L 516 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 563 675
+L 563 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 610 675
+L 610 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 657 675
+L 657 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 704 675
+L 704 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 751 675
+L 751 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 798 675
+L 798 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 845 675
+L 845 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 892 675
+L 892 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 939 675
+L 939 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 986 675
+L 986 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1033 675
+L 1033 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1080 675
+L 1080 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1127 675
+L 1127 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1174 675
+L 1174 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1221 675
+L 1221 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1268 675
+L 1268 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1315 675
+L 1315 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1362 675
+L 1362 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1409 675
+L 1409 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1456 675
+L 1456 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1503 675
+L 1503 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1550 675
+L 1550 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1597 675
+L 1597 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1644 675
+L 1644 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1691 675
+L 1691 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1738 675
+L 1738 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1785 675
+L 1785 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1832 675
+L 1832 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1879 675
+L 1879 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1926 675
+L 1926 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 1973 675
+L 1973 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2020 675
+L 2020 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2067 675
+L 2067 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2114 675
+L 2114 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2161 675
+L 2161 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2208 675
+L 2208 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2255 675
+L 2255 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2302 675
+L 2302 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 2350 675
+L 2350 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><path  d="M 93 670
+L 2350 670" style="stroke-width:1;stroke:rgba(110,112,121,1.0);fill:none"/><text x="109" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,109,786)">AdaptiveSort</text><text x="156" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,156,786)">AmericanFlagSort</text><text x="203" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,203,786)">BeadSortInspired</text><text x="250" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,250,786)">BitonicSort</text><text x="297" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,297,786)">BitonicSortAny</text><text x="344" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,344,786)">BlockSort</text><text x="391" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,391,786)">BubbleSortEarly</text><text x="438" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,438,786)">BucketSort</text><text x="485" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,485,786)">BurstSort</text><text x="532" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,532,786)">CascadeSort</text><text x="578" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,578,786)">CocktailShakerSort</text><text x="626" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,626,786)">CombSort</text><text x="673" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,673,786)">CountingSort</text><text x="720" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,720,786)">CubeSort</text><text x="767" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,767,786)">CycleSortOpt</text><text x="814" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,814,786)">ExchangeSort</text><text x="861" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,861,786)">FlashSort</text><text x="908" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,908,786)">GallopingSort</text><text x="955" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,955,786)">GnomeSort</text><text x="1003" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1003,786)">GrailSort</text><text x="1049" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1049,786)">HeapSort</text><text x="1096" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1096,786)">HybridSortSonnet</text><text x="1143" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1143,786)">InsertionSort</text><text x="1191" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1191,786)">IntroSort</text><text x="1237" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1237,786)">JupiterSort</text><text x="1284" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1284,786)">LibrarySort</text><text x="1331" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1331,786)">MergeSort</text><text x="1378" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1378,786)">OddEvenSort</text><text x="1425" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1425,786)">PancakeSort</text><text x="1472" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1472,786)">PatienceSort</text><text x="1519" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1519,786)">PigeonholeSort</text><text x="1566" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1566,786)">PostmanSort</text><text x="1613" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1613,786)">QuickSort</text><text x="1660" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1660,786)">RadixSortLSD</text><text x="1707" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1707,786)">RadixSortMSD</text><text x="1754" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1754,786)">SampleSort</text><text x="1801" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1801,786)">SelectionSort</text><text x="1849" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1849,786)">ShellSort</text><text x="1895" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1895,786)">SmoothSort</text><text x="1942" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1942,786)">SpreadSort</text><text x="1990" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,1990,786)">StdSort</text><text x="2036" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2036,786)">StrandSort</text><text x="2084" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2084,786)">TimSort</text><text x="2130" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2130,786)">TournamentSort</text><text x="2177" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2177,786)">TreeAVLSort</text><text x="2225" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2225,786)">TreeSort</text><text x="2271" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2271,786)">WeaveMergeSort</text><text x="2320" y="786" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif" transform="rotate(272.15,2320,786)">WikiSort</text><path  d="M 98 670
+L 135 670
+L 135 669
+L 98 669
+L 98 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 145 669
+L 182 669
+L 182 669
+L 145 669
+L 145 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 192 125
+L 229 125
+L 229 669
+L 192 669
+L 192 125" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 239 663
+L 276 663
+L 276 669
+L 239 669
+L 239 663" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 286 655
+L 323 655
+L 323 669
+L 286 669
+L 286 655" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 333 669
+L 370 669
+L 370 669
+L 333 669
+L 333 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 380 269
+L 417 269
+L 417 669
+L 380 669
+L 380 269" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 427 575
+L 464 575
+L 464 669
+L 427 669
+L 427 575" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 474 669
+L 511 669
+L 511 669
+L 474 669
+L 474 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 521 670
+L 558 670
+L 558 669
+L 521 669
+L 521 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 568 244
+L 605 244
+L 605 669
+L 568 669
+L 568 244" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 615 668
+L 652 668
+L 652 669
+L 615 669
+L 615 668" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 662 670
+L 699 670
+L 699 669
+L 662 669
+L 662 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 709 666
+L 746 666
+L 746 669
+L 709 669
+L 709 666" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 756 666
+L 793 666
+L 793 669
+L 756 669
+L 756 666" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 803 405
+L 840 405
+L 840 669
+L 803 669
+L 803 405" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 850 669
+L 887 669
+L 887 669
+L 850 669
+L 850 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 897 649
+L 934 649
+L 934 669
+L 897 669
+L 897 649" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 944 201
+L 981 201
+L 981 669
+L 944 669
+L 944 201" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 991 669
+L 1028 669
+L 1028 669
+L 991 669
+L 991 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1038 666
+L 1075 666
+L 1075 669
+L 1038 669
+L 1038 666" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1085 670
+L 1122 670
+L 1122 669
+L 1085 669
+L 1085 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1132 576
+L 1169 576
+L 1169 669
+L 1132 669
+L 1132 576" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1179 665
+L 1216 665
+L 1216 669
+L 1179 669
+L 1179 665" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1226 599
+L 1263 599
+L 1263 669
+L 1226 669
+L 1226 599" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1273 648
+L 1310 648
+L 1310 669
+L 1273 669
+L 1273 648" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1320 665
+L 1357 665
+L 1357 669
+L 1320 669
+L 1320 665" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1367 413
+L 1404 413
+L 1404 669
+L 1367 669
+L 1367 413" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1414 349
+L 1451 349
+L 1451 669
+L 1414 669
+L 1414 349" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1461 312
+L 1498 312
+L 1498 669
+L 1461 669
+L 1461 312" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1508 668
+L 1545 668
+L 1545 669
+L 1508 669
+L 1508 668" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1555 665
+L 1592 665
+L 1592 669
+L 1555 669
+L 1555 665" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1602 507
+L 1639 507
+L 1639 669
+L 1602 669
+L 1602 507" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1649 670
+L 1686 670
+L 1686 669
+L 1649 669
+L 1649 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1696 670
+L 1733 670
+L 1733 669
+L 1696 669
+L 1696 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1743 669
+L 1780 669
+L 1780 669
+L 1743 669
+L 1743 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1790 381
+L 1827 381
+L 1827 669
+L 1790 669
+L 1790 381" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1837 669
+L 1874 669
+L 1874 669
+L 1837 669
+L 1837 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1884 360
+L 1921 360
+L 1921 669
+L 1884 669
+L 1884 360" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1931 669
+L 1968 669
+L 1968 669
+L 1931 669
+L 1931 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 1978 670
+L 2015 670
+L 2015 669
+L 1978 669
+L 1978 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2025 670
+L 2062 670
+L 2062 669
+L 2025 669
+L 2025 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2072 670
+L 2109 670
+L 2109 669
+L 2072 669
+L 2072 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2119 666
+L 2156 666
+L 2156 669
+L 2119 669
+L 2119 666" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2166 661
+L 2203 661
+L 2203 669
+L 2166 669
+L 2166 661" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2213 276
+L 2250 276
+L 2250 669
+L 2213 669
+L 2213 276" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2260 669
+L 2297 669
+L 2297 669
+L 2260 669
+L 2260 669" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2307 670
+L 2344 670
+L 2344 669
+L 2307 669
+L 2307 670" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 207 117
+A 15 15 330.00 1 1 213 117
+L 210 103
+Z" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 195 103
+Q210,140 225,103
+Z" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><text x="192" y="108" style="stroke-width:0;stroke:none;fill:rgba(238,238,238,1.0);font-size:10.2px;font-family:'Roboto Medium',sans-serif">69.12M</text><path  d="M 2087 662
+A 15 15 330.00 1 1 2093 662
+L 2090 648
+Z" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><path  d="M 2075 648
+Q2090,685 2105,648
+Z" style="stroke-width:0;stroke:none;fill:rgba(84,112,198,1.0)"/><text x="2074" y="653" style="stroke-width:0;stroke:none;fill:rgba(238,238,238,1.0);font-size:10.2px;font-family:'Roboto Medium',sans-serif">20.91k</text><circle cx="96" cy="575" r="3" style="stroke-width:1;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><path stroke-dasharray="4.0, 2.0" d="" style="stroke-width:1;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><path stroke-dasharray="4.0, 2.0" d="M 102 575
+L 2332 575" style="stroke-width:1;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><path stroke-dasharray="4.0, 2.0" d="M 2332 570
+L 2348 575
+L 2332 580
+L 2337 575
+L 2332 570" style="stroke-width:1;stroke:rgba(84,112,198,1.0);fill:rgba(84,112,198,1.0)"/><text x="2350" y="579" style="stroke-width:0;stroke:none;fill:rgba(70,70,70,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">12.13M</text></svg>

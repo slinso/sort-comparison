@@ -23,69 +23,83 @@ type Sorter struct {
 }
 
 var (
-	testSizes = []int{
-		10,         // 10
-		100,        // 100
-		1000,       // 1K
-		10000,      // 10K
-		100000,     // 100K
-		1000000,    // 1M
+	smallTestSizes = []int{
+		10,    // 10
+		100,   // 100
+		1000,  // 1K
+		10000, // 10K
+	}
+
+	mediumTestSizes = []int{
+		100000,  // 100K
+		1000000, // 1M
+	}
+
+	bigTestSizes = []int{
 		10000000,   // 10M
 		100000000,  // 100M
 		1000000000, // 1B
 	}
 
-	sortImplementations = []Sorter{
+	testOnlyImplementations = []Sorter{
+		{"BeadSort", BeadSort, nil},
+	}
+
+	bigSortImplementations = []Sorter{
 		{"StdSort", slices.Sort[[]int, int], nil},
 		{"AdaptiveSort", nil, AdaptiveSort},
 		{"AmericanFlagSort", AmericanFlagSort, nil},
-		{"BeadSort", BeadSort, nil},
-		{"BeadSortInspired", nil, BeadSortInspired},
-		{"BitonicSort", BitonicSort, nil},
-		{"BitonicSortAny", BitonicSortAny, nil},
-		{"BlockSort", BlockSort, nil},
-		{"BubbleSort", BubbleSort, nil},
-		{"BucketSort", BucketSort[int], nil},
 		{"BurstSort", BurstSort, nil},
 		{"CascadeSort", nil, CascadeSort},
-		{"CocktailShakerSort", CocktailShakerSort, nil},
 		{"CombSort", CombSort, nil},
-		{"CountingSort", nil, CountingSort},
-		{"CubeSort", CubeSort, nil},
-		{"CycleSort", CycleSort, nil},
-		{"ExchangeSort", ExchangeSort, nil},
+		{"CountingSort", CountingSort, nil},
 		{"FlashSort", FlashSort, nil},
-		{"GallopingSort", GallopingSort, nil},
-		{"GnomeSort", GnomeSort, nil},
 		{"GrailSort", GrailSort, nil},
 		{"HeapSort", HeapSort, nil},
-		{"HybridSortSonnet", nil, HybridSort},
-		{"InsertionSort", InsertionSort, nil},
+		{"HybridSortSonnet", HybridSort, nil},
 		{"IntroSort", IntroSort, nil},
 		{"JupiterSort", JupiterSort, nil},
-		{"LibrarySort", LibrarySort, nil},
 		{"MergeSort", MergeSort, nil},
-		{"OddEvenSort", nil, OddEvenSort},
-		{"PancakeSort", PancakeSort, nil},
-		{"PatienceSort", PatienceSort, nil},
 		{"PigeonholeSort", PigeonholeSort, nil},
 		{"PostmanSort", nil, PostmanSort},
-		{"QuantumSortO3", nil, QuantumSort},
 		{"QuickSort", QuickSort, nil},
 		{"RadixSortLSD", RadixSortLSD, nil},
 		{"RadixSortMSD", RadixSortMSD, nil},
 		{"SampleSort", SampleSort, nil},
-		{"SelectionSort", SelectionSort, nil},
-		{"ShellSort", ShellSort, nil},
-		{"SimplePancakeSort", SimplePancakeSort, nil},
-		{"SmoothSort", SmoothSort, nil},
 		{"SpreadSort", nil, SpreadSort},
-		{"StrandSort", StrandSort, nil},
 		{"TimSort", TimSort, nil},
 		{"TournamentSort", TournamentSort, nil},
-		{"TreeSort", TreeSort, nil},
 		{"WeaveMergeSort", nil, WeaveMergeSort},
+	}
+
+	mediumSortImplementations = []Sorter{
+		{"BitonicSort", BitonicSort, nil},
+		{"BitonicSortAny", BitonicSortAny, nil},
+		{"BlockSort", BlockSort, nil},
+		{"CubeSort", CubeSort, nil},
+		{"PatienceSort", PatienceSort, nil},
+		{"ShellSort", ShellSort, nil},
+		{"TreeAVLSort", TreeAVLSort, nil},
 		{"WikiSort", nil, WikiSort},
+	}
+
+	smallSortImplementations = []Sorter{
+		{"BeadSortInspired", nil, BeadSortInspired},
+		{"BubbleSortEarly", BubbleSortEarly[int], nil},
+		{"BucketSort", BucketSort[int], nil},
+		{"CocktailShakerSort", CocktailShakerSort, nil},
+		{"CycleSortOpt", CycleSortOpt, nil},
+		{"ExchangeSort", ExchangeSort, nil},
+		{"GallopingSort", GallopingSort, nil},
+		{"GnomeSort", GnomeSort, nil},
+		{"InsertionSort", InsertionSort, nil},
+		{"LibrarySort", LibrarySort, nil},
+		{"OddEvenSort", nil, OddEvenSort},
+		{"PancakeSort", PancakeSort, nil},
+		{"SelectionSort", SelectionSort, nil},
+		{"StrandSort", StrandSort, nil},
+		{"SmoothSort", SmoothSort, nil},
+		{"TreeSort", TreeSort, nil},
 	}
 
 	dataGenerators = []DataGenerator{
@@ -112,63 +126,48 @@ var (
 	}
 )
 
-// Helper function to format size for benchmark name
-func formatSize(size int) string {
-	switch {
-	case size >= 1000000000:
-		return fmt.Sprintf("%dB", size/1000000000)
-	case size >= 1000000:
-		return fmt.Sprintf("%dM", size/1000000)
-	case size >= 1000:
-		return fmt.Sprintf("%dK", size/1000)
-	default:
-		return fmt.Sprintf("%d", size)
-	}
+// Helper closure to eliminate duplicate benchmarking code.
+func runBenchmark(b *testing.B, gen DataGenerator, sortName string, size int, sortFunc func([]int)) {
+	benchmarkName := fmt.Sprintf("dist=%s/algo=%s/size=%d", gen.name, sortName, size)
+	b.Run(benchmarkName, func(b *testing.B) {
+		data := gen.Data(size)
+		testData := make([]int, len(data))
+
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			// copy data to start with the same initial state every time
+			copy(testData, data)
+			sortFunc(testData)
+		}
+	})
 }
 
-// General benchmark function for sorting algorithms
-func BenchmarkSort(b *testing.B) {
-	for _, size := range testSizes {
+func runSorterSuite(b *testing.B, sizes []int, sorter []Sorter) {
+	for _, size := range sizes {
 		for _, gen := range dataGenerators {
-			for _, s := range sortImplementations {
+			for _, s := range sorter {
 				if s.fn != nil && s.fnNotInPlace != nil {
-					b.Fail()
+					b.Fatalf("Sorter %s: define either fn or fnNotInPlace, not both", s.name)
 				}
 
 				if s.fn != nil {
-					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
-						data := gen.Data(size)
-						b.ResetTimer()
-						b.StopTimer()
-						for i := 0; i < b.N; i++ {
-							testData := make([]int, len(data))
-							copy(testData, data)
-
-							b.StartTimer()
-							s.fn(testData)
-							b.StopTimer()
-						}
-					})
+					runBenchmark(b, gen, s.name, size, s.fn)
 				}
-
 				if s.fnNotInPlace != nil {
-					b.Run(fmt.Sprintf("dist=%s/algo=%s/size=%s", gen.name, s.name, formatSize(size)), func(b *testing.B) {
-						data := gen.Data(size)
-						b.ResetTimer()
-						b.StopTimer()
-						for i := 0; i < b.N; i++ {
-							testData := make([]int, len(data))
-							copy(testData, data)
-
-							b.StartTimer()
-							s.fnNotInPlace(testData)
-							b.StopTimer()
-						}
+					runBenchmark(b, gen, s.name, size, func(data []int) {
+						_ = s.fnNotInPlace(data)
 					})
 				}
 			}
 		}
 	}
+}
+
+// General benchmark function for sorting algorithms
+func BenchmarkSort(b *testing.B) {
+	runSorterSuite(b, smallTestSizes, slices.Concat(smallSortImplementations, mediumSortImplementations, bigSortImplementations))
+	runSorterSuite(b, mediumTestSizes, slices.Concat(mediumSortImplementations, bigSortImplementations))
+	runSorterSuite(b, bigTestSizes, bigSortImplementations)
 }
 
 // testSortImplementation verifies a sorting implementation
@@ -199,7 +198,9 @@ func TestSort(t *testing.T) {
 		{"RandomMod16_100", 100, GenerateRandomMod16},
 	}
 
-	for _, s := range sortImplementations {
+	sorter := slices.Concat(testOnlyImplementations, smallSortImplementations, mediumSortImplementations, bigSortImplementations)
+
+	for _, s := range sorter {
 		for _, tc := range testCases {
 			// special case for BitonicSort
 			if s.name == "BitonicSort" {
@@ -207,7 +208,7 @@ func TestSort(t *testing.T) {
 			}
 
 			if s.fn != nil {
-				t.Run(fmt.Sprintf("/Ret/%s/%s", s.name, tc.name), func(t *testing.T) {
+				t.Run(fmt.Sprintf("%s/%s", s.name, tc.name), func(t *testing.T) {
 					data := tc.gen(tc.size)
 					s.fn(data)
 
