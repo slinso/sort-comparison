@@ -5,7 +5,7 @@ echo "Plotting results..."
 # create on big file with all the results
 algos=($(go test -bench "///10$" -cpu 1 -count 5 -benchtime 1x | rg BenchmarkSort | sed -n 's/.*algo=\([^/]*\).*/\1/p' | sort | uniq))
 
-cat data/bench-StdSort.txt > tmp/out.txt
+cat data/bench-slices.Sort.txt > tmp/out.txt
 for algo in "${algos[@]}"
 do
     cat data/bench-${algo}.txt >> tmp/out.txt

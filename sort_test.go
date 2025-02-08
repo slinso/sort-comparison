@@ -46,7 +46,7 @@ var (
 	}
 
 	bigSortImplementations = []Sorter{
-		{"StdSort", slices.Sort[[]int, int], nil},
+		{"slices.Sort", slices.Sort[[]int, int], nil},
 		{"AdaptiveSort", nil, AdaptiveSort},
 		{"AmericanFlagSort", AmericanFlagSort, nil},
 		{"BurstSort", BurstSort, nil},
