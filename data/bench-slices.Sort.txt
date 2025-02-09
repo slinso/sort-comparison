@@ -802,8 +802,3 @@ BenchmarkSort/dist=NearlyReversed/algo=slices.Sort/size=100000000   	       1	38
 BenchmarkSort/dist=NearlyReversed/algo=slices.Sort/size=100000000   	       1	3842052842 ns/op
 BenchmarkSort/dist=NearlyReversed/algo=slices.Sort/size=100000000   	       1	2725039257 ns/op
 BenchmarkSort/dist=NearlyReversed/algo=slices.Sort/size=100000000   	       1	3668639328 ns/op
-BenchmarkSort/dist=Random/algo=slices.Sort/size=1000000000          	       1	99026458112 ns/op
-BenchmarkSort/dist=Random/algo=slices.Sort/size=1000000000          	       1	98717251990 ns/op
-BenchmarkSort/dist=Random/algo=slices.Sort/size=1000000000          	       1	100074788255 ns/op
-BenchmarkSort/dist=Random/algo=slices.Sort/size=1000000000          	       1	99564894156 ns/op
-BenchmarkSort/dist=Random/algo=slices.Sort/size=1000000000          	       1	98880415640 ns/op
