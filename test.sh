@@ -13,7 +13,7 @@ algos=($(go test -bench "///10$" -cpu 1 -count 5 -benchtime 1x | rg BenchmarkSor
 # for each algo run the benchmark
 for algo in "${algos[@]}"
 do
-    go test -bench "//${algo}/" -cpu 1 -count 5 -benchtime 1x | tee data/bench-${algo}.txt
+    go test -bench "//${algo}/" -cpu 1 -count 5 -benchtime 100ms | tee data/bench-${algo}.txt
 done
 
 # testing a single size
